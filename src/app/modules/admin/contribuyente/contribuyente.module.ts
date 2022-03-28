@@ -12,6 +12,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
 import { ContribuyenteComponent } from './contribuyente.component';
+import { ListComponent } from './list/list.component';
 
 
 export const routes: Route[] = [
@@ -24,7 +25,8 @@ export const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    ContribuyenteComponent
+    ContribuyenteComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,
