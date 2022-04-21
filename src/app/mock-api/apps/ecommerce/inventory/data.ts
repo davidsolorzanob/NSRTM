@@ -1,3 +1,101 @@
+export const vias = [
+{
+    id         : '00b0292f-3d50-4669-a0c4-7a9d85efc98d',
+    category   : '07986d93-d4eb-4de1-9448-2538407f7254',
+    name       : 'JOSE GALVEZ',
+    description: 'Avenida',
+    tags       : [
+        '3baea410-a7d6-4916-b79a-bdce50c37f95',
+        '7d6dd47e-7472-4f8b-93d4-46c114c44533',
+        '8f868ddb-d4a2-461d-bc3b-d7c8668687c3',
+        '0b11b742-3125-4d75-9a6f-84af7fde1969',
+        'b1286f3a-e2d0-4237-882b-f0efc0819ec3'
+    ],
+    sku        : '001',
+    barcode    : 'Activo',
+    brand      : '',
+    vendor     : '05ebb527-d733-46a9-acfb-a4e4ec960024',
+    stock      : 37,
+    reserved   : 2,
+    cost       : 723.55,
+    basePrice  : 1686,
+    taxPercent : 30,
+    price      : 2191.8,
+    weight     : 0.79,
+    thumbnail  : 'assets/images/apps/ecommerce/products/watch-02-thumb.jpg',
+    images     : [
+        'assets/images/apps/ecommerce/products/watch-02-01.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-02.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-03.jpg'
+    ],
+    active     : true
+},
+{
+    id         : '00b0292f-3d50-4669-a0c4-7a9d85efc98d',
+    category   : '07986d93-d4eb-4de1-9448-2538407f7254',
+    name       : 'INDUSTRIAL Nº 3',
+    description: 'Calle',
+    tags       : [
+        '3baea410-a7d6-4916-b79a-bdce50c37f95',
+        '7d6dd47e-7472-4f8b-93d4-46c114c44533',
+        '8f868ddb-d4a2-461d-bc3b-d7c8668687c3',
+        '0b11b742-3125-4d75-9a6f-84af7fde1969',
+        'b1286f3a-e2d0-4237-882b-f0efc0819ec3'
+    ],
+    sku        : '002',
+    barcode    : 'Activo',
+    brand      : '',
+    vendor     : '05ebb527-d733-46a9-acfb-a4e4ec960024',
+    stock      : 37,
+    reserved   : 2,
+    cost       : 723.55,
+    basePrice  : 1686,
+    taxPercent : 30,
+    price      : 2191.8,
+    weight     : 0.79,
+    thumbnail  : 'assets/images/apps/ecommerce/products/watch-02-thumb.jpg',
+    images     : [
+        'assets/images/apps/ecommerce/products/watch-02-01.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-02.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-03.jpg'
+    ],
+    active     : true
+},
+{
+    id         : '00b0292f-3d50-4669-a0c4-7a9d85efc98d',
+    category   : '07986d93-d4eb-4de1-9448-2538407f7254',
+    name       : 'LAS GOLONDRINAS',
+    description: 'Avenida',
+    tags       : [
+        '3baea410-a7d6-4916-b79a-bdce50c37f95',
+        '7d6dd47e-7472-4f8b-93d4-46c114c44533',
+        '8f868ddb-d4a2-461d-bc3b-d7c8668687c3',
+        '0b11b742-3125-4d75-9a6f-84af7fde1969',
+        'b1286f3a-e2d0-4237-882b-f0efc0819ec3'
+    ],
+    sku        : '003',
+    barcode    : 'Activo',
+    brand      : '',
+    vendor     : '05ebb527-d733-46a9-acfb-a4e4ec960024',
+    stock      : 37,
+    reserved   : 2,
+    cost       : 723.55,
+    basePrice  : 1686,
+    taxPercent : 30,
+    price      : 2191.8,
+    weight     : 0.79,
+    thumbnail  : 'assets/images/apps/ecommerce/products/watch-02-thumb.jpg',
+    images     : [
+        'assets/images/apps/ecommerce/products/watch-02-01.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-02.jpg',
+        'assets/images/apps/ecommerce/products/watch-02-03.jpg'
+    ],
+    active     : true
+}
+
+]
+
+
 /* eslint-disable */
 export const categories = [
     {
@@ -109,7 +207,7 @@ export const products = [
     {
         id         : '7eb7c859-1347-4317-96b6-9476a7e2ba3c',
         category   : 'b899ec30-b85a-40ab-bb1f-18a596d5c6de',
-        name       : 'Capmia Mens Chronograph Watch 44mm 5 ATM',
+        name       : ' David Solorzano Capmia Mens Chronograph Watch 44mm 5 ATM',
         description: 'Consequat esse in culpa commodo anim. Et ullamco anim amet est. Sunt dolore ex occaecat officia anim. In sit minim laborum nostrud. Consequat ex do velit voluptate do exercitation est adipisicing quis velit.',
         tags       : [
             '167190fa-51b4-45fc-a742-8ce1b33d24ea',
