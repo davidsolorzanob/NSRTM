@@ -12,9 +12,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
 import { ContribuyenteComponent } from './contribuyente.component';
-import { ListComponent } from './list/list.component';
-
-
+import { FuseAlertModule } from '@fuse/components/alert';
+import { MatPaginatorModule } from '@angular/material/paginator';
 export const routes: Route[] = [
   {
       path     : '',
@@ -25,8 +24,7 @@ export const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    ContribuyenteComponent,
-    ListComponent
+    ContribuyenteComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +38,9 @@ export const routes: Route[] = [
     MatMenuModule,
     MatRadioModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    FuseAlertModule,
+    MatPaginatorModule
   ]
 })
 export class ContribuyenteModule { }

@@ -9,7 +9,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/Contribuyente'
+    },
+    {
+        id   : 'vias',
+        title: 'Registro Vías',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/registro'
+    }, 
+    {
+        id   : 'seetings',
+        title: 'Registro Contribuyente',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/seetings'
     }
+
+
 ];
 export const compactNavigation: FuseNavigationItem[] = [
    
@@ -19,7 +35,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/Contribuyente'
-    }
+    },
+    {
+        id   : 'vias',
+        title: 'Registro Vías',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/registro'
+    },
 
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [

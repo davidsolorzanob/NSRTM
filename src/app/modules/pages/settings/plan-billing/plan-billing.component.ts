@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-contribuyente',
-  templateUrl: './contribuyente.component.html',
-  styleUrls: ['./contribuyente.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector       : 'settings-plan-billing',
+    templateUrl    : './plan-billing.component.html',
+    encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContribuyenteComponent implements OnInit 
-  {
+export class SettingsPlanBillingComponent implements OnInit
+{
     planBillingForm: FormGroup;
     plans: any[];
 
@@ -34,7 +33,7 @@ export class ContribuyenteComponent implements OnInit
         // Create the form
         this.planBillingForm = this._formBuilder.group({
             plan          : ['team'],
-            cardHolder    : ['email'],
+            cardHolder    : ['Brian Hughes'],
             cardNumber    : [''],
             cardExpiration: [''],
             cardCVC       : [''],
