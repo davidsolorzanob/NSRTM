@@ -9,11 +9,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
   selector: 'app-list',
-  templateUrl: './list.component.html',
-  //styleUrls: ['./list.component.scss']
-  encapsulation  : ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations     : fuseAnimations
+  templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit {
   isLoading: boolean = false;

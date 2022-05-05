@@ -1,7 +1,7 @@
 <div class="w-full max-w-7xl">
 
     <!-- Form -->
-    <form [formGroup]="planBillingForm">
+    <form>
 
 
         <!-- Divider -->
@@ -21,7 +21,7 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Tipo de Contribuyente</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select [formControlName]="'tipoContribuyente'">
+                    <mat-select>
                         <mat-option [value]="'1'">Natural</mat-option>
                         <mat-option [value]="'2'">Juridica</mat-option>
                     </mat-select>
@@ -33,7 +33,7 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Tipo de Documento</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select [formControlName]="'tipoContribuyente'">
+                    <mat-select >
                         <mat-option [value]="'1'">DNI</mat-option>
                         <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
                         <mat-option [value]="'3'">Pasaporte</mat-option>

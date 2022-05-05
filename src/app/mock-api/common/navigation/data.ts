@@ -8,23 +8,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Contribuyente',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/Contribuyente'
+        link : '/contribuyente'
     },
     {
-        id   : 'vias',
-        title: 'Registro Vías',
+        id   : 'configuracion',
+        title: 'Configuracion',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/registro'
-    }, 
-    {
-        id   : 'seetings',
-        title: 'Registro Contribuyente',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/seetings'
+        link : '/settings'
     }
-
 
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -34,16 +26,15 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Contribuyente',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/Contribuyente'
+        link : '/contribuyente'
     },
     {
-        id   : 'vias',
-        title: 'Registro Vías',
+        id   : 'configuracion',
+        title: 'Configuracion',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/registro'
-    },
-
+        link : '/settings'
+    }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     
@@ -52,7 +43,14 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Contribuyente',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/Contribuyente'
+        link : '/contribuyente'
+    },
+    {
+        id   : 'configuracion',
+        title: 'Configuracion',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/settings'
     }
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -62,6 +60,13 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Contribuyente',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/Contribuyente'
+        link : '/contribuyente'
+    },
+    {
+        id   : 'configuracion',
+        title: 'Configuracion',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/settings'
     }
 ];
