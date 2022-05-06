@@ -14,21 +14,24 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ContribuyenteComponent } from './contribuyente.component';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { MatPaginatorModule } from '@angular/material/paginator';
-export const routes: Route[] = [
-  {
-      path     : '',
-      component: ContribuyenteComponent
-  }
-];
+import { ListComponent } from './list/list.component';
+import { contribuyenteRoutes} from 'app/modules/admin/contribuyente/contribuyente.routing';
+// export const routes: Route[] = [
+// //   {
+// //       path     : '',
+// //       component: ContribuyenteComponent
+// //   }
+// // ];
 
 
 @NgModule({
   declarations: [
-    ContribuyenteComponent
+    ContribuyenteComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(contribuyenteRoutes),
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,

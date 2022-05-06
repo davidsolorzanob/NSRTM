@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 
 @Injectable({
@@ -14,10 +14,10 @@ export class ContribuyenteService {
 
 
 
-public listar(): Observable<Contribuyente[]>{
+public todos(): Observable<Contribuyente[]>{
 
 
-  return this.http.get<Contribuyente[]>(this.baseEndpoint);
+  return this.http.get<Contribuyente[]>(this.baseEndpoint+'/todos');
 
 
 

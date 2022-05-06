@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 
 @Component({
   selector: 'app-contribuyente',
   templateUrl: './contribuyente.component.html',
   styleUrls: ['./contribuyente.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContribuyenteComponent implements OnInit 
+export class ContribuyenteComponent
   {
    
     constructor(){}

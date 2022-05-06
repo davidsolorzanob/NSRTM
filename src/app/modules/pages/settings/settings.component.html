@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
+<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden ">
 
     <mat-drawer-container class="flex-auto sm:h-full">
 
@@ -12,7 +12,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between m-8 mr-6 sm:my-10">
                 <!-- Title -->
-                <div class="text-4xl font-extrabold tracking-tight leading-none">Settings ok</div>
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Busqueda de contribuyente</div>
                 <!-- Close button -->
                 <div class="lg:hidden">
                     <button
@@ -21,7 +21,34 @@
                         <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
                     </button>
                 </div>
+
+                
             </div>
+
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+                <!-- Search -->
+                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                    <input
+                        matInput
+                  
+                        [autocomplete]="'off'"
+                        [placeholder]="'Busqueda de contribuyente'">
+                </mat-form-field>
+                <!-- Add product button -->
+                <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                   >
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1"></span>
+                </button>
+            </div>
+        
             <!-- Panel links -->
             <div class="flex flex-col divide-y border-t border-b">
                 <ng-container *ngFor="let panel of panels; trackBy: trackByFn">
@@ -53,7 +80,7 @@
         <mat-drawer-content class="flex flex-col">
 
             <!-- Main -->
-            <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+            <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12 bg-white">
 
                 <!-- Panel header -->
                 <div class="flex items-center">
@@ -68,12 +95,12 @@
 
                     <!-- Panel title -->
                     <div class="ml-2 lg:ml-0 text-3xl font-bold tracking-tight leading-none">
-                        {{getPanelInfo(selectedPanel).title}}
+                        <!-- {{getPanelInfo(selectedPanel).title}} -->
                     </div>
                 </div>
 
                 <!-- Load settings panel -->
-                <div class="mt-8">
+                <div class="mt-8" >
                     <ng-container [ngSwitch]="selectedPanel">
                         <!-- Account -->
                         <ng-container *ngSwitchCase="'account'">

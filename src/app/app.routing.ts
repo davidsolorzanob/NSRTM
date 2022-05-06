@@ -73,6 +73,7 @@ export const appRoutes: Route[] = [
             {path: 'contribuyente', loadChildren: () => import('app/modules/admin/contribuyente/contribuyente.module').then(m => m.ContribuyenteModule)},
             {path: 'settings', loadChildren:()=> import('app/modules/pages/settings/settings.module').then(m=>m.SettingsModule)},
 
+
         ]
     }
 ];

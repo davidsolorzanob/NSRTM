@@ -52,6 +52,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:chart-pie',
         link : '/settings'
     }
+    
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
   
