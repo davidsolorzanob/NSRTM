@@ -14,7 +14,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ContribuyenteComponent } from './contribuyente.component';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ListComponent } from './list/list.component';
+import { ListComponent } from './list.component';
 import { contribuyenteRoutes} from 'app/modules/admin/contribuyente/contribuyente.routing';
 // export const routes: Route[] = [
 // //   {

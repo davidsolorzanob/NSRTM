@@ -11,7 +11,7 @@ import { Contribuyente } from 'app/models/contribuyente.models';
 
 @Component({
   selector: 'app-list',
-  templateUrl: './list.component.html'
+  templateUrl: 'list.component.html'
 })
 export class ListComponent implements OnInit {
   titulo = 'Relación de contribuyentes';

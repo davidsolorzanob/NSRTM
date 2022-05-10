@@ -1,16 +1,22 @@
-<div class="w-full max-w-7xl bg-white">
+<div class="w-full max-w-7xl bg-white border-radius: 0 24px 24px 0">
   
     <!-- Form -->
     <form>
-
-
-  
 
         <!-- Section -->
         <div class="w-full">
             <div class="text-xl" style="font-weight: bold;" >Registro de Contribuyente</div>
             <div class="text-secondary">Formulario para el mantenimineto y gestión de contribuyente.</div>
         </div>
+
+               <!-- Actions -->
+               <div class="flex items-center justify-end">
+                <button mat-stroked-button type="button">
+                    Cancelar
+                </button>
+                <button class="ml-4" mat-flat-button type="button" [color]="'primary'">Guardar
+                </button>
+            </div>
      
         <div class="grid grid-cols-12 gap-6 w-full mt-8">
 
@@ -118,14 +124,7 @@
         <!-- Divider -->
         <div class="mt-11 mb-10 border-t"></div>
 
-        <!-- Actions -->
-        <div class="flex items-center justify-end">
-            <button mat-stroked-button type="button">
-                Cancelar
-            </button>
-            <button class="ml-4" mat-flat-button type="button" [color]="'primary'">Guardar
-            </button>
-        </div>
+ 
     </form>
 
 </div>
