@@ -8,7 +8,7 @@ import { Contribuyente } from '../models/contribuyente.models';
 })
 export class ContribuyenteService {
 
-  private baseEndpoint = 'http://localhost:8090/api/contribuyente';
+  private baseEndpoint = 'http://localhost:8082/api/contribuyente';
   private cabeceras: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'}); //la cabecera es lo que va a pasar un JSON
   constructor(private http: HttpClient) { }
 
@@ -36,7 +36,7 @@ public todos(): Observable<Contribuyente[]>{
      const params = new HttpParams()
     .set('page',page)
     .set('size', size);
-    return this.http.get<any>(this.baseEndpoint+'/'+page, {params: params});
+    return this.http.get<any>(this.baseEndpoint+'/pagina/', {params: params});
 
 
  }
