@@ -12,7 +12,8 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
-
+import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -39,8 +40,12 @@ const routerConfig: ExtraOptions = {
         // Layout module of your application
         LayoutModule,
 
+        FormsModule,
+
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
+
+        MatAutocompleteModule
     ],
     bootstrap   : [
         AppComponent

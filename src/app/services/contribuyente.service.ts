@@ -54,7 +54,7 @@ public todos(): Observable<Contribuyente[]>{
 public crear(contribuyente:Contribuyente): Observable<Contribuyente>{
 //enviar un body
 
- return this.http.post<Contribuyente>(this.baseEndpoint, contribuyente, {headers: this.cabeceras});
+ return this.http.post<Contribuyente>(this.baseEndpoint+'/crear', contribuyente, {headers: this.cabeceras});
 
 }
 

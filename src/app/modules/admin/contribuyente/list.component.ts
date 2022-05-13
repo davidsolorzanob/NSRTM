@@ -1,8 +1,9 @@
-import {  Component, OnInit} from '@angular/core';
+import {  Component, OnInit, ViewChild} from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { NumericDictionaryIteratee } from 'lodash';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { relativeTimeThreshold } from 'moment';
 
 @Component({
   selector: 'app-list',
@@ -18,11 +19,11 @@ import { PageEvent } from '@angular/material/paginator';
             }
 
             @screen md {
-                grid-template-columns: 48px 112px auto 112px 72px;
+                grid-template-columns: 48px 112px 112px 112px 72px;
             }
 
             @screen lg {
-                grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                grid-template-columns: 48px 602px 112px 112px 112px 112px 112px 112px;
             }
         }
     `
@@ -35,6 +36,7 @@ export class ListComponent implements OnInit {
   paginaActual:number =0;
   totalPorPagina:number = 4;
   pageSizeOptions: number[] = [3,5,10,25,100];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private service: ContribuyenteService) { }
 
@@ -43,7 +45,7 @@ export class ListComponent implements OnInit {
       this.contribuyentes = contribuyentes;
     });     
      this.calcularRangos();
-  
+    
 
   }
 
@@ -57,13 +59,11 @@ export class ListComponent implements OnInit {
 
     private calcularRangos(){
 
-      const paginaActual = this.paginaActual+'';
-      const totalRegistro = this.totalRegistros+'';
-   
-      this.service.listarPaginas(paginaActual,totalRegistro).subscribe(p =>{
+      this.service.listarPaginas(this.paginaActual.toString(),this.totalRegistros.toString()).subscribe(p =>{
        
        this.contribuyentes = p.content as Contribuyente[];
        this.totalRegistros = p.totalElements as number;
+       this.paginator._intl.itemsPerPageLabel = 'Registro por página';
    
       } );
     }

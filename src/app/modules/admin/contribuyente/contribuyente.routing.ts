@@ -6,8 +6,8 @@ import { ListComponent } from 'app/modules/admin/contribuyente/list.component';
 export const contribuyenteRoutes: Route[] = [
     { path: '', pathMatch : 'full', redirectTo: 'contribuyente'},
     { path: 'contribuyente', component: ContribuyenteComponent},
-    { path: 'list',component:ListComponent }
-    
+    { path: 'list', component:ListComponent },
+    { path: 'contribuyente/form/:id', component: ContribuyenteComponent},
 ];
 @NgModule(
     {

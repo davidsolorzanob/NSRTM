@@ -3,6 +3,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { ListComponent } from './modules/admin/contribuyente/list.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -72,7 +73,7 @@ export const appRoutes: Route[] = [
           
             {path: 'contribuyente', loadChildren: () => import('app/modules/admin/contribuyente/contribuyente.module').then(m => m.ContribuyenteModule)},
             {path: 'settings', loadChildren:()=> import('app/modules/pages/settings/settings.module').then(m=>m.SettingsModule)},
-
+            {path: 'list', component: ListComponent}
 
         ]
     }

@@ -14,4 +14,5 @@ export class Contribuyente {
     fechaRegistro: string;
     usuarioEdicion: string;
     fechaEdicion: string;
+    tipoDocumento: string;
 }

@@ -16,12 +16,7 @@ import { FuseAlertModule } from '@fuse/components/alert';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListComponent } from './list.component';
 import { contribuyenteRoutes} from 'app/modules/admin/contribuyente/contribuyente.routing';
-// export const routes: Route[] = [
-// //   {
-// //       path     : '',
-// //       component: ContribuyenteComponent
-// //   }
-// // ];
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -43,7 +38,8 @@ import { contribuyenteRoutes} from 'app/modules/admin/contribuyente/contribuyent
     MatSelectModule,
     SharedModule,
     FuseAlertModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule
   ]
 })
 export class ContribuyenteModule { }

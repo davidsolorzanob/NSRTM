@@ -2,7 +2,7 @@
     <button class="ml-4" mat-flat-button type="button" [color]="'primary'" routerLink="../list">Ver Lista
     </button>
     <!-- Form -->
-    <form>
+    <form class="flex flex-col w-full form-container">
 
 
         <!-- Divider -->
@@ -10,37 +10,37 @@
 
         <!-- Section -->
         <div class="w-full">
-            <div class="text-xl" style="font-weight: bold;" >Registro de Contribuyente</div>
+            <div class="text-xl" style="font-weight: bold;">Registro de Contribuyente</div>
             <div class="text-secondary">Formulario para el mantenimineto y gestión de contribuyente.</div>
         </div>
-     
+
         <div class="grid grid-cols-12 gap-6 w-full mt-8">
 
 
             <!-- Contribuyente -->
-            <div class="col-span-2 sm:col-span-2">
+             <div class="col-span-2 sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Tipo de Contribuyente</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select>
+                    <mat-select [(ngModel)]="contribuyente.tipoContribuyente" name="tipoContribuyente" id="tipoContribuyente">
                         <mat-option [value]="'1'">Natural</mat-option>
                         <mat-option [value]="'2'">Juridica</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> 
 
-
+          
             <div class="col-span-4 sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Tipo de Documento</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select >
+                    <mat-select  [(ngModel)]="contribuyente.tipoDocumento" name="tipoDocumento" id="tipoDocumento">
                         <mat-option [value]="'1'">DNI</mat-option>
                         <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
                         <mat-option [value]="'3'">Pasaporte</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> 
 
 
             <!-- Card number -->
@@ -48,15 +48,17 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Número de Documento</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix></mat-icon>
-                    <input  matInput>
+                    <input matInput [(ngModel)]="contribuyente.numeroDocumento" id="numeroDocumento"
+                        name="numeroDocumento">
+                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
                 </mat-form-field>
             </div>
-
 
             <div class="col-span-2 sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Apellido Paterno</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.apellidoPaterno" name="apellidoPaterno"
+                        id="apellidoPaterno">
                 </mat-form-field>
             </div>
 
@@ -64,7 +66,8 @@
             <div class="col-span-4 sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.apellidoMaterno" name="apellidoMaterno"
+                        id="apellidoMaterno">
                 </mat-form-field>
             </div>
 
@@ -72,7 +75,7 @@
             <div class="col-span-6 sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Nombres</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.nombres" name="nombres" id="nombres">
                 </mat-form-field>
             </div>
 
@@ -80,7 +83,7 @@
             <div class="col-span-4 sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Razon Social</mat-label>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.razonSocial" name="razonSocial" id="razonSocial">
                 </mat-form-field>
             </div>
 
@@ -90,7 +93,7 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Celular</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:hashtag'" matPrefix></mat-icon>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.celular1" name="celular1" id="celular1">
                 </mat-form-field>
             </div>
 
@@ -100,21 +103,10 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Telefono</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:hashtag'" matPrefix></mat-icon>
-                    <input matInput>
+                    <input matInput [(ngModel)]="contribuyente.celular2" name="celular2" id="celular2">
                 </mat-form-field>
             </div>
 
-
-
-
-            <!-- Card holder -->
-            <div class="col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Email</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
-                    <input  matInput>
-                </mat-form-field>
-            </div>
         </div>
 
         <!-- Divider -->
@@ -125,9 +117,14 @@
             <button mat-stroked-button type="button">
                 Cancelar
             </button>
-            <button class="ml-4" mat-flat-button type="button" [color]="'primary'">Guardar
+            <button class="ml-4" mat-flat-button 
+            type="button" [color]="'primary'" 
+            (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId? 'Editar': 'Crear'}}
             </button>
         </div>
     </form>
 
 </div>
+
+
+
