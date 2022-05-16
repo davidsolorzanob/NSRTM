@@ -6,47 +6,7 @@
         <!-- Loader -->
         <!-- Title -->
         <div class="text-4xl font-extrabold tracking-tight">Contribuyente</div>
-        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <div>
-
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                        routerLinkActive="router-link-active">Domicilio</span>
-
-                </button>
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                        routerLinkActive="router-link-active">Relacionado</span>
-
-                </button>
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">DJ
-                        Predial</span>
-
-                </button>
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                        routerLinkActive="router-link-active">Domicilio</span>
-
-                </button>
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                        routerLinkActive="router-link-active">Sustento</span>
-
-                </button>
-                <button class="m-2" mat-flat-button [color]="'primary'">
-                    <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-                    <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                        routerLinkActive="router-link-active">Notificación</span>
-
-                </button>
-            </div>
-        </div>
+     
 
     </div>
 
@@ -74,12 +34,64 @@
         </button>
     </div>
 
+    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 float-right">
+        <div>
+
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
+                    routerLinkActive="router-link-active">Domicilio</span>
+
+            </button>
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
+                    routerLinkActive="router-link-active">Relacionado</span>
+
+            </button>
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">DJ
+                    Predial</span>
+
+            </button>
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
+                    routerLinkActive="router-link-active">Domicilio</span>
+
+            </button>
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
+                    routerLinkActive="router-link-active">Sustento</span>
+
+            </button>
+            <button class="m-2" mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
+                    routerLinkActive="router-link-active">Notificación</span>
+
+            </button>
+        </div>
+    </div>
+
     <!-- Main -->
     <div class="flex flex-auto overflow-hidden">
 
         <!-- Products list -->
         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
             <ng-container>
+
+                <mat-paginator [length]="totalRegistros" 
+                [pageSize]="totalPorPagina" 
+                [pageIndex]="paginaActual"
+     [pageSizeOptions]="pageSizeOptions" 
+     (page) ="paginar($event)"
+     showFirstLastButtons 
+     class="float-left mx-2">
+ </mat-paginator>
+</ng-container>
                 <ng-container>
                     <div class="grid">
                         <!-- Header -->
@@ -204,11 +216,7 @@
                 class="float-left mx-2">
               </mat-paginator> -->
 
-                <mat-paginator [length]="totalRegistros" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
-                    [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" aria-label="Select page"
-                    showFirstLastButtons class="float-right mx-2">
-                </mat-paginator>
-            </ng-container>
+               
 
         </div>
 
