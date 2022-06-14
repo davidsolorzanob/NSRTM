@@ -7,7 +7,7 @@ export const contribuyenteRoutes: Route[] = [
     { path: '', pathMatch : 'full', redirectTo: 'contribuyente'},
     { path: 'contribuyente', component: ContribuyenteComponent},
     { path: 'list', component:ListComponent },
-    { path: 'contribuyente/form/:id', component: ContribuyenteComponent},
+    { path: 'contribuyente/:id', component: ContribuyenteComponent},
 ];
 @NgModule(
     {

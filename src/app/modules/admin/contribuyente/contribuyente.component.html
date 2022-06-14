@@ -1,130 +1,1088 @@
-<div class="w-full max-w-7xl">
-    <button class="ml-4" mat-flat-button type="button" [color]="'primary'" routerLink="../list">Ver Lista
+<div class="w-full max-w-9xl">
+    <button class="ml-4" mat-flat-button type="button" [color]="'primary'" routerLink="/contribuyente/list">Ver Lista
     </button>
-    <!-- Form -->
-    <form class="flex flex-col w-full form-container">
 
 
-        <!-- Divider -->
-        <div class="mt-12 mb-10 border-t"></div>
-
-        <!-- Section -->
-        <div class="w-full">
-            <div class="text-xl" style="font-weight: bold;">Registro de Contribuyente</div>
-            <div class="text-secondary">Formulario para el mantenimineto y gestión de contribuyente.</div>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 w-full mt-8">
 
 
-            <!-- Contribuyente -->
-             <div class="col-span-2 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Tipo de Contribuyente</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select [(ngModel)]="contribuyente.tipoContribuyente" name="tipoContribuyente" id="tipoContribuyente">
-                        <mat-option [value]="'1'">Natural</mat-option>
-                        <mat-option [value]="'2'">Juridica</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> 
 
-          
-            <div class="col-span-4 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Tipo de Documento</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix></mat-icon>
-                    <mat-select  [(ngModel)]="contribuyente.tipoDocumento" name="tipoDocumento" id="tipoDocumento">
-                        <mat-option [value]="'1'">DNI</mat-option>
-                        <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
-                        <mat-option [value]="'3'">Pasaporte</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> 
+    <mat-accordion>
+
+        <mat-expansion-panel (opened)="panelContribuyenteOpenState = true"
+            (closed)="panelContribuyenteOpenState = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder ;">
+                    <!-- <p *ngIf="panelOpenState>=true">+</p> <p *ngIf="panelOpenState=false">-</p>  Contribuyente -->
 
 
-            <!-- Card number -->
-            <div class="col-span-6 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Número de Documento</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix></mat-icon>
-                    <input matInput [(ngModel)]="contribuyente.numeroDocumento" id="numeroDocumento"
-                        name="numeroDocumento">
-                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
-                </mat-form-field>
-            </div>
-
-            <div class="col-span-2 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Apellido Paterno</mat-label>
-                    <input matInput [(ngModel)]="contribuyente.apellidoPaterno" name="apellidoPaterno"
-                        id="apellidoPaterno">
-                </mat-form-field>
-            </div>
+                    <h2 *ngIf="panelContribuyenteOpenState>=true else elseBlock">
+                        <p> - Contribuyente</p>
+                    </h2>
+                    <ng-template #elseBlock>
+                        <p> + Contribuyente</p>
+                    </ng-template>
 
 
-            <div class="col-span-4 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Apellido Materno</mat-label>
-                    <input matInput [(ngModel)]="contribuyente.apellidoMaterno" name="apellidoMaterno"
-                        id="apellidoMaterno">
-                </mat-form-field>
-            </div>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>
 
 
-            <div class="col-span-6 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Nombres</mat-label>
-                    <input matInput [(ngModel)]="contribuyente.nombres" name="nombres" id="nombres">
-                </mat-form-field>
-            </div>
+                <!-- Form -->
+            <form class="flex flex-col w-full form-container">
 
 
-            <div class="col-span-4 sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Razon Social</mat-label>
-                    <input matInput [(ngModel)]="contribuyente.razonSocial" name="razonSocial" id="razonSocial">
-                </mat-form-field>
-            </div>
+                <!-- Divider -->
+                <div class="mt-12 mb-10 border-t"></div>
+
+                <!-- Section -->
+                <div class="w-full">
+
+                </div>
 
 
-            <!-- Celular -->
-            <div class="col-span-8 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Celular</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:hashtag'" matPrefix></mat-icon>
-                    <input matInput [(ngModel)]="contribuyente.celular1" name="celular1" id="celular1">
-                </mat-form-field>
-            </div>
+
+                <div class="grid grid-cols-12 gap-10 w-full mt-10">
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Cod. Contribuyente</mat-label>
+                            <input matInput name="codContribuyente" id="codContribuyente">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>N° de Declaración</mat-label>
+                            <input matInput name="nroDeclaracion" id="nroDeclaracion">
+                        </mat-form-field>
+                    </div>
 
 
-            <!-- Telefono -->
-            <div class="col-span-8 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Telefono</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:hashtag'" matPrefix></mat-icon>
-                    <input matInput [(ngModel)]="contribuyente.celular2" name="celular2" id="celular2">
-                </mat-form-field>
-            </div>
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de Declaración</mat-label>
+                            <input matInput name="fechaDeclaracion" id="fechaDeclaracion">
+                        </mat-form-field>
+                    </div>
 
-        </div>
 
-        <!-- Divider -->
-        <div class="mt-11 mb-10 border-t"></div>
+                    <!-- Tipo de Medio -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Medio</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoMedio" id="tipoContribuyente">
+                                <mat-option [value]="'1'">DJ</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
-        <!-- Actions -->
-        <div class="flex items-center justify-end">
-            <button mat-stroked-button type="button">
-                Cancelar
-            </button>
-            <button class="ml-4" mat-flat-button 
-            type="button" [color]="'primary'" 
-            (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId? 'Editar': 'Crear'}}
-            </button>
-        </div>
-    </form>
+
+
+                    <!-- Medio -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Medio</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="medio" id="medio">
+                                <mat-option [value]="'1'">Física</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Motivo -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Motivo</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="motivo" id="motivo">
+                                <mat-option [value]="'1'">Inscripción</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Motivo -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Modalidad de Oficio</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="motivo" id="modalidadOficio">
+                                <mat-option [value]="'1'">Error Material</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+                <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+
+
+
+
+
+                    <!-- Contribuyente -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Contribuyente</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select [(ngModel)]="contribuyente.tipoContribuyente" name="tipoContribuyente"
+                                id="tipoContribuyente">
+                                <mat-option [value]="'1'">Natural</mat-option>
+                                <mat-option [value]="'2'">Juridica</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Documento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select [(ngModel)]="contribuyente.tipoDocumento" name="tipoDocumento"
+                                id="tipoDocumento">
+                                <mat-option [value]="'1'">DNI</mat-option>
+                                <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
+                                <mat-option [value]="'3'">Pasaporte</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Numero de documento -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número de Documento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
+                            </mat-icon>
+                            <input matInput [(ngModel)]="contribuyente.numeroDocumento" id="numeroDocumento"
+                                name="numeroDocumento">
+                            <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de Presentación</mat-label>
+                            <input matInput name="fechaPresentacion" id="fechaPresentacion">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de Nacimiento</mat-label>
+                            <input matInput name="fechaNacimiento" id="fechaNacimiento">
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Estado -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Estado</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
+                            </mat-icon>
+                            <input matInput id="estado" name="estado">
+                            <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Apellido Paterno</mat-label>
+                            <input matInput [(ngModel)]="contribuyente.apellidoPaterno" name="apellidoPaterno"
+                                id="apellidoPaterno">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Apellido Materno</mat-label>
+                            <input matInput [(ngModel)]="contribuyente.apellidoMaterno" name="apellidoMaterno"
+                                id="apellidoMaterno">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-6 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombres</mat-label>
+                            <input matInput [(ngModel)]="contribuyente.nombres" name="nombres" id="nombres">
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <!-- Estado Civil-->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Estado Civil</mat-label>
+                            <input matInput id="estadoCivil" name="estadoCivil">
+                            <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fallecio</mat-label>
+                            <mat-select name="fallecio" id="fallecio">
+                                <mat-option [value]="'1'">Sí</mat-option>
+                                <mat-option [value]="'2'">No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Fecha Fallecio-->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha Fallecimiento</mat-label>
+                            <input matInput id="fechaFallecimiento" name="fechaFallecimiento">
+                            <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Razon Social</mat-label>
+                            <input matInput [(ngModel)]="contribuyente.razonSocial" name="razonSocial" id="razonSocial">
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Segamentación -->
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Segmentación</mat-label>
+                            <input matInput name="segmentacion" id="segmentacion">
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                </div>
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
+                        Cancelar
+                    </button> -->
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
+                        (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId?
+                        'Siguiente': 'Siguiente'}}
+                    </button>
+                </div>
+            </form>
+
+
+        </mat-expansion-panel>
+
+
+
+        <mat-expansion-panel (opened)="panelDomicilioFiscal = true" (closed)="panelDomicilioFiscal = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder ;">
+
+                    <h2 *ngIf="panelDomicilioFiscal>=true else domicilioFalse">
+                        <p>- Domicilio</p>
+                    </h2>
+                    <ng-template #domicilioFalse>
+                        <p>+ Domicilio</p>
+
+                    </ng-template>
+
+
+                </mat-panel-title>
+                <mat-panel-description>
+
+
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+
+
+            <!-- Form -->
+            <form class="flex flex-col w-full form-container">
+
+
+                <!-- Divider -->
+                <div class="mt-12 mb-10 border-t"></div>
+
+                <!-- Section -->
+                <div class="w-full">
+
+                </div>
+
+
+                <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+
+                    <!-- Departamento -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Departamento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="departamento" id="departamento">
+                                <mat-option [value]="'1'">Amazonas</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Procinvia -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Provincia</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="provincia" id="provincia">
+                                <mat-option [value]="'1'">Alaya</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Distrito</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="distrito" id="distrito">
+                                <mat-option [value]="'1'">Santiago</mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de domicilio</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoDomicilio" id="tipoDomicilio">
+                                <mat-option [value]="'1'">Fiscal</mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de declaración</mat-label>
+                            <input matInput name="fechaDeclaracion" id="fechaDeclaracion">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Vía</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoVia" id="tipoVia">
+                                <mat-option [value]="'1'">Avenida</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Descripción de Vía</mat-label>
+                            <input matInput name="descripcionVia" id="descripcionVia">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número 1</mat-label>
+                            <input matInput name="numero1" id="numero1">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número 2</mat-label>
+                            <input matInput name="numero2" id="numero2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Letra 1</mat-label>
+                            <input matInput name="letra1" id="letra1">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Letra 2</mat-label>
+                            <input matInput name="letra2" id="letra2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Manzana</mat-label>
+                            <input matInput name="mazana" id="manzana">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Lote</mat-label>
+                            <input matInput name="lote" id="lote">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Sub Lote</mat-label>
+                            <input matInput name="subLote" id="subLote">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Zona Urbana</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="zonaUrbana" id="zonaUrbana">
+                                <mat-option [value]="'1'">Avenida</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput name="nombreZona" id="nombreZona">
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Sub Zona</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="subZona" id="subZona">
+                                <mat-option [value]="'1'">Avenida</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Sub Zona</mat-label>
+                            <input matInput name="nombreSubZona" id="nombreSubZona">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Edificación</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="edificacion" id="edificacion">
+                                <mat-option [value]="'1'">Edificacion</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Edificación</mat-label>
+                            <input matInput name="nombreEdificacion" id="nombreEdificacion">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Interior</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="interior" id="interior">
+                                <mat-option [value]="'1'">Interior</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Interior</mat-label>
+                            <input matInput name="nombreInterior" id="nombreInterior">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Piso</mat-label>
+                            <input matInput name="piso" id="piso">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Ingreso</mat-label>
+                            <input matInput name="ingreso" id="ingreso">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Km</mat-label>
+                            <input matInput name="km" id="km">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Referencia</mat-label>
+                            <input matInput name="referencia" id="referencia">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Estado</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="estado" id="estado">
+                                <mat-option [value]="'1'">Activo</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
+                        (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId?
+                        'Siguiente': 'Siguiente'}}
+                    </button>
+                </div>
+            </form>
+
+
+        </mat-expansion-panel>
+
+       
+
+        <mat-expansion-panel (opened)="panelRelacionado = true" (closed)="panelRelacionado = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelRelacionado>=true  else elsePanelRelacionado">
+                        <p> - Relacionado</p>
+                    </h2>
+                    <ng-template #elsePanelRelacionado>
+                        <p> + Relacionado </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+     
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+                    <!-- Form -->
+                    <form class="flex flex-col w-full form-container">
+
+                        <!-- Divider -->
+                        <div class="mt-12 mb-10 border-t"></div>
+
+                        <!-- Section -->
+                        <div class="w-full">
+
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Cod. Relacionado</mat-label>
+                                    <input matInput name="codRelacionado" id="codRelacionado">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Documento</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
+                                        matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="tipoRelacionadoDocumento" id="tipoDocumento">
+                                        <mat-option [value]="'1'">DNI</mat-option>
+                                        <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
+                                        <mat-option [value]="'3'">Pasaporte</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Numero de documento -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Número de Documento</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
+                                    </mat-icon>
+                                    <input matInput id="numeroRelacionadoDocumento" name="numeroRelacionadoDocumento">
+                                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Apellido Paterno</mat-label>
+                                    <input matInput name="apellidoRelacionadoPaterno" id="apellidoRelacionadoPaterno">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Apellido Materno</mat-label>
+                                    <input matInput name="apellidoRelacionadoMaterno" id="apellidoRelacionadoMaterno">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput name="nombresRelacionado" id="nombresRelacionado">
+                                </mat-form-field>
+                            </div>
+
+
+
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Relación</mat-label>
+                                    <mat-select name="tipoRelacion" id="tipoRelacion">
+                                        <mat-option [value]="'1'">Conyugue</mat-option>
+                                        <mat-option [value]="'2'">Padre</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="col-span-4 sm:col-span-4">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Razon Social</mat-label>
+                                    <input matInput name="razonRelacionadoSocial" id="razonRelacionadoSocial">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Fecha de Inicio -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha de Inicio</mat-label>
+                                    <input matInput name="fechaInicio" id="fechaInicio">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Fecha fin -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha Final</mat-label>
+                                    <input matInput name="fechaFinal" id="fechaFinal">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Telefono fijo -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Telefono fijo</mat-label>
+                                    <input matInput name="telefonoFijo" id="telefonoFijo">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Anexo -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Anexo</mat-label>
+                                    <input matInput name="relacionadoAnexo" id="relacionadoAnexo">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Telefono Celular -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Celular</mat-label>
+                                    <input matInput name="relacionadoCelular" id="relacionadoCelular">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Correo Electrónico</mat-label>
+                                    <input matInput name="correoElectronico" id="correoElectronico">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+
+                           <!-- Divider -->
+                <div class="mt-12 mb-10 border-t"></div>
+ <!-- Domicilio del relacionado -->
+                        <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+
+                            <!-- Departamento -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Departamento</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoDepartamento" id="relacionadoDepartamento">
+                                        <mat-option [value]="'1'">Amazonas</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <!-- Procinvia -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Provincia</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoProvincia" id="relacionadoProvincia">
+                                        <mat-option [value]="'1'">Alaya</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Distrito</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoDistrito" id="relacionadoDistrito">
+                                        <mat-option [value]="'1'">Santiago</mat-option>
+        
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+        
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de domicilio</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoTipoDomicilio" id="relacionadoTipoDomicilio">
+                                        <mat-option [value]="'1'">Fiscal</mat-option>
+        
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                           
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Vía</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadotipoVia" id="relacionadotipoVia">
+                                        <mat-option [value]="'1'">Avenida</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Descripción de Vía</mat-label>
+                                    <input matInput name="relacionadodescripcionVia" id="relacionadodescripcionVia">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Número 1</mat-label>
+                                    <input matInput name="relacionadonumero1" id="relacionadonumero1">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Número 2</mat-label>
+                                    <input matInput name="relacionadonumero2" id="relacionadonumero2">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Letra 1</mat-label>
+                                    <input matInput name="relacionadoletra1" id="relacionadoletra1">
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Letra 2</mat-label>
+                                    <input matInput name="relacionadoletra2" id="relacionadoletra2">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Manzana</mat-label>
+                                    <input matInput name="relacionadomazana" id="relacionadomanzana">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Lote</mat-label>
+                                    <input matInput name="relacionadolote" id="relacionadolote">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Sub Lote</mat-label>
+                                    <input matInput name="relacionadosubLote" id="relacionadosubLote">
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Zona Urbana</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadozonaUrbana" id="relacionadozonaUrbana">
+                                        <mat-option [value]="'1'">Avenida</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput name="relacionadonombreZona" id="relacionadonombreZona">
+                                </mat-form-field>
+                            </div>
+        
+        
+        
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Sub Zona</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadosubZona" id="relacionadosubZona">
+                                        <mat-option [value]="'1'">Avenida</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombre Sub Zona</mat-label>
+                                    <input matInput name="relacionadonombreSubZona" id="relacionadonombreSubZona">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Edificación</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoedificacion" id="relacionadoedificacion">
+                                        <mat-option [value]="'1'">Edificacion</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombre Edificación</mat-label>
+                                    <input matInput name="relacionadonombreEdificacion" id="relacionadonombreEdificacion">
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Interior</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadointerior" id="irelacionadonterior">
+                                        <mat-option [value]="'1'">Interior</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombre Interior</mat-label>
+                                    <input matInput name="relacionadonombreInterior" id="relacionadonombreInterior">
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Piso</mat-label>
+                                    <input matInput name="relacionadopiso" id="relacionadopiso">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Ingreso</mat-label>
+                                    <input matInput name="relacionadoingreso" id="relacionadoingreso">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Km</mat-label>
+                                    <input matInput name="relacionadokm" id="relacionadokm">
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Referencia</mat-label>
+                                    <input matInput name="relacionadoreferencia" id="relacionadoreferencia">
+                                </mat-form-field>
+                            </div>
+        
+        
+                            <div class="col-span-4 sm:col-span-1">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Estado</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="relacionadoestado" id="relacionadoestado">
+                                        <mat-option [value]="'1'">Activo</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+        
+                        </div>
+        
+                    </form>
+
+
+
+
+
+        </mat-expansion-panel>
+
+
+
+
+      
+
+
+        <mat-expansion-panel (opened)="panelCondicion = true" (closed)="panelCondicion = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelCondicion>=true  else elsepanelCondicion">
+                        <p> - Condición</p>
+                    </h2>
+                    <ng-template #elsepanelCondicion>
+                        <p> + Condición </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel (opened)="panelContacto = true" (closed)="panelContacto = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelContacto>=true  else elsepanelContacto">
+                        <p> - Contacto</p>
+                    </h2>
+                    <ng-template #elsepanelContacto>
+                        <p> + Contacto </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelInformacionAdicional = true" (closed)="panelInformacionAdicional = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelInformacionAdicional>=true  else elsepanelInformacionAdicional">
+                        <p> - Información Adicional</p>
+                    </h2>
+                    <ng-template #elsepanelInformacionAdicional>
+                        <p> + Información Adicional </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelSustento = true" (closed)="panelSustento = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelSustento>=true  else elsepanelSustento">
+                        <p> - Sustento</p>
+                    </h2>
+                    <ng-template #elsepanelSustento>
+                        <p> + Sustento </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
 
 </div>
-
-
-

@@ -43,10 +43,8 @@ public todos(): Observable<Contribuyente[]>{
 
  public ver(contribuyenteId:number): Observable<Contribuyente>{
 
-  return this.http.get<Contribuyente>(this.baseEndpoint + '/' + contribuyenteId);
-  //otra forma
-  
-  //return this.http.get<Contribuyente>({this.baseEndpoint}/${id});
+  return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
+
 
 }
 
@@ -60,17 +58,20 @@ public crear(contribuyente:Contribuyente): Observable<Contribuyente>{
 
 public editar(contribuyente:Contribuyente): Observable<Contribuyente>{
 
-   return this.http.put<Contribuyente>(this.baseEndpoint + '/' + contribuyente.contribuyenteId, contribuyente, {headers: this.cabeceras});
+   return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, {headers: this.cabeceras});
 
 }
 
 
 public eliminar(contribuyenteId:number): Observable<void>{  //cuando se elimina no devuelve nada
 
-return this.http.delete<void>(this.baseEndpoint + '/' + contribuyenteId)
+return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
 
 }
 
+public filtrarPorNombre(contribuyente: Contribuyente): Observable<Contribuyente[]>{
+  return this.http.post<Contribuyente[]>(this.baseEndpoint+'/filtrar/',contribuyente, {headers: this.cabeceras});
+}
 
 
 }

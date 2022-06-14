@@ -17,6 +17,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListComponent } from './list.component';
 import { contribuyenteRoutes} from 'app/modules/admin/contribuyente/contribuyente.routing';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     SharedModule,
     FuseAlertModule,
     MatPaginatorModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ]
 })
 export class ContribuyenteModule { }

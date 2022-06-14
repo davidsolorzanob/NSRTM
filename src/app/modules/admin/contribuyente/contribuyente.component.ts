@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Route } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
+
 import Swal from 'sweetalert2';
 
 
@@ -16,13 +17,27 @@ export class ContribuyenteComponent implements OnInit {
 
   error: any;
 
+  contribuyentes: Contribuyente[];
+
+
+  panelContribuyenteOpenState= false;
+  panelDomicilioFiscal=false;
+  panelRelacionado=false;
+  panelCondicion=false;
+  panelContacto=false;
+  panelInformacionAdicional=false;
+  panelSustento;
+  panelOpenState = false;
+
+  
   constructor(private service: ContribuyenteService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      const id: number = +params.get('contribuyenteId');
+      const id: number = +params.get('id');
+      console.log(id + 'nuevo request');
       if(id){
         this.service.ver(id).subscribe(contribuyente => this.contribuyente = contribuyente)
       }
@@ -32,9 +47,9 @@ export class ContribuyenteComponent implements OnInit {
     this.service.crear(this.contribuyente).subscribe({
       next: (contribuyente) => {
         console.log(contribuyente);
-        alert('Contribuyente creado con exito ${contribuyente.nombres}');
-        //Swal.fire('Nuevo:', `Contribuyente ${contribuyente.nombres} creado con éxito`, 'success');
-        this.router.navigate(['/list']);
+       // alert('Contribuyente creado con exito ${contribuyente.nombres}');
+        Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+        this.router.navigate(['../contribuyente/list']);
       }
       , error: (err) => {
         if (err.status === 400) {
@@ -49,12 +64,16 @@ export class ContribuyenteComponent implements OnInit {
     this.service.editar(this.contribuyente).subscribe({
       next: (contribuyente) => {
         console.log(contribuyente);
-        alert('Contribuyente fue editafo con exito ${this.contribuyente.nombres}');
-        //Swal.fire('Nuevo:', `Contribuyente ${contribuyente.nombres} creado con éxito`, 'success');
-        this.router.navigate(['/list']);
+        //alert('Contribuyente fue editado con exito ${this.contribuyente.nombres}');
+        Swal.fire('Editado:', `Contribuyente ${this.contribuyente.nombres} editado con éxito`, 'success');
+        this.router.navigate(['../contribuyente/list']);
       }
       , error: (err) => {
         if (err.status === 400) {
+          this.error = err.error;
+          console.log(this.error);
+        }
+        if (err.status === 500) {
           this.error = err.error;
           console.log(this.error);
         }
