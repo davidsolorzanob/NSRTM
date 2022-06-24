@@ -1,18 +1,38 @@
 export class Contribuyente {
-    contribuyenteId:number;
-    tipoContribuyente: string;
-    numeroDocumento: string;
+    // Contribuyente
+    municipalidadId: number;
+    contribuyenteNumero: number;
+    fechaInscripcion: Date;
+    fechaDJ: Date;
+    numeroDJ: number;
+    personaId: number;
+    tipoPersonaId: number;
+    motivoDjId: number;
+    estadoDjId: number;
+    modalidadOficio: number;
+    tipoMedioDeterminacionId: number;
+    medioDeterminacionId: number;
+    segContribuyenteId: number;
+    fuenteInformacionId: number;
+    clave: string;
+    usuarioCreacion: number;
+    fechaCreacion: Date;
+    terminalCreacion
+    usuarioModificacion: number;
+    fechaModificacion: Date;
+    terminalModificacion: string;
+// Persona
+    docIdentidadId: number;
+    numDocIdentidad: string;
     apellidoPaterno: string;
     apellidoMaterno: string;
     nombres: string;
     razonSocial: string;
-    celular1: string;
-    celular2: string;
-    correoElectronico1: string;
-    correoElectronico2: string;
-    usuarioRegistro: string;
-    fechaRegistro: string;
-    usuarioEdicion: string;
-    fechaEdicion: string;
-    tipoDocumento: string;
+    nombreCompleto: string;
+    fechaNacimiento: string;
+    genero: string;
+    fallecido: number;
+    fechaFallecimiento: Date;
 }
+
+

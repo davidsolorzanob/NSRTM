@@ -1,10 +1,6 @@
 <div class="w-full max-w-9xl">
-    <button class="ml-4" mat-flat-button type="button" [color]="'primary'" routerLink="/contribuyente/list">Ver Lista
-    </button>
-
-
-
-
+    <!-- <button class="ml-4" mat-flat-button type="button" [color]="'primary'" routerLink="/contribuyente/list">Ver Lista
+    </button> -->
 
     <mat-accordion>
 
@@ -65,7 +61,7 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fecha de Declaración</mat-label>
-                            <input matInput name="fechaDeclaracion" id="fechaDeclaracion">
+                            <input matInput name="fechaDeclaracion" name="fechaDeclaracion">
                         </mat-form-field>
                     </div>
 
@@ -74,10 +70,11 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Tipo de Medio</mat-label>
-                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
-                            </mat-icon>
-                            <mat-select name="tipoMedio" id="tipoContribuyente">
-                                <mat-option [value]="'1'">DJ</mat-option>
+                             <mat-select  id="tipoMedioDeterminacionId">
+
+                                <mat-option *ngFor="let mae of maestrosTipoMedio; index as i;" [value]="mae.idMaestro">
+                                    {{mae.descripcion}}
+                                  </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -86,12 +83,14 @@
 
                     <!-- Medio -->
                     <div class="col-span-2 sm:col-span-2">
-                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-form-field appearance="fill">
                             <mat-label>Medio</mat-label>
-                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
-                            </mat-icon>
-                            <mat-select name="medio" id="medio">
-                                <mat-option [value]="'1'">Física</mat-option>
+
+                            <mat-select [(ngModel)]="contribuyente.medioDeterminacionId" name="medioDeterminacionId" id="medioDeterminacionId">
+
+                                <mat-option *ngFor="let mae of maestrosMedio ; index as i;" [value]="mae.idMaestro">
+                                    {{mae.descripcion}}
+                                  </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -138,8 +137,8 @@
                             <mat-label>Tipo de Contribuyente</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)]="contribuyente.tipoContribuyente" name="tipoContribuyente"
-                                id="tipoContribuyente">
+                            <mat-select [(ngModel)]="contribuyente.tipoPersonaId" name="tipoPersonaId"
+                                id="tipoPersonaId">
                                 <mat-option [value]="'1'">Natural</mat-option>
                                 <mat-option [value]="'2'">Juridica</mat-option>
                             </mat-select>
@@ -152,8 +151,8 @@
                             <mat-label>Tipo de Documento</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)]="contribuyente.tipoDocumento" name="tipoDocumento"
-                                id="tipoDocumento">
+                            <mat-select [(ngModel)]="contribuyente.docIdentidadId" name="docIdentidadId"
+                                id="docIdentidadId">
                                 <mat-option [value]="'1'">DNI</mat-option>
                                 <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
                                 <mat-option [value]="'3'">Pasaporte</mat-option>
@@ -168,8 +167,8 @@
                             <mat-label>Número de Documento</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
                             </mat-icon>
-                            <input matInput [(ngModel)]="contribuyente.numeroDocumento" id="numeroDocumento"
-                                name="numeroDocumento">
+                            <input matInput [(ngModel)]="contribuyente.numDocIdentidad" id="numDocIdentidad"
+                                name="numDocIdentidad">
                             <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
                         </mat-form-field>
                     </div>
@@ -178,7 +177,7 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fecha de Presentación</mat-label>
-                            <input matInput name="fechaPresentacion" id="fechaPresentacion">
+                            <input matInput name="fechaInscripcion" id="fechaInscripcion">
                         </mat-form-field>
                     </div>
 
@@ -196,7 +195,7 @@
                             <mat-label>Estado</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
                             </mat-icon>
-                            <input matInput id="estado" name="estado">
+                            <input matInput id="estadoDjId" name="estadoDjId">
                             <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
                         </mat-form-field>
                     </div>
@@ -244,7 +243,7 @@
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fallecio</mat-label>
-                            <mat-select name="fallecio" id="fallecio">
+                            <mat-select name="fallecido" id="fallecido">
                                 <mat-option [value]="'1'">Sí</mat-option>
                                 <mat-option [value]="'2'">No</mat-option>
                             </mat-select>
@@ -274,11 +273,9 @@
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Segmentación</mat-label>
-                            <input matInput name="segmentacion" id="segmentacion">
+                            <input matInput name="segContribuyenteId" id="segContribuyenteId">
                         </mat-form-field>
                     </div>
-
-
 
 
                 </div>
@@ -291,7 +288,7 @@
                         Cancelar
                     </button> -->
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>
@@ -377,8 +374,6 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-
-
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -590,7 +585,7 @@
                 <!-- Actions -->
                 <div class="flex items-center justify-end">
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteId? editar(): crear()">{{ contribuyente.contribuyenteId?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>
@@ -998,6 +993,23 @@
                     </div>
 
 
+
+
+                </div>
+
+
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
+                                 Cancelar
+                             </button> -->
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        'Siguiente': 'Siguiente'}}
+                    </button>
                 </div>
 
             </form>
@@ -1032,108 +1044,128 @@
 
 
             </mat-expansion-panel-header>
-            <div class="grid grid-cols-12 gap-4 w-full mt-12">
 
-                <div class="col-span-4 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Condición del Contribuyente</mat-label>
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
-                        </mat-icon>
-                        <mat-select name="condicionContribuyente" id="condicionContribuyente">
-                            <mat-option [value]="'1'">Activo</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+            <form class="flex flex-col w-full form-container">
+                <div class="grid grid-cols-12 gap-4 w-full mt-12">
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Condición del Contribuyente</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="condicionContribuyente" id="condicionContribuyente">
+                                <mat-option [value]="'1'">Activo</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Descripción de documento</mat-label>
+                            <input matInput name="descripcionDocumento" id="descripcionDocumento">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>N° de Resolución </mat-label>
+                            <input matInput name="numeroResolucion" id="numeroResolucion">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+
+                        <mat-form-field>
+                            <mat-label>Fecha del Documento</mat-label>
+                            <input matInput [matDatepicker]="fechaDocumento">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaDocumento"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaDocumento></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-2">
+
+                        <mat-form-field>
+                            <mat-label>Fecha del Inicio</mat-label>
+                            <input matInput [matDatepicker]="fechaInicio">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaInicio></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>N° de Expediente Administrativo </mat-label>
+                            <input matInput name="expedienteAdministrativo" id="expedienteAdministrativo">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>N° de Expediente Administrativo </mat-label>
+                            <input matInput name="expedienteAdministrativo" id="expedienteAdministrativo">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Fecha de Expediente</mat-label>
+                            <input matInput [matDatepicker]="fechaExpediente">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaExpediente"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaExpediente></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Remuneración mensual </mat-label>
+
+                            <input matInput name="remuneracionMensual" id="remuneracionMensual">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Resolución de Alcaldía </mat-label>
+                            <input matInput name="resolucionAlcaldia" id="resolucionAlcaldia">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Fecha de Resolución </mat-label>
+                            <input matInput [matDatepicker]="fechaResolucion">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaResolucion"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaResolucion></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+
                 </div>
 
 
-                <div class="col-span-1 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Descripción de documento</mat-label>
-                        <input matInput name="descripcionDocumento" id="descripcionDocumento">
-                    </mat-form-field>
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
+                                 Cancelar
+                             </button> -->
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        'Siguiente': 'Siguiente'}}
+                    </button>
                 </div>
 
-
-                <div class="col-span-2 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>N° de Resolución </mat-label>
-                        <input matInput name="numeroResolucion" id="numeroResolucion">
-                    </mat-form-field>
-                </div>
-
-                <div class="col-span-2 sm:col-span-2">
-
-                    <mat-form-field >
-                        <mat-label>Fecha del Documento</mat-label>
-                        <input matInput [matDatepicker]="fechaDocumento">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="fechaDocumento"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaDocumento></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-
-                <div class="col-span-2 sm:col-span-2">
-
-                    <mat-form-field >
-                        <mat-label>Fecha del Inicio</mat-label>
-                        <input matInput [matDatepicker]="fechaInicio">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaInicio></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-
-                <div class="col-span-2 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>N° de Expediente Administrativo </mat-label>
-                        <input matInput name="expedienteAdministrativo" id="expedienteAdministrativo">
-                    </mat-form-field>
-                </div>
-
-                <div class="col-span-2 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>N° de Expediente Administrativo </mat-label>
-                        <input matInput name="expedienteAdministrativo" id="expedienteAdministrativo">
-                    </mat-form-field>
-                </div>
-
-                <div class="col-span-2 sm:col-span-2">
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Fecha de Expediente</mat-label>
-                        <input matInput [matDatepicker]="fechaExpediente">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="fechaExpediente"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaExpediente></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-                <div class="col-span-1 sm:col-span-2">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Remuneración mensual </mat-label>
-                        <input matInput name="remuneracionMensual" id="remuneracionMensual">
-                    </mat-form-field>
-                </div>
-                <div class="col-span-2 sm:col-span-4">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Resolución de Alcaldía </mat-label>
-                        <input matInput name="resolucionAlcaldia" id="resolucionAlcaldia">
-                    </mat-form-field>
-                </div>
-                <div class="col-span-2 sm:col-span-4">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Fecha de Resolución </mat-label>
-                        <input matInput [matDatepicker]="fechaResolucion">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="fechaResolucion"></mat-datepicker-toggle>
-                        <mat-datepicker #fechaResolucion></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-
-            </div>
+            </form>
         </mat-expansion-panel>
 
 
@@ -1148,11 +1180,71 @@
                     </ng-template>
                 </mat-panel-title>
                 <mat-panel-description>
-
-
-
                 </mat-panel-description>
             </mat-expansion-panel-header>
+
+
+            <form class="flex flex-col w-full form-container">
+                <div class="grid grid-cols-12 gap-4 w-full mt-12">
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Contacto</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoContacto" id="tipoContacto">
+                                <mat-option [value]="'1'">Familiar</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Medio de Contacto</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="medioContacto" id="medioContacto">
+                                <mat-option [value]="'1'">Familiar</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Detalle </mat-label>
+                            <input matInput name="detalleContacto" id="detalleContacto">
+                        </mat-form-field>
+
+
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <br>
+                        <br>
+                        <mat-checkbox class="fuse-mat-no-subscript w-full">
+                            <mat-label>Principal </mat-label>
+                        </mat-checkbox>
+                    </div>
+
+
+                </div>
+
+                <!-- Divider -->
+                <div class="mt-11 mb-10 border-t"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
+                       Cancelar
+                   </button> -->
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        'Siguiente': 'Siguiente'}}
+                    </button>
+                </div>
+            </form>
+
         </mat-expansion-panel>
 
         <mat-expansion-panel (opened)="panelInformacionAdicional = true" (closed)="panelInformacionAdicional = false">

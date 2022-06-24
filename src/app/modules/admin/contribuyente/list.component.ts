@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     // this.service.todos().subscribe(contribuyentes=>{
     //   this.contribuyentes = contribuyentes;
-    // });     
+    // });
     this.calcularRangos();
 
 
@@ -83,7 +83,7 @@ export class ListComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.eliminar(contribuyente.contribuyenteId).subscribe(() => {
+        this.service.eliminar(contribuyente.contribuyenteNumero).subscribe(() => {
           this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
         })
         Swal.fire(

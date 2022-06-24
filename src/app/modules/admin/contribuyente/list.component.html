@@ -198,9 +198,9 @@
                             Apellidos y Nombres
                         </div>
 
-                        <div class="hidden sm:block">
+                        <!-- <div class="hidden sm:block">
                             Documento
-                        </div>
+                        </div> -->
 
 
                         <div class="hidden sm:block">
@@ -235,7 +235,7 @@
 
                                 <!-- SKU -->
                                 <div>
-                                    {{contribuyente.contribuyenteId}}
+                                    {{contribuyente.contribuyenteNumero}}
                                 </div>
 
 
@@ -244,10 +244,10 @@
                                     {{contribuyente.apellidoPaterno + ' ' + contribuyente.apellidoMaterno + ' ' +
                                     contribuyente.nombres}}
                                 </div>
-                                <!-- SKU -->
+                                <!-- SKU
                                 <div class="hidden sm:block truncate">
                                     {{contribuyente.tipoDocumento}}
-                                </div>
+                                </div> -->
                                 <!-- SKU -->
                                 <div class="hidden sm:block truncate">
                                     {{contribuyente.numeroDocumento}}
@@ -258,23 +258,14 @@
                                 </div>
 
 
-                                <!-- SKU -->
-                                <div class="hidden sm:block truncate">
-                                    {{contribuyente.celular1}}
-                                </div>
 
-
-                                <!-- SKU -->
-                                <div class=" hidden sm:block truncate">
-                                    {{contribuyente.celular2}}
-                                </div>
                                 <!-- SKU -->
                                 <div>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"
-                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteId]">
+                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]">
                                     </mat-icon>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:pencil'"
-                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteId]"
+                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]"
                                         routerLinkActive="router-link-active">
                                     </mat-icon>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:trash'"
