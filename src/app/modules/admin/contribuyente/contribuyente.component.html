@@ -72,7 +72,7 @@
                             <mat-label>Tipo de Medio</mat-label>
                              <mat-select  id="tipoMedioDeterminacionId">
 
-                                <mat-option *ngFor="let mae of maestrosTipoMedio" [ngValue]="mae.idMaestro">
+                                <mat-option *ngFor="let mae of maestrosTipoMedio" [value]="'mae.idMaestro'">
                                     {{mae.descripcion}}
                                   </mat-option>
                             </mat-select>
@@ -83,12 +83,12 @@
 
                     <!-- Medio -->
                     <div class="col-span-2 sm:col-span-2">
-                        <mat-form-field appearance="fill">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Medio</mat-label>
 
                             <mat-select [(ngModel)]="contribuyente.medioDeterminacionId" name="medioDeterminacionId" id="medioDeterminacionId">
 
-                                <mat-option *ngFor="let mae of maestrosMedio" [ngValue]="mae.idMaestro">
+                                <mat-option *ngFor="let mae of maestrosMedio" [value]="'mae.idMaestro'">
                                     {{mae.descripcion}}
                                   </mat-option>
                             </mat-select>
@@ -102,21 +102,23 @@
                             <mat-label>Motivo</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="motivo" id="motivo">
-                                <mat-option [value]="'1'">Inscripción</mat-option>
+                            <mat-select [(ngModel)]="contribuyente.motivoDjId" name="motivoDjId" id="motivoDjId">
+                                <mat-option *ngFor = "let mae of maestrosMotivo" [value]="'mae.idMaestro'">{{mae.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
 
 
-                    <!-- Motivo -->
+                    <!-- Modalidad Oficio -->
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Modalidad de Oficio</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="motivo" id="modalidadOficio">
-                                <mat-option [value]="'1'">Error Material</mat-option>
+                            <mat-select [(ngModel)] = "contribuyente.modalidadOficio" name="modalidadOficio" id="modalidadOficio">
+                                <mat-option *ngFor="let mae of maestrosModalidadOficio" [value]="'mae.idMaestro'">
+                                    {{mae.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
