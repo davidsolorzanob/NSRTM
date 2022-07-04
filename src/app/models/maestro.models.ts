@@ -1,6 +1,7 @@
 export class Maestro {
-  idMaestro: number;
+  maestroId: number;
   descripcion: string;
   abreviatura: string;
-
+  maestroSecundarioId: string;
+  descripcionSecundario: string;
 }

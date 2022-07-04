@@ -44,10 +44,10 @@ export class ListComponent implements OnInit {
   constructor(private service: ContribuyenteService) { }
 
   ngOnInit() {
-    // this.service.todos().subscribe(contribuyentes=>{
-    //   this.contribuyentes = contribuyentes;
-    // });
-    this.calcularRangos();
+     this.service.todos().subscribe(contribuyentes=>{
+       this.contribuyentes = contribuyentes;
+     });
+   // this.calcularRangos();
 
 
   }

@@ -124,14 +124,7 @@
                     </div>
                 </div>
 
-
-
                 <div class="grid grid-cols-12 gap-6 w-full mt-8">
-
-
-
-
-
 
                     <!-- Contribuyente -->
                     <div class="col-span-2 sm:col-span-2">
@@ -141,12 +134,12 @@
                             </mat-icon>
                             <mat-select [(ngModel)]="contribuyente.tipoPersonaId" name="tipoPersonaId"
                                 id="tipoPersonaId">
-                                <mat-option [value]="'1'">Natural</mat-option>
-                                <mat-option [value]="'2'">Juridica</mat-option>
+                                <mat-option *ngFor="let mae of maestrosTipoContribuyente"
+                                [value]="'mae.maestroId'">{{mae.descripcion}}</mat-option>
+
                             </mat-select>
                         </mat-form-field>
                     </div>
-
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -155,13 +148,11 @@
                             </mat-icon>
                             <mat-select [(ngModel)]="contribuyente.docIdentidadId" name="docIdentidadId"
                                 id="docIdentidadId">
-                                <mat-option [value]="'1'">DNI</mat-option>
-                                <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
-                                <mat-option [value]="'3'">Pasaporte</mat-option>
+                                <mat-option *ngFor="let mae of maestrosTipoDocumento"
+                                [value]="'mae.idMaestro'">{{mae.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-
 
                     <!-- Numero de documento -->
                     <div class="col-span-2 sm:col-span-2">
@@ -179,17 +170,22 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fecha de Presentación</mat-label>
-                            <input matInput name="fechaInscripcion" id="fechaInscripcion">
+                            <input matInput [matDatepicker]="fechaInscripcion">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaInscripcion"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaInscripcion></mat-datepicker>
                         </mat-form-field>
                     </div>
 
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fecha de Nacimiento</mat-label>
-                            <input matInput name="fechaNacimiento" id="fechaNacimiento">
+                            <input matInput [matDatepicker]="fechaNacimiento">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaNacimiento></mat-datepicker>
                         </mat-form-field>
                     </div>
-
 
                     <!-- Estado -->
                     <div class="col-span-2 sm:col-span-2">

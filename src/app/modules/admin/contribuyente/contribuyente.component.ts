@@ -28,7 +28,7 @@ export class ContribuyenteComponent implements OnInit {
     maestrosMotivo: Maestro[] = [];
     maestrosModalidadOficio: Maestro[] = [];
     maestrosTipoContribuyente: Maestro[] = [];
-    maestrosTipodocumento: Maestro[] = [];
+    maestrosTipoDocumento: Maestro[] = [];
 
     //Domicilio
 
@@ -77,12 +77,12 @@ export class ContribuyenteComponent implements OnInit {
 
     ngAfterViewInit() {
 
-        this.maestroGenerico(3,'maestrosMedio');
-        this.maestroGenerico(2,'maestrosTipoMedio');
-        this.maestroGenerico(4,'maestrosMotivo');
-        this.maestroGenerico(12,'maestrosModalidadOficio');
-        this.maestroGenerico(14,'maestrosTipoContribuyente');
-        this.maestroGenerico(1,'maestrosTipoDocumento');
+        this.maestroGenerico(3, 'maestrosMedio');
+        this.maestroGenerico(2, 'maestrosTipoMedio');
+        this.maestroGenerico(4, 'maestrosMotivo');
+        this.maestroGenerico(12, 'maestrosModalidadOficio');
+        this.maestroGenerico(14, 'maestrosTipoContribuyente');
+        this.maestroGenerico(1, 'maestrosTipoDocumento');
 
     }
 
@@ -125,74 +125,40 @@ export class ContribuyenteComponent implements OnInit {
         });
     }
 
-    cargaTipoMedio() {
-
-        this.serviceMaestro.ver(2)
-            .subscribe({
-                next: (res: any) => {
-                    console.log('TIPO DE MEDIO', res);
-                    this.maestrosTipoMedio = res;
-                },
-                error: (error) => {
-                    console.error('Error: ' + error);
-                },
-                complete: () => {
-                    console.log('completo la recuperaciónb del Tipo de Medio');
-                }
-            });
-    }
-
-
-    cargaMedio() {
-
-        this.serviceMaestro.ver(3)
-            .subscribe({
-                next: (res: any) => {
-                    console.log('MEDIO', res);
-                    this.maestrosMedio = res;
-                },
-                error: (error) => {
-                    console.error('Error: ' + error);
-                },
-                complete: () => {
-                    console.log('completo la recuperación de Medio');
-                }
-            });
-    }
 
 
 
-    maestroGenerico(tipo:number, matriz: string) {
+    maestroGenerico(tipo: number, matriz: string) {
 
         this.serviceMaestro.ver(tipo)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
-                   // matriz = res;
-                    if(matriz == 'maestrosTipoMedio')
-                    {
+                    // matriz = res;
+                    if (matriz == 'maestrosTipoMedio') {
                         console.log(matriz);
                         this.maestrosTipoMedio = res;
                     }
-                    if(matriz == 'maestrosMedio')
-                    {
+                    if (matriz == 'maestrosMedio') {
                         console.log(matriz);
                         this.maestrosMedio = res;
                     }
-                    if(matriz == 'maestrosMotivo')
-                    {
+                    if (matriz == 'maestrosMotivo') {
                         console.log(matriz);
                         this.maestrosMotivo = res;
                     }
-                    if(matriz == 'maestrosModalidadOficio')
-                    {
+                    if (matriz == 'maestrosModalidadOficio') {
                         console.log(matriz);
                         this.maestrosModalidadOficio = res;
                     }
-
-
-
-
+                    if (matriz == 'maestrosTipoDocumento') {
+                        console.log(matriz);
+                        this.maestrosTipoDocumento = res;
+                    }
+                    if (matriz == 'maestrosTipoContribuyente') {
+                        console.log(matriz);
+                        this.maestrosTipoContribuyente = res;
+                    }
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
