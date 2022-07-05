@@ -28,7 +28,7 @@
 
 
                 <!-- Form -->
-            <form class="flex flex-col w-full form-container">
+            <form [formGroup]="registerForm" (ngSubmit)="guardar()" class="flex flex-col w-full form-container">
 
 
                 <!-- Divider -->
@@ -46,7 +46,7 @@
                     <div class="col-span-2 sm:col-span-1">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Cod. Contribuyente</mat-label>
-                            <input matInput name="codContribuyente" id="codContribuyente">
+                            <input matInput name="codContribuyente" id="codContribuyente" [disabled]="true">
                         </mat-form-field>
                     </div>
 
@@ -61,7 +61,7 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Fecha de Declaración</mat-label>
-                            <input matInput name="fechaDeclaracion" name="fechaDeclaracion">
+                            <input matInput name="fechaDeclaracion" name="fechaDeclaracion" [disabled]="'disabled'">
                         </mat-form-field>
                     </div>
 
@@ -70,27 +70,25 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Tipo de Medio</mat-label>
-                             <mat-select  id="tipoMedioDeterminacionId">
-
+                            <mat-select id="tipoMedioDeterminacionId" name="tipoMedioDeterminacionId">
+                                <mat-option>-- Seleccionar Tipo de Medio Determinación --</mat-option>
                                 <mat-option *ngFor="let mae of maestrosTipoMedio" [value]="'mae.idMaestro'">
                                     {{mae.descripcion}}
-                                  </mat-option>
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-
 
 
                     <!-- Medio -->
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Medio</mat-label>
-
-                            <mat-select [(ngModel)]="contribuyente.medioDeterminacionId" name="medioDeterminacionId" id="medioDeterminacionId">
-
+                            <mat-select name="medioDeterminacionId" id="medioDeterminacionId">
+                                <mat-option> -- Seleccionar Medio --</mat-option>
                                 <mat-option *ngFor="let mae of maestrosMedio" [value]="'mae.idMaestro'">
                                     {{mae.descripcion}}
-                                  </mat-option>
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -102,8 +100,9 @@
                             <mat-label>Motivo</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)]="contribuyente.motivoDjId" name="motivoDjId" id="motivoDjId">
-                                <mat-option *ngFor = "let mae of maestrosMotivo" [value]="'mae.idMaestro'">{{mae.descripcion}}</mat-option>
+                            <mat-select name="motivoDjId" id="motivoDjId">
+                                <mat-option *ngFor="let mae of maestrosMotivo" [value]="'mae.idMaestro'">
+                                    {{mae.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -115,7 +114,7 @@
                             <mat-label>Modalidad de Oficio</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)] = "contribuyente.modalidadOficio" name="modalidadOficio" id="modalidadOficio">
+                            <mat-select name="modalidadOficio" id="modalidadOficio">
                                 <mat-option *ngFor="let mae of maestrosModalidadOficio" [value]="'mae.idMaestro'">
                                     {{mae.descripcion}}
                                 </mat-option>
@@ -132,10 +131,9 @@
                             <mat-label>Tipo de Contribuyente</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)]="contribuyente.tipoPersonaId" name="tipoPersonaId"
-                                id="tipoPersonaId">
-                                <mat-option *ngFor="let mae of maestrosTipoContribuyente"
-                                [value]="'mae.maestroId'">{{mae.descripcion}}</mat-option>
+                            <mat-select name="tipoPersonaId" id="tipoPersonaId">
+                                <mat-option *ngFor="let mae of maestrosTipoContribuyente" [value]="'mae.maestroId'">
+                                    {{mae.descripcion}}</mat-option>
 
                             </mat-select>
                         </mat-form-field>
@@ -146,10 +144,9 @@
                             <mat-label>Tipo de Documento</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select [(ngModel)]="contribuyente.docIdentidadId" name="docIdentidadId"
-                                id="docIdentidadId">
-                                <mat-option *ngFor="let mae of maestrosTipoDocumento"
-                                [value]="'mae.idMaestro'">{{mae.descripcion}}</mat-option>
+                            <mat-select name="docIdentidadId" formControlName="docIdentidadId" id="docIdentidadId">
+                                <mat-option *ngFor="let mae of maestrosTipoDocumento" [value]="'mae.idMaestro'">
+                                    {{mae.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -160,7 +157,7 @@
                             <mat-label>Número de Documento</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
                             </mat-icon>
-                            <input matInput [(ngModel)]="contribuyente.numDocIdentidad" id="numDocIdentidad"
+                            <input matInput id="numDocIdentidad" formControlName="numDocIdentidad"
                                 name="numDocIdentidad">
                             <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
                         </mat-form-field>
@@ -169,9 +166,9 @@
 
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Fecha de Presentación</mat-label>
+                            <mat-label>Fecha de Presentación </mat-label>
                             <input matInput [matDatepicker]="fechaInscripcion">
-                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-hint>DD/MM/YYYY </mat-hint>
                             <mat-datepicker-toggle matSuffix [for]="fechaInscripcion"></mat-datepicker-toggle>
                             <mat-datepicker #fechaInscripcion></mat-datepicker>
                         </mat-form-field>
@@ -202,8 +199,8 @@
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput [(ngModel)]="contribuyente.apellidoPaterno" name="apellidoPaterno"
-                                id="apellidoPaterno">
+                            <input matInput name="apellidoPaterno" id="apellidoPaterno"
+                                formControlName="apellidoPaterno">
                         </mat-form-field>
                     </div>
 
@@ -211,8 +208,8 @@
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput [(ngModel)]="contribuyente.apellidoMaterno" name="apellidoMaterno"
-                                id="apellidoMaterno">
+                            <input matInput name="apellidoMaterno" id="apellidoMaterno"
+                                formControlName="apellidoMaterno">
                         </mat-form-field>
                     </div>
 
@@ -220,7 +217,7 @@
                     <div class="col-span-6 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Nombres</mat-label>
-                            <input matInput [(ngModel)]="contribuyente.nombres" name="nombres" id="nombres">
+                            <input matInput name="nombres" id="nombres" formControlName="nombres">
                         </mat-form-field>
                     </div>
 
@@ -262,7 +259,7 @@
                     <div class="col-span-4 sm:col-span-4">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Razon Social</mat-label>
-                            <input matInput [(ngModel)]="contribuyente.razonSocial" name="razonSocial" id="razonSocial">
+                            <input matInput name="razonSocial" id="razonSocial">
                         </mat-form-field>
                     </div>
 
@@ -285,10 +282,14 @@
                     <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
                         Cancelar
                     </button> -->
-                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
-                        'Siguiente': 'Siguiente'}}
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'" type="submit">Guardar
                     </button>
+
+                    <!--<button class="ml-4" mat-flat-button type="button" [color]="'primary'" [disabled]="registerForm.invalid" type="submit" class="px-6 ml-3"></button>
+
+                          (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        'Siguiente': 'Siguiente'}} -->
+                    -->
                 </div>
             </form>
 
@@ -583,7 +584,8 @@
                 <!-- Actions -->
                 <div class="flex items-center justify-end">
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{
+                        contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>
@@ -1005,7 +1007,8 @@
                                  Cancelar
                              </button> -->
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{
+                        contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>
@@ -1158,7 +1161,8 @@
                                  Cancelar
                              </button> -->
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{
+                        contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>
@@ -1237,7 +1241,8 @@
                        Cancelar
                    </button> -->
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
-                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{ contribuyente.contribuyenteNumero?
+                        (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{
+                        contribuyente.contribuyenteNumero?
                         'Siguiente': 'Siguiente'}}
                     </button>
                 </div>

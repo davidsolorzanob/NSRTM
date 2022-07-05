@@ -15,6 +15,7 @@ export class Contribuyente {
     segContribuyenteId: number;
     fuenteInformacionId: number;
     clave: string;
+ // Auditoria
     usuarioCreacion: number;
     fechaCreacion: Date;
     terminalCreacion

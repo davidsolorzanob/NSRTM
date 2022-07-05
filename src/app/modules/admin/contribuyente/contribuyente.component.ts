@@ -5,6 +5,13 @@ import { Maestro } from 'app/models/maestro.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { MaestroService } from 'app/services/maestro.service';
 import Swal from 'sweetalert2';
+import * as _moment from 'moment';
+// tslint:disable-next-line:no-duplicate-imports
+import { default as _rollupMoment } from 'moment';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs';
+
+const moment = _rollupMoment || _moment;
 
 @Component({
     selector: 'app-contribuyente',
@@ -22,7 +29,6 @@ export class ContribuyenteComponent implements OnInit {
     error: any;
 
     contribuyentes: Contribuyente[];
-
     maestrosTipoMedio: Maestro[] = [];
     maestrosMedio: Maestro[] = [];
     maestrosMotivo: Maestro[] = [];
@@ -57,10 +63,24 @@ export class ContribuyenteComponent implements OnInit {
     panelSustento;
     panelOpenState = false;
 
+    todayDate: Date = new Date();
+    date = new FormControl(moment([2017, 0, 1]));
+    public registerForm!: FormGroup;
+
+    isAddMode!: boolean;
+    loading = false;
+    submitted = false;
+    //     myDate = new Date();
+    // constructor(private datePipe: DatePipe){
+    //     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+    // }
 
     constructor(private service: ContribuyenteService,
         private router: Router,
-        private route: ActivatedRoute, private serviceMaestro: MaestroService) { }
+        private route: ActivatedRoute, private serviceMaestro: MaestroService,
+        private formBuilder: FormBuilder) {
+
+    }
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
@@ -68,11 +88,32 @@ export class ContribuyenteComponent implements OnInit {
             console.log(id + 'nuevo request');
             if (id) {
                 this.service.ver(id).subscribe(contribuyente => this.contribuyente = contribuyente);
-
-
             }
-
         })
+
+        this.registerForm = this.formBuilder.group({
+            codContribuyente: [''],
+            nroDeclaracion: [''],
+            fechaDeclaracion: [''],
+            tipoMedioDeterminacionId: [''],
+            medioDeterminacionId: [''],
+            motivoDjId: [''],
+            modalidadOficio: [''],
+            tipoPersonaId: [''],
+            docIdentidadId: ['', [Validators.required]],
+            numDocIdentidad: ['', [Validators.required, Validators.pattern('[0-9]{8}')]],
+            fechaInscripcion: [''],
+            fechaNacimiento: [''],
+            estadoDjId: [''],
+            apellidoPaterno: this.formBuilder.control('', Validators.required),
+            apellidoMaterno: ['', [Validators.required]],
+            nombres: ['', [Validators.required]],
+            estadoCivil: [''],
+            fallecido: [''],
+            fechaFallecimiento: [''],
+            razonSocial: [''],
+            segContribuyenteId: [''],
+        });
     }
 
     ngAfterViewInit() {
@@ -87,8 +128,43 @@ export class ContribuyenteComponent implements OnInit {
     }
 
 
+    onSubmit() {
+
+        console.log('envio');
+    }
+
     public crear(): void {
         this.service.crear(this.contribuyente).subscribe({
+            next: (contribuyente) => {
+                console.log(contribuyente);
+                // alert('Contribuyente creado con exito ${contribuyente.nombres}');
+                Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+                this.router.navigate(['../contribuyente/list']);
+            }
+            , error: (err) => {
+                if (err.status === 400) {
+                    this.error = err.error;
+                    console.log(this.error);
+                }
+            }
+        });
+    }
+
+    // private createContribuyente() {
+    //     this.service.guardar(this.registerForm.value)
+    //       .pipe(first())
+    //       .subscribe(() => {
+    //         Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+    //         this.router.navigate(['../contribuyente/list']);
+    //         //this.mostrarSnakbar('Registro se ha creado satisfactoriamente..!')
+    //         //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
+    //       })
+    //       .add(() => this.loading = false);
+    //   }
+
+    public guardar(): void {
+        console.log('llego');
+        this.service.guardar(this.contribuyente).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');

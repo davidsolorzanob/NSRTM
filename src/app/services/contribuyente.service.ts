@@ -37,10 +37,12 @@ public todos(): Observable<Contribuyente[]>{
 
 public crear(contribuyente:Contribuyente): Observable<Contribuyente>{
 //enviar un body
-
  return this.http.post<Contribuyente>(this.baseEndpoint+'/crear', contribuyente, {headers: this.cabeceras});
-
 }
+public guardar(contribuyente:Contribuyente): Observable<Contribuyente>{
+    //enviar un body
+     return this.http.post<Contribuyente>(this.baseEndpoint+'/guardar', contribuyente, {headers: this.cabeceras});
+    }
 public editar(contribuyente:Contribuyente): Observable<Contribuyente>{
 
    return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, {headers: this.cabeceras});
