@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contribuyente } from 'app/models/contribuyente.models';
+import { Domicilio } from 'app/models/domicilio.models';
+import { Relacionado } from 'app/models/relacionado.models';
+import { Condicion } from 'app/models/condicion.models';
 import { Maestro } from 'app/models/maestro.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
+
 import { MaestroService } from 'app/services/maestro.service';
 import Swal from 'sweetalert2';
 import * as _moment from 'moment';
@@ -24,6 +28,9 @@ const moment = _rollupMoment || _moment;
 export class ContribuyenteComponent implements OnInit {
 
     contribuyente: Contribuyente = new Contribuyente();
+    domicilio: Domicilio = new Domicilio();
+    relacionado: Relacionado = new Relacionado();
+    condicion: Condicion = new Condicion();
     maestro: Maestro = new Maestro();
 
     error: any;
@@ -65,7 +72,12 @@ export class ContribuyenteComponent implements OnInit {
 
     todayDate: Date = new Date();
     date = new FormControl(moment([2017, 0, 1]));
-    public registerForm!: FormGroup;
+    public registerFormContribuyente!: FormGroup;
+    public registerFormContribuyenteDomicilio!: FormGroup;
+    public registerFormContribuyenteRelacionado!: FormGroup;
+    public registerFormContribuyenteCondicion!: FormGroup;
+    public registerFormContribuyenteContacto!: FormGroup;
+
 
     isAddMode!: boolean;
     loading = false;
@@ -91,15 +103,15 @@ export class ContribuyenteComponent implements OnInit {
             }
         })
 
-        this.registerForm = this.formBuilder.group({
+        this.registerFormContribuyente = this.formBuilder.group({
             codContribuyente: [''],
             nroDeclaracion: [''],
             fechaDeclaracion: [''],
-            tipoMedioDeterminacionId: [''],
-            medioDeterminacionId: [''],
-            motivoDjId: [''],
+            tipoMedioDeterminacionId: ['', [Validators.required]],
+            medioDeterminacionId: ['', [Validators.required]],
+            motivoDjId: ['', [Validators.required]],
             modalidadOficio: [''],
-            tipoPersonaId: [''],
+            tipoPersonaId: ['', [Validators.required]],
             docIdentidadId: ['', [Validators.required]],
             numDocIdentidad: ['', [Validators.required, Validators.pattern('[0-9]{8}')]],
             fechaInscripcion: [''],
@@ -109,30 +121,85 @@ export class ContribuyenteComponent implements OnInit {
             apellidoMaterno: ['', [Validators.required]],
             nombres: ['', [Validators.required]],
             estadoCivil: [''],
-            fallecido: [''],
+            fallecido: ['', [Validators.required]],
             fechaFallecimiento: [''],
             razonSocial: [''],
             segContribuyenteId: [''],
         });
+
+
+        // this.registerFormContribuyenteDomicilio = this.formBuilder.group({
+
+
+        //     contribuyenteId: ['', [Validators.required]],
+        //     contribuyenteDomicilioId: ['', [Validators.required]],
+        //     departamento: ['', [Validators.required]],
+        //     provincia: ['', [Validators.required]],
+        //     distrito: ['', [Validators.required]],
+        //     tipoDomicilio: ['', [Validators.required]],
+        //     tipoHabilitacion: ['', [Validators.required]],
+        //     nombreHabilitacion: ['', [Validators.required]],
+        //     tipoVia: ['', [Validators.required]],
+        //     nombreVia: ['', [Validators.required]],
+        //     numeroMunicipal: ['', [Validators.required]],
+        //     loteUrbano: ['', [Validators.required]],
+        //     numeroAlterno: ['', [Validators.required]],
+        //     manzanaUrbana: ['', [Validators.required]],
+        //     block: ['', [Validators.required]],
+        //     numeroDpto: ['', [Validators.required]],
+        //     interior: ['', [Validators.required]],
+        //     cuadra: ['', [Validators.required]],
+        //     kilometro: ['', [Validators.required]],
+        //     referencia: ['', [Validators.required]],
+        //     telefono: ['', [Validators.required]],
+        //     usuarioRegistro: ['', [Validators.required]],
+        //     fechaRegistro: ['', [Validators.required]],
+        //     usuarioEdicion: ['', [Validators.required]],
+        //     fechaEdicion: ['', [Validators.required]],
+
+        // })
+
+        // this.registerFormContribuyenteRelacionado = this.formBuilder.group({
+
+        //     contribuyenteId: ['', [Validators.required]],
+        //     contribuyenteDomicilioId: ['', [Validators.required]],
+        //     departamento: ['', [Validators.required]],
+        //     provincia: ['', [Validators.required]],
+        //     distrito: ['', [Validators.required]],
+        //     tipoDomicilio: ['', [Validators.required]],
+        //     tipoHabilitacion: ['', [Validators.required]],
+        //     nombreHabilitacion: ['', [Validators.required]],
+        //     tipoVia: ['', [Validators.required]],
+        //     nombreVia: ['', [Validators.required]],
+        //     numeroMunicipal: ['', [Validators.required]],
+        //     loteUrbano: ['', [Validators.required]],
+        //     numeroAlterno: ['', [Validators.required]],
+        //     manzanaUrbana: ['', [Validators.required]],
+        //     block: ['', [Validators.required]],
+        //     numeroDpto: ['', [Validators.required]],
+        //     interior: ['', [Validators.required]],
+        //     cuadra: ['', [Validators.required]],
+        //     kilometro: ['', [Validators.required]],
+        //     referencia: ['', [Validators.required]],
+        //     telefono: ['', [Validators.required]],
+        //     usuarioRegistro: ['', [Validators.required]],
+        //     fechaRegistro: ['', [Validators.required]],
+        //     usuarioEdicion: ['', [Validators.required]],
+        //     fechaEdicion: ['', [Validators.required]],
+        // }
+        // )
     }
-
     ngAfterViewInit() {
-
         this.maestroGenerico(3, 'maestrosMedio');
         this.maestroGenerico(2, 'maestrosTipoMedio');
         this.maestroGenerico(4, 'maestrosMotivo');
         this.maestroGenerico(12, 'maestrosModalidadOficio');
         this.maestroGenerico(14, 'maestrosTipoContribuyente');
         this.maestroGenerico(1, 'maestrosTipoDocumento');
-
     }
-
-
     onSubmit() {
-
         console.log('envio');
     }
-
     public crear(): void {
         this.service.crear(this.contribuyente).subscribe({
             next: (contribuyente) => {
@@ -161,6 +228,20 @@ export class ContribuyenteComponent implements OnInit {
     //       })
     //       .add(() => this.loading = false);
     //   }
+
+
+    createContribuyente() {
+        console.log(this.registerFormContribuyente.value);
+        this.service.guardar(this.registerFormContribuyente.value)
+            .pipe(first())
+            .subscribe(() => {
+                Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+                this.router.navigate(['../contribuyente/list']);
+                // this.mostrarSnakbar('Registro se ha creado satisfactoriamente..!')
+                //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
+            })
+            .add(() => this.loading = false);
+    }
 
     public guardar(): void {
         console.log('llego');
