@@ -9,13 +9,11 @@ import { ContribuyenteService } from 'app/services/contribuyente.service';
 
 import { MaestroService } from 'app/services/maestro.service';
 import Swal from 'sweetalert2';
-import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-import { default as _rollupMoment } from 'moment';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
-
-const moment = _rollupMoment || _moment;
+import * as _moment from 'moment';
+import { Moment } from 'moment';
+const moment = _moment;
 
 @Component({
     selector: 'app-contribuyente',
@@ -54,7 +52,9 @@ export class ContribuyenteComponent implements OnInit {
     maestrosSubZona: Maestro[] = [];
     maestrosEdificacion: Maestro[] = [];
     maestrosInterior: Maestro[] = [];
-    maestrosEstado: Maestro[] = [];
+    maestrosEstadoDj: Maestro[] = [];
+    maestrosEstadoCivil: Maestro[] = [];
+
 
     //Condición
 
@@ -82,10 +82,7 @@ export class ContribuyenteComponent implements OnInit {
     isAddMode!: boolean;
     loading = false;
     submitted = false;
-    //     myDate = new Date();
-    // constructor(private datePipe: DatePipe){
-    //     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
-    // }
+
 
     constructor(private service: ContribuyenteService,
         private router: Router,
@@ -102,11 +99,15 @@ export class ContribuyenteComponent implements OnInit {
                 this.service.ver(id).subscribe(contribuyente => this.contribuyente = contribuyente);
             }
         })
-
+        //this.registerFormContribuyente.get('fallecido').disable();
+        // this.registerFormContribuyente = this.formBuilder.group({
+        //     name: new FormControl({ value: '', disabled: this.disabled })
+        // });
+        this.panelContribuyenteOpenState>= true;
         this.registerFormContribuyente = this.formBuilder.group({
-            codContribuyente: [''],
-            nroDeclaracion: [''],
-            fechaDeclaracion: [''],
+            codContribuyente: [{value: '', disabled:true}],
+            nroDeclaracion: [{value: '', disabled:true}],
+            fechaDJ: [''],
             tipoMedioDeterminacionId: ['', [Validators.required]],
             medioDeterminacionId: ['', [Validators.required]],
             motivoDjId: ['', [Validators.required]],
@@ -121,43 +122,45 @@ export class ContribuyenteComponent implements OnInit {
             apellidoMaterno: ['', [Validators.required]],
             nombres: ['', [Validators.required]],
             estadoCivil: [''],
-            fallecido: ['', [Validators.required]],
-            fechaFallecimiento: [''],
+            fallecido: [{value: '', disabled:true}, [Validators.required]],
+            fechaFallecimiento: [{value: '', disabled:true}],
             razonSocial: [''],
-            segContribuyenteId: [''],
+            segContribuyenteId: [{value: '', disabled:true}],
+            usuarioCreacion: ['2025'],
+            terminalCreacion:['192.168.1.1'],
+            municipalidadId:['1'],
         });
 
 
-        // this.registerFormContribuyenteDomicilio = this.formBuilder.group({
+        this.registerFormContribuyenteDomicilio = this.formBuilder.group({
 
+            contribuyenteId: ['', [Validators.required]],
+            contribuyenteDomicilioId: ['', [Validators.required]],
+            departamento: ['', [Validators.required]],
+            provincia: ['', [Validators.required]],
+            distrito: ['', [Validators.required]],
+            tipoDomicilio: ['', [Validators.required]],
+            tipoHabilitacion: ['', [Validators.required]],
+            nombreHabilitacion: ['', [Validators.required]],
+            tipoVia: ['', [Validators.required]],
+            nombreVia: ['', [Validators.required]],
+            numeroMunicipal: ['', [Validators.required]],
+            loteUrbano: ['', [Validators.required]],
+            numeroAlterno: ['', [Validators.required]],
+            manzanaUrbana: ['', [Validators.required]],
+            block: ['', [Validators.required]],
+            numeroDpto: ['', [Validators.required]],
+            interior: ['', [Validators.required]],
+            cuadra: ['', [Validators.required]],
+            kilometro: ['', [Validators.required]],
+            referencia: ['', [Validators.required]],
+            telefono: ['', [Validators.required]],
+            usuarioRegistro: ['', [Validators.required]],
+            fechaRegistro: ['', [Validators.required]],
+            usuarioEdicion: ['', [Validators.required]],
+            fechaEdicion: ['', [Validators.required]],
 
-        //     contribuyenteId: ['', [Validators.required]],
-        //     contribuyenteDomicilioId: ['', [Validators.required]],
-        //     departamento: ['', [Validators.required]],
-        //     provincia: ['', [Validators.required]],
-        //     distrito: ['', [Validators.required]],
-        //     tipoDomicilio: ['', [Validators.required]],
-        //     tipoHabilitacion: ['', [Validators.required]],
-        //     nombreHabilitacion: ['', [Validators.required]],
-        //     tipoVia: ['', [Validators.required]],
-        //     nombreVia: ['', [Validators.required]],
-        //     numeroMunicipal: ['', [Validators.required]],
-        //     loteUrbano: ['', [Validators.required]],
-        //     numeroAlterno: ['', [Validators.required]],
-        //     manzanaUrbana: ['', [Validators.required]],
-        //     block: ['', [Validators.required]],
-        //     numeroDpto: ['', [Validators.required]],
-        //     interior: ['', [Validators.required]],
-        //     cuadra: ['', [Validators.required]],
-        //     kilometro: ['', [Validators.required]],
-        //     referencia: ['', [Validators.required]],
-        //     telefono: ['', [Validators.required]],
-        //     usuarioRegistro: ['', [Validators.required]],
-        //     fechaRegistro: ['', [Validators.required]],
-        //     usuarioEdicion: ['', [Validators.required]],
-        //     fechaEdicion: ['', [Validators.required]],
-
-        // })
+        })
 
         // this.registerFormContribuyenteRelacionado = this.formBuilder.group({
 
@@ -196,10 +199,25 @@ export class ContribuyenteComponent implements OnInit {
         this.maestroGenerico(12, 'maestrosModalidadOficio');
         this.maestroGenerico(14, 'maestrosTipoContribuyente');
         this.maestroGenerico(1, 'maestrosTipoDocumento');
+        this.maestroGenerico(18,'maestrosEstadoDj');
+        this.maestroGenerico(17,'maestrosEstadoCivil');
+        this.maestroGenerico(8,'maestrosEdificacion');
+        this.maestroGenerico(9,'maestrosInterior');
+        this.maestroGenerico(7,'maestrosTipoVia');
     }
     onSubmit() {
         console.log('envio');
     }
+
+    setDefaultDate() {
+        this.registerFormContribuyente.patchValue({
+            fechaNacimiento: moment("12/12/1995", "DD-MM-YYYY"),
+
+        });
+      }
+
+
+
     public crear(): void {
         this.service.crear(this.contribuyente).subscribe({
             next: (contribuyente) => {
@@ -235,7 +253,7 @@ export class ContribuyenteComponent implements OnInit {
         this.service.guardar(this.registerFormContribuyente.value)
             .pipe(first())
             .subscribe(() => {
-                Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+                Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
                 this.router.navigate(['../contribuyente/list']);
                 // this.mostrarSnakbar('Registro se ha creado satisfactoriamente..!')
                 //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
@@ -244,12 +262,13 @@ export class ContribuyenteComponent implements OnInit {
     }
 
     public guardar(): void {
+        this.setDefaultDate();
         console.log('llego');
         this.service.guardar(this.contribuyente).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
-                Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+                Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
                 this.router.navigate(['../contribuyente/list']);
             }
             , error: (err) => {
@@ -316,6 +335,28 @@ export class ContribuyenteComponent implements OnInit {
                         console.log(matriz);
                         this.maestrosTipoContribuyente = res;
                     }
+                    if (matriz == 'maestrosEstadoDj') {
+                        console.log(matriz + 'estado dj');
+                        this.maestrosEstadoDj = res;
+                    }
+                    if (matriz == 'maestrosEstadoCivil') {
+                        console.log(matriz);
+                        this.maestrosEstadoCivil = res;
+                    }
+                    if (matriz == 'maestrosEdificacion') {
+                        console.log(matriz);
+                        this.maestrosEdificacion = res;
+                    }
+                    if (matriz == 'maestrosInterior') {
+                        console.log(matriz);
+                        this.maestrosInterior = res;
+                    }
+                    if (matriz == 'maestrosTipoVia') {
+                        console.log(matriz);
+                        this.maestrosTipoVia = res;
+                    }
+
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);

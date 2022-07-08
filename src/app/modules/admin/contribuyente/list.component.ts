@@ -44,11 +44,22 @@ export class ListComponent implements OnInit {
   constructor(private service: ContribuyenteService) { }
 
   ngOnInit() {
-     this.service.todos().subscribe(contribuyentes=>{
-       this.contribuyentes = contribuyentes;
-     });
+    //  this.service.todos().subscribe(contribuyentes=>{
+    //    this.contribuyentes = contribuyentes;
+    //    console.log(contribuyentes);
+    //  });
    // this.calcularRangos();
 
+
+   this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(contribuyentes => {
+    //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+    //this.contribuyentes = p.content as Contribuyente[];
+    //this.totalRegistros = p.totalElements as number;
+   // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
+
+    this.contribuyentes = contribuyentes;
+    console.log(contribuyentes);
+  });
 
   }
 
@@ -63,11 +74,13 @@ export class ListComponent implements OnInit {
   private calcularRangos() {
 
     this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+      //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+      //this.contribuyentes = p.content as Contribuyente[];
+      //this.totalRegistros = p.totalElements as number;
+     // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
 
-      this.contribuyentes = p.content as Contribuyente[];
-      this.totalRegistros = p.totalElements as number;
-      this.paginator._intl.itemsPerPageLabel = 'Registro por página';
-
+      this.contribuyentes = p as Contribuyente[];
+      console.log(p);
     });
   }
 

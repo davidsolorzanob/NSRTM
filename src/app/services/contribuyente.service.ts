@@ -21,12 +21,22 @@ public todos(): Observable<Contribuyente[]>{
 
 }
 
- public listarPaginas(page: string, size:  string): Observable<any> {
-     const params = new HttpParams()
-    .set('page',page)
-    .set('size', size);
-    return this.http.get<any>(this.baseEndpoint+'/pagina/', {params: params});
+//  public listarPaginas(page: string, size:  string): Observable<any> {
+//      const params = new HttpParams()
+//     .set('nroPage',page)
+//     .set('size', size);
+//     return this.http.get<any>(this.baseEndpoint+'/pagina/', {params: params});
 
+//  }
+
+ public listarPaginas(page: string, size:  string): Observable<Contribuyente[]> {
+    var params = {
+					"data" : { "tipoFiltro": null, "municipalidadId":"1"},
+					"nroPage": page,
+					"size" : size
+			     };
+    //return this.http.get<any>(this.baseEndpoint+'/listaContribuyentePaginado/', params);
+	return this.http.post<Contribuyente[]>(this.baseEndpoint+'/listaContribuyentePaginado', params, {headers: this.cabeceras});
  }
 
  public ver(contribuyenteId:number): Observable<Contribuyente>{
