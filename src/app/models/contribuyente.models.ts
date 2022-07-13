@@ -34,6 +34,7 @@ export class Contribuyente {
     genero!: string;
     fallecido!: number;
     fechaFallecimiento!: Date;
+
 }
 
 

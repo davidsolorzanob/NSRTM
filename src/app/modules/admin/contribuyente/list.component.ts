@@ -31,10 +31,11 @@ import { Observable } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   titulo = 'Relación de contribuyentes';
-  contribuyentes: Contribuyente[];
+  contribuyentes: Contribuyente[] = [];
+  contribuyentesAny: any[] = [] ;
   contribuyente: Contribuyente;
   totalRegistros = 0;
-  paginaActual = 0;
+  paginaActual = 1;
   totalPorPagina = 10;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,14 +52,16 @@ export class ListComponent implements OnInit {
    // this.calcularRangos();
 
 
-   this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(contribuyentes => {
+   this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
     //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-    //this.contribuyentes = p.content as Contribuyente[];
-    //this.totalRegistros = p.totalElements as number;
-   // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
+    this.contribuyentes = p.data as Contribuyente[];
+    //this.totalRegistros = p.totalRows as number;
+    //this.paginator._intl.itemsPerPageLabel =  'Registro por página';
 
-    this.contribuyentes = contribuyentes;
-    console.log(contribuyentes);
+   //this.contribuyentesAny = p;
+
+   console.log(p);
+   console.log('llego');
   });
 
   }
@@ -79,7 +82,7 @@ export class ListComponent implements OnInit {
       //this.totalRegistros = p.totalElements as number;
      // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
 
-      this.contribuyentes = p as Contribuyente[];
+      this.contribuyentes = p.data as Contribuyente[];
       console.log(p);
     });
   }
@@ -106,8 +109,6 @@ export class ListComponent implements OnInit {
         )
       }
     })
-
-
 
 
   }

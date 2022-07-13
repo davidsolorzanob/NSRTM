@@ -1,12 +1,26 @@
 export class Condicion{
-    condicionContribuyente:number;
-    descricionDocumento: string;
-    nroResolucion: string;
-    fechaDocumento: Date;
-    fechaInicio: Date;
-    expedienteAdministrativo: string;
-    fechaExpediente: Date;
-    remuneracionMensual: number;
-    resolucionAlcadia: string;
-    fechaResolucion: Date; 
+
+
+   conContribuyenteId:number;
+   contribuyenteNumero:number;
+   desDocumento:string;
+   estadoId:number;
+   fechaDocumento:Date;
+   fechaExpediente:Date;
+   fechaVigenciaFinal:Date;
+   fechaVigenciaInicial:Date;
+   importePension:number;
+   municipalidadId: number;
+   numeroDocumento:string;
+   numeroExpediente:string;
+   numeroLicencia:string;
+   tipoCondicionConcursalId:number;
+   tipoCondicionInafectacionId:number;
+   tipoDocumentoId:number;
+   //nombreDocumento:string;
+   terminalCreacion: string;
+
 }
+
+
+

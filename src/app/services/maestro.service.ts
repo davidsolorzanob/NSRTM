@@ -29,9 +29,9 @@ public todos(): Observable<Maestro[]>{
 
  }
 
- public ver(tipoMaestroId:number): Observable<Maestro>{
+ public ver(tipoMaestroId:number, municipalidadId:number): Observable<Maestro>{
   console.log(tipoMaestroId);
-  return this.http.get<Maestro>(this.baseEndpoint + '/filtrarportipo/?tipoMaestroId=' + tipoMaestroId );
+  return this.http.get<Maestro>(this.baseEndpoint + '/filtrarportipo/?tipoMaestroId=' + tipoMaestroId + '&municipalidadId=' + municipalidadId );
 
 }
 

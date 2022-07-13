@@ -153,10 +153,10 @@
         </div>
         <div style="float: right;">
             <!-- <ng-container>
-                <mat-paginator [length]="totalRegistros" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
+                <mat-paginator [length]="totalRows" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
                     [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" [showFirstLastButtons]="true">
                 </mat-paginator>
-            </ng-container>-->
+            </ng-container> -->
         </div>
 
  <!-- <mat-paginator [length]="totalRegistros"
@@ -243,12 +243,10 @@
                                 class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b hover:bg-red-100">
 
 
-
                                 <!-- SKU -->
                                 <div>
-                                    {{contribuyente.contribuyenteNumero}}
+                                    {{contribuyente.nombres}}
                                 </div>
-
 
                                 <!-- SKU -->
                                 <div class="sm:block truncate">
@@ -261,14 +259,12 @@
                                 </div> -->
                                 <!-- SKU -->
                                 <div class="hidden sm:block truncate">
-                                    {{contribuyente.numeroDocumento}}
+                                   {{contribuyente.numeroDocumento}}
                                 </div>
                                 <!-- SKU -->
                                 <div class="hidden sm:block truncate">
-                                    {{contribuyente.razonSocial}}
+                                     {{contribuyente.razonSocial}}
                                 </div>
-
-
 
                                 <!-- SKU -->
                                 <div>
