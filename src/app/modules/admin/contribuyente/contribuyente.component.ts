@@ -78,6 +78,7 @@ export class ContribuyenteComponent implements OnInit {
     listaZonas: Ubicacion[] = [];
     listaSubZona: Ubicacion[] = [];
     listaNombreEdificacion: Ubicacion[] = [];
+    listarZonaUrbana: Ubicacion[] = [];
     //Condición
     valorDepartamento: number;
     valorProvincia: number;
@@ -243,31 +244,56 @@ export class ContribuyenteComponent implements OnInit {
 
         this.registerFormContribuyenteRelacionado = this.formBuilder.group({
 
-            contribuyenteId: ['', [Validators.required]],
-            contribuyenteDomicilioId: ['', [Validators.required]],
-            departamento: ['', [Validators.required]],
-            provincia: ['', [Validators.required]],
-            distrito: ['', [Validators.required]],
-            tipoDomicilio: ['', [Validators.required]],
-            tipoHabilitacion: ['', [Validators.required]],
-            nombreHabilitacion: ['', [Validators.required]],
-            tipoVia: ['', [Validators.required]],
-            nombreVia: ['', [Validators.required]],
+
+            relContribuyenteNumero: ['', [Validators.required]],
+            personaId: ['', [Validators.required]],
+
+
+            tipoRelacionadoId: ['', [Validators.required]],
+            fechaInscripcion: ['', [Validators.required]],
+            fechaVigenciaInicial: ['', [Validators.required]],
+            fechaVigenciaFinal: ['', [Validators.required]],
+            estadoId: ['', [Validators.required]],
+            estadoCivil: ['', [Validators.required]],
             numeroMunicipal: ['', [Validators.required]],
-            loteUrbano: ['', [Validators.required]],
-            numeroAlterno: ['', [Validators.required]],
-            manzanaUrbana: ['', [Validators.required]],
-            block: ['', [Validators.required]],
-            numeroDpto: ['', [Validators.required]],
-            interior: ['', [Validators.required]],
-            cuadra: ['', [Validators.required]],
+
+            domicilioRelacionadoNumero: ['', [Validators.required]],
+            departamentoId: ['', [Validators.required]],
+            provinciaId: ['', [Validators.required]],
+            distritoId: ['', [Validators.required]],
+            tipoPredioId: ['', [Validators.required]],
+            viaDepartamentoId: ['', [Validators.required]],
+            viaProvinciaId: ['', [Validators.required]],
+
+            viaDistritoId: ['', [Validators.required]],
+            viaId: ['', [Validators.required]],
+            numero1: ['', [Validators.required]],
+            letra1: ['', [Validators.required]],
+            numero2: ['', [Validators.required]],
+            letra2: ['', [Validators.required]],
+            manzana: ['', [Validators.required]],
+            lote: ['', [Validators.required]],
+            subLote: ['', [Validators.required]],
+            zonaUrbanaId: ['', [Validators.required]],
+            subZonaUrbanaId: ['', [Validators.required]],
+            edificacionId: ['', [Validators.required]],
+            tipoInteriorId: ['', [Validators.required]],
+            descripcionInterior: ['', [Validators.required]],
+            ingreso: ['', [Validators.required]],
+            piso: ['', [Validators.required]],
             kilometro: ['', [Validators.required]],
             referencia: ['', [Validators.required]],
-            telefono: ['', [Validators.required]],
-            usuarioRegistro: ['', [Validators.required]],
-            fechaRegistro: ['', [Validators.required]],
-            usuarioEdicion: ['', [Validators.required]],
-            fechaEdicion: ['', [Validators.required]],
+            latitud: ['', [Validators.required]],
+            longitud: ['', [Validators.required]],
+            descripcionDomicilio: ['', [Validators.required]],
+            estructurado: ['', [Validators.required]],
+            fuenteInformacionId: ['', [Validators.required]],
+            usuarioCreacion: ['2025'],
+            terminalCreacion: ['192.168.1.1'],
+            municipalidadId: ['1'],
+            "contribuyenteNumero": "5",
+            "conContribuyenteId": null,
+
          }
         );
 
@@ -436,14 +462,14 @@ export class ContribuyenteComponent implements OnInit {
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
-                    this.listarNombreZonaUrbana = res;
-                    console.log(this.listarNombreZonaUrbana);
+                    this.listarZonaUrbana = res;
+                    console.log(this.listarZonaUrbana);
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
                 },
                 complete: () => {
-                    console.log('completo la recuperación de listar vias');
+                    console.log('completo la recuperación de listar zonas ');
                 }
             });
 

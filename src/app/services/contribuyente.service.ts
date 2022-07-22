@@ -19,30 +19,18 @@ export class ContribuyenteService {
         return this.http.get<Contribuyente[]>(this.baseEndpoint + '/todos');
     }
 
-    //  public listarPaginas(page: string, size:  string): Observable<any> {
-    //      const params = new HttpParams()
-    //     .set('nroPage',page)
-    //     .set('size', size);
-    //     return this.http.get<any>(this.baseEndpoint+'/pagina/', {params: params});
-
-    //  }
-
     public listarPaginas(size: string, page: string): Observable<any> {
         var params = {
             "data": { "tipoFiltro": null, "municipalidadId": "1" },
             "size": size,
             "nroPage": page
         };
-        //return this.http.get<any>(this.baseEndpoint+'/listaContribuyentePaginado/', params);
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
-
     public ver(contribuyenteId: number): Observable<Contribuyente> {
 
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
-
     }
-
     public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
         //enviar un body
         return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });

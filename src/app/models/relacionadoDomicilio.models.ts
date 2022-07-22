@@ -1,4 +1,5 @@
 export class RelacionadoDomicilio{
+
     contribuyenteId:number;
     contribuyenteDomicilioId: number;
     departamento: string;
