@@ -1,3 +1,5 @@
+import { RelacionadoDomicilio } from "./relacionadoDomicilio.models";
+
 export class Relacionado{
     municipalidadId: number;
     contribuyenteNumero: number;
@@ -16,11 +18,12 @@ export class Relacionado{
     razonSocial:string;
     nombreCompleto:string;
     fechaNacimiento:string;
-
-
-
+    genero:string;
+    fallecido:number;
+    fechaFallecimiento: Date;
     estadoCivil: number;
-    numeroMunicipal: number;
+    //domicilioRelacionado: RelacionadoDomicilio;
+
     domicilioRelacionadoNumero: number;
     departamentoId: number;
     provinciaId: number;

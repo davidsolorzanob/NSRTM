@@ -20,6 +20,7 @@ import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
 import { via } from 'app/models/via.models';
 import { ViaService } from 'app/services/via.service';
 import { DomicilioService } from 'app/services/domicilio.service';
+import { RelacionadoService } from 'app/services/relacionado.service';
 import { Ubicacion } from 'app/models/ubicacion.models';
 
 const moment = _moment;
@@ -124,7 +125,8 @@ export class ContribuyenteComponent implements OnInit {
         private serviceCondicion: CondicionService,
         private serviceUbigeo: UbigeoService,
         private serviceVia: ViaService,
-        private serviceDomicilio: DomicilioService) {
+        private serviceDomicilio: DomicilioService,
+        private serviceRelacionado: RelacionadoService) {
     }
 
     ngOnInit() {
@@ -138,16 +140,9 @@ export class ContribuyenteComponent implements OnInit {
 
         this.maestroDepartamento();
 
-
-
         console.log(this.ubigeo);
         console.log('llego ahora ok');
 
-        //this.registerFormContribuyente.get('fallecido').disable();
-        // this.registerFormContribuyente = this.formBuilder.group({
-        //     name: new FormControl({ value: '', disabled: this.disabled })
-        // });
-        //this.panelContribuyenteOpenState>= true;
         this.registerFormContribuyente = this.formBuilder.group({
             codContribuyente: [{ value: '', disabled: true }],
             nroDeclaracion: [{ value: '', disabled: true }],
@@ -238,7 +233,6 @@ export class ContribuyenteComponent implements OnInit {
             fechaEdicion: ['', [Validators.required]],
             usuarioCreacion: ['2025'],
             terminalCreacion: ['192.168.1.1'],
-
 
         });
 
@@ -476,8 +470,6 @@ export class ContribuyenteComponent implements OnInit {
     }
 
 
-
-
     listarSubZonaUrbana(SubZonaUrbana: any) {
 
         this.valorDepartamento = this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
@@ -620,15 +612,15 @@ export class ContribuyenteComponent implements OnInit {
     }
 
     createContribuyenteRelacionado() {
-        // console.log(this.registerFormContribuyenteRelacionado.value);
-        // this.service.crearRelacionado(this.registerFormContribuyenteRelacionado.value)
-        //     .pipe(first())
-        //     .subscribe(() => {
-        //         Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
-        //         this.router.navigate(['../contribuyente/list']);
+         console.log(this.registerFormContribuyenteRelacionado.value);
+         this.serviceRelacionado.crear(this.registerFormContribuyenteRelacionado.value)
+             .pipe(first())
+             .subscribe(() => {
+                 Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
+                 this.router.navigate(['../contribuyente/list']);
 
-        //     })
-        //     .add(() => this.loading = false);
+             })
+             .add(() => this.loading = false);
     }
 
     public guardar(): void {
