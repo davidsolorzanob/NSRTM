@@ -17,7 +17,7 @@ export class DomicilioService {
 
     public guardar(domicilio: Domicilio): Observable<Domicilio> {
         //enviar un body
-        console.log('llego domicilio', domicilio);
+        console.log('llego domicilio  okkkkk', domicilio);
         return this.http.post<Domicilio>(this.baseEndpoint + '/guardar', domicilio, { headers: this.cabeceras });
 
     }

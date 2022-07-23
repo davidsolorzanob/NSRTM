@@ -12,18 +12,18 @@ import { Observable } from 'rxjs';
     /* language=SCSS */
     `
         .inventory-grid {
-            grid-template-columns: 48px auto 40px;
+            grid-template-columns: 48px 48px 40px;
 
             @screen sm {
-                grid-template-columns: 48px auto 40px;
+                grid-template-columns: 84px 48px 40px;
             }
 
             @screen md {
-                grid-template-columns: 48px auto 112px;
+                grid-template-columns: 84px 84px 112px;
             }
 
             @screen lg {
-                grid-template-columns: 48px auto 602px 112px 112px 112px 112px 112px 112px;
+                grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
             }
         }
     `

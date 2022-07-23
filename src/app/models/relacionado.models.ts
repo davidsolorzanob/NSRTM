@@ -9,6 +9,8 @@ export class Relacionado{
     docIdentidadId: number;
     fechaVigenciaInicial: Date;
     fechaVigenciaFinal: Date;
+    fechaVigenciaInicialRela: Date;
+    fechaVigenciaFinalRela: Date;
     estadoId: number;
     descDocIdentidadId: string;
     numDocIdentidad: string;
