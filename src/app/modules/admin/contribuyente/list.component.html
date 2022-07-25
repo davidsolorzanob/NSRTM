@@ -25,15 +25,10 @@ aaa
         <!-- Search -->
 
 
-
-
-
-
-
         <div class="mr-4">
-            <mat-label>Codi. Contribuyente :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                <mat-label>Codi. Contribuyente :</mat-label>
                 <input matInput [autocomplete]="'off'" name="busquedaCodigo" id="busquedaCodigo">
             </mat-form-field>
         </div>
@@ -42,9 +37,9 @@ aaa
 
     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
         <div class="mr-4">
-            <mat-label>Tipo de documento :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                <mat-label>Tipo de documento :</mat-label>
                 <mat-select name="busquedatipoDocumento" id="busquedatipoDocumento">
                     <mat-option [value]="'1'">DNI</mat-option>
                     <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
@@ -56,9 +51,9 @@ aaa
 
         <div class="mr-4">
 
-            <mat-label>Número documento :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                <mat-label>Número documento :</mat-label>
                 <input matInput [autocomplete]="'off'" name="busquedaNumeroDocumento" id="busquedaNumeroDocumento">
             </mat-form-field>
 
@@ -70,23 +65,23 @@ aaa
 
     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
         <div class=" mr-4">
-            <mat-label>Apellido Paterno :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                <mat-label>Apellido Paterno :</mat-label>
                 <input matInput [autocomplete]="'off'" name="busquedaApellidoPaterno" id="busquedaApellidoMaterno">
             </mat-form-field>
         </div>
         <div class="mr-4">
-            <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
                 <input matInput [autocomplete]="'off'" name="busquedaApellidoMaterno" id="busquedaApellidoMaterno">
             </mat-form-field>
         </div>
         <div class="mr-4">
-            <mat-label>Nombres :</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                <mat-label>Nombres :</mat-label>
                 <input matInput [autocomplete]="'off'" name="busquedaNombres" id="busquedaNombres">
             </mat-form-field>
         </div>
@@ -95,9 +90,9 @@ aaa
 
     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-6  col-span-4">
         <div class="mr-4">
-            <mat-label>Razón social</mat-label>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-128">
 
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-128">
+                <mat-label>Razón social</mat-label>
                 <input matInput name="busquedaRazonSocial" id="busquedaRazonSocial" [autocomplete]="'off'">
             </mat-form-field>
         </div>
@@ -212,7 +207,7 @@ aaa
                         </div>
 
                         <div class="truncate">
-                            Apellidos y Nombres
+                           Fecha de Registro
                         </div>
 
                         <!-- <div class="hidden sm:block">
@@ -220,20 +215,21 @@ aaa
                         </div> -->
 
 
+
                         <div class="hidden sm:block">
-                            N° Documento
+                            Estado
                         </div>
 
                         <div class="hidden sm:block">
-                            Razon Social
+                           Apellidos y Nombres
                         </div>
 
                         <div class="hidden sm:block">
-                            Celular
+                            DNI
                         </div>
 
                         <div class="hidden sm:block">
-                            Telefono
+                            N Documento
                         </div>
 
 
@@ -251,7 +247,20 @@ aaa
 
                                 <!-- SKU -->
                                 <div>
-                                    {{contribuyente.nombres}}
+                                    {{contribuyente.contribuyenteNumero}}
+                                </div>
+                                   <!-- SKU -->
+                                   <div>
+                                   20/07/22
+                                </div>
+                                  <!-- SKU -->
+                                  <div class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase">
+
+
+                                  Activo
+
+
+
                                 </div>
 
                                 <!-- SKU -->
@@ -259,18 +268,18 @@ aaa
                                     {{contribuyente.apellidoPaterno + ' ' + contribuyente.apellidoMaterno + ' ' +
                                     contribuyente.nombres}}
                                 </div>
+                                <div>
+                                    DNI
+                                </div>
                                 <!-- SKU
                                 <div class="hidden sm:block truncate">
                                     {{contribuyente.tipoDocumento}}
                                 </div> -->
                                 <!-- SKU -->
                                 <div class="hidden sm:block truncate">
-                                   {{contribuyente.numeroDocumento}}
+                                   {{contribuyente.numDocIdentidad}}
                                 </div>
-                                <!-- SKU -->
-                                <div class="hidden sm:block truncate">
-                                     {{contribuyente.razonSocial}}
-                                </div>
+
 
                                 <!-- SKU -->
                                 <div>

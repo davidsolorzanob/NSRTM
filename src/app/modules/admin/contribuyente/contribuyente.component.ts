@@ -17,6 +17,11 @@ import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { ubigeoProvincia } from 'app/models/ubigeoProvincia.models';
 import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
+import { via } from 'app/models/via.models';
+import { ViaService } from 'app/services/via.service';
+import { DomicilioService } from 'app/services/domicilio.service';
+import { RelacionadoService } from 'app/services/relacionado.service';
+import { Ubicacion } from 'app/models/ubicacion.models';
 
 const moment = _moment;
 
@@ -54,8 +59,8 @@ export class ContribuyenteComponent implements OnInit {
     maestrosDistrito: Maestro[] = [];
     maestrosTipoDomicilio: Maestro[] = [];
     maestrosTipoVia: Maestro[] = [];
-    maestrosZonaUrbana: Maestro[] = [];
-    maestrosSubZona: Maestro[] = [];
+    maestrosTipoZonaUrbana: Maestro[] = [];
+    maestrosTipoSubZona: Maestro[] = [];
     maestrosEdificacion: Maestro[] = [];
     maestrosInterior: Maestro[] = [];
     maestrosEstadoDj: Maestro[] = [];
@@ -63,18 +68,35 @@ export class ContribuyenteComponent implements OnInit {
     maestrosCondicionTipoContribuyente: Maestro[] = [];
     maestrosCondicionConcursalTipo: Maestro[] = [];
     maestroEstadoRegistroCondicion: Maestro[] = [];
+    maestroTipoVias: Maestro[] = [];
+    maestroTipoPredio: Maestro[] = [];
+    maestroTipoDomicilio: Maestro[] = [];
+    maestroTipoRelacion: Maestro[] = [];
+
+
 
     ubigeo: UbigeoDepartamento[] = [];
     ubigeoProvincia: ubigeoProvincia[] = [];
     ubigeoDistrito: ubigeoDistrito[] = [];
+    listaVias: via[] = [];
+    listaZonas: Ubicacion[] = [];
+    listaSubZona: Ubicacion[] = [];
+    listaNombreEdificacion: Ubicacion[] = [];
+    listarZonaUrbana: Ubicacion[] = [];
     //Condición
     valorDepartamento: number;
+    valorProvincia: number;
+    valorDistrito: number;
+    valorTipoVia: number;
+    valorTipoZonaUrbana: number;
+    valorTipoSubZonaUrbana: number;
+    valorTipoEdificacion: number;
 
     maestrosCondicionContribuyente: Maestro[] = [];
 
     panelContribuyenteOpenState = false;
     panelDomicilioFiscal = false;
-    panelRelacionado = false;
+    panelContribuyenteRelacionadoOpenState = false;
     panelCondicion = false;
     panelContacto = false;
     panelInformacionAdicional = false;
@@ -86,6 +108,7 @@ export class ContribuyenteComponent implements OnInit {
     public registerFormContribuyente!: FormGroup;
     public registerFormContribuyenteDomicilio!: FormGroup;
     public registerFormContribuyenteRelacionado!: FormGroup;
+    public registerFormDomicilioRelacionado!: FormGroup;
     public registerFormContribuyenteCondicion!: FormGroup;
     public registerFormContribuyenteContacto!: FormGroup;
 
@@ -104,7 +127,10 @@ export class ContribuyenteComponent implements OnInit {
         private route: ActivatedRoute, private serviceMaestro: MaestroService,
         private formBuilder: FormBuilder,
         private serviceCondicion: CondicionService,
-        private serviceUbigeo: UbigeoService) {
+        private serviceUbigeo: UbigeoService,
+        private serviceVia: ViaService,
+        private serviceDomicilio: DomicilioService,
+        private serviceRelacionado: RelacionadoService) {
     }
 
     ngOnInit() {
@@ -118,16 +144,9 @@ export class ContribuyenteComponent implements OnInit {
 
         this.maestroDepartamento();
 
-
-
         console.log(this.ubigeo);
         console.log('llego ahora ok');
 
-        //this.registerFormContribuyente.get('fallecido').disable();
-        // this.registerFormContribuyente = this.formBuilder.group({
-        //     name: new FormControl({ value: '', disabled: this.disabled })
-        // });
-        //this.panelContribuyenteOpenState>= true;
         this.registerFormContribuyente = this.formBuilder.group({
             codContribuyente: [{ value: '', disabled: true }],
             nroDeclaracion: [{ value: '', disabled: true }],
@@ -178,7 +197,7 @@ export class ContribuyenteComponent implements OnInit {
             "contribuyenteNumero": "5",
             "conContribuyenteId": null,
 
-        })
+        });
 
         this.registerFormContribuyenteDomicilio = this.formBuilder.group({
             municipalidadId: ['1'],
@@ -190,78 +209,101 @@ export class ContribuyenteComponent implements OnInit {
             tipoPredioId: ['', [Validators.required]],
             viaDepartamentoId: ['', [Validators.required]],
             fechaDeclaracion: ['', [Validators.required]],
-            // viaProvinciaId: ['', [Validators.required]],
-            // viaDistritoId: ['', [Validators.required]],
+            tipoViaId: ['', [Validators.required]],
             viaId: ['', [Validators.required]],
-            //descripcion de via  preguntar
             numero1: ['', [Validators.required]],
             letra1: ['', [Validators.required]],
             numero2: ['', [Validators.required]],
             letra2: ['', [Validators.required]],
-
-
-
             manzana: ['', [Validators.required]],
             lote: ['', [Validators.required]],
             subLote: ['', [Validators.required]],
-
-
-
             zonaUrbanaId: ['', [Validators.required]],
+            nombreZonaUrbana: ['', [Validators.required]],
             subZonaUrbanaId: ['', [Validators.required]],
-
-
-
+            nombreSubZonaUrbana: ['', [Validators.required]],
             edificacionId: ['', [Validators.required]],
+            nombreEdificacion: ['', [Validators.required]],
             tipoInteriorId: ['', [Validators.required]],
-            // descripcionInterior: ['', [Validators.required]],
             ingreso: ['', [Validators.required]],
             piso: ['', [Validators.required]],
             kilometro: ['', [Validators.required]],
             referencia: ['', [Validators.required]],
             latitud: ['', [Validators.required]],
             longitud: ['', [Validators.required]],
-            //descripcionDomicilio: ['', [Validators.required]],
-            // estructurado: ['', [Validators.required]],
-
-
-
             usuarioRegistro: ['', [Validators.required]],
             fechaRegistro: ['', [Validators.required]],
             usuarioEdicion: ['', [Validators.required]],
             fechaEdicion: ['', [Validators.required]],
+            usuarioCreacion: ['2025'],
+            terminalCreacion: ['192.168.1.1'],
 
-        })
+        });
 
-        // this.registerFormContribuyenteRelacionado = this.formBuilder.group({
+        this.registerFormContribuyenteRelacionado = this.formBuilder.group({
 
-        //     contribuyenteId: ['', [Validators.required]],
-        //     contribuyenteDomicilioId: ['', [Validators.required]],
-        //     departamento: ['', [Validators.required]],
-        //     provincia: ['', [Validators.required]],
-        //     distrito: ['', [Validators.required]],
-        //     tipoDomicilio: ['', [Validators.required]],
-        //     tipoHabilitacion: ['', [Validators.required]],
-        //     nombreHabilitacion: ['', [Validators.required]],
-        //     tipoVia: ['', [Validators.required]],
-        //     nombreVia: ['', [Validators.required]],
-        //     numeroMunicipal: ['', [Validators.required]],
-        //     loteUrbano: ['', [Validators.required]],
-        //     numeroAlterno: ['', [Validators.required]],
-        //     manzanaUrbana: ['', [Validators.required]],
-        //     block: ['', [Validators.required]],
-        //     numeroDpto: ['', [Validators.required]],
-        //     interior: ['', [Validators.required]],
-        //     cuadra: ['', [Validators.required]],
-        //     kilometro: ['', [Validators.required]],
-        //     referencia: ['', [Validators.required]],
-        //     telefono: ['', [Validators.required]],
-        //     usuarioRegistro: ['', [Validators.required]],
-        //     fechaRegistro: ['', [Validators.required]],
-        //     usuarioEdicion: ['', [Validators.required]],
-        //     fechaEdicion: ['', [Validators.required]],
-        // }
-        // )
+
+            relContribuyenteNumero: ['', [Validators.required]],
+            personaId: null,
+            docIdentidadId: ['', [Validators.required]],
+            numDocIdentidad: ['', [Validators.required]],
+            apellidoPaterno: ['', [Validators.required]],
+            apellidoMaterno: ['', [Validators.required]],
+            nombres: ['', [Validators.required]],
+            razonSocial: ['', [Validators.required]],
+            fechaVigenciaInicial: [''],
+            fechaVigenciaFinal: [''],
+            fechaVigenciaInicialRela: ['', [Validators.required]],
+            fechaVigenciaFinalRela: ['', [Validators.required]],
+            fechaDeclaracionRela: ['', [Validators.required]],
+
+            tipoRelacionadoId: ['', [Validators.required]],
+            fechaInscripcion: null,
+            estadoId: "1",
+            estadoCivil: "1",
+            numeroMunicipal: ['', [Validators.required]],
+
+
+            domicilioRelacionadoNumero: null,
+            departamentoId: ['', [Validators.required]],
+            provinciaId: ['', [Validators.required]],
+            distritoId: ['', [Validators.required]],
+            tipoPredioId: ['', [Validators.required]],
+            viaDepartamentoId: ['15'],
+            viaProvinciaId: ['135'],
+            tipoViaId: ['', [Validators.required]],
+            viaDistritoId: ['121'],
+            viaId: ['', [Validators.required]],
+            numero1: ['', [Validators.required]],
+            letra1: ['', [Validators.required]],
+            numero2: ['', [Validators.required]],
+            letra2: ['', [Validators.required]],
+            manzana: ['', [Validators.required]],
+            lote: ['', [Validators.required]],
+            subLote: ['', [Validators.required]],
+            zonaUrbanaId: ['', [Validators.required]],
+            subZonaUrbanaId: ['', [Validators.required]],
+            edificacionId: ['', [Validators.required]],
+            tipoInteriorId: ['', [Validators.required]],
+            descripcionInterior: null,
+            ingreso: ['', [Validators.required]],
+            piso: ['', [Validators.required]],
+            kilometro: ['', [Validators.required]],
+            referencia: ['', [Validators.required]],
+            //latitud: ['', [Validators.required]],
+            //longitud: ['', [Validators.required]],
+            descripcionDomicilio: null,
+            estructurado: null,
+            fuenteInformacionId: null,
+            usuarioCreacion: ['2025'],
+            terminalCreacion: ['192.168.1.1'],
+            municipalidadId: ['1'],
+            "contribuyenteNumero": "5",
+            "conContribuyenteId": null,
+
+
+        }
+        );
 
 
 
@@ -310,12 +352,12 @@ export class ContribuyenteComponent implements OnInit {
         this.maestroGenerico(5, 'maestrosCondicionTipoContribuyente', 1);
         this.maestroGenerico(6, 'maestrosCondicionConcursalTipo', 1);
         this.maestroGenerico(20, 'maestroEstadoRegistroCondicion', 0)
-
-
+        this.maestroGenerico(21, 'maestroTipoVias', 0);
+        this.maestroGenerico(22, 'maestrosTipoZonaUrbana', 0);
+        this.maestroGenerico(23, 'maestrosTipoSubZona', 0);
+        this.maestroGenerico(13, 'maestroTipoPredio', 0);
+        this.maestroGenerico(10, 'maestroTipoRelacion', 0);
     }
-
-
-
 
 
     // this.serviceUbigeo.todos().subscribe(p => this.ubigeo = p);
@@ -343,7 +385,7 @@ export class ContribuyenteComponent implements OnInit {
 
 
     maestroProvincia(departamentoId: any) {
-      console.log(departamentoId + 'depa llego');
+        console.log(departamentoId + 'depa llego');
         this.serviceUbigeo.verProvincia(departamentoId)
             .subscribe({
                 next: (res: any) => {
@@ -371,12 +413,38 @@ export class ContribuyenteComponent implements OnInit {
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
 
-        this.serviceUbigeo.verDistrito(this.valorDepartamento,provinciaId)
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
                     // matriz = res;
-                   // this.ubigeoDistrito = [];
+                    // this.ubigeoDistrito = [];
+                    this.ubigeoDistrito = res;
+                    console.log(this.ubigeoDistrito);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Distrito');
+                }
+            });
+    }
+
+
+    maestroDistrito2(provinciaId: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
+        console.log(provinciaId + 'DEPARTAMENTO(2)');
+
+
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    // matriz = res;
+                    // this.ubigeoDistrito = [];
                     this.ubigeoDistrito = res;
                     console.log(this.ubigeoDistrito);
                 },
@@ -391,8 +459,207 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
+    listarVias(tipoViaId: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoVia = tipoViaId;
+
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoVia, 'valorTipovia');
+
+        this.serviceVia.listarVias(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoVia)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaVias = res;
+                    console.log(this.listaVias);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar vias');
+                }
+            });
+    }
 
 
+    listarVias2(tipoViaId: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoVia = tipoViaId;
+
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoVia, 'valorTipovia');
+
+        this.serviceVia.listarVias(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoVia)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaVias = res;
+                    console.log(this.listaVias);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar vias');
+                }
+            });
+    }
+
+    listarNombreZonaUrbana(tipoZonaUrbana: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoZonaUrbana = tipoZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listarZonaUrbana = res;
+                    console.log(this.listarZonaUrbana);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar zonas ');
+                }
+            });
+
+    }
+
+
+
+    listarNombreZonaUrbana2(tipoZonaUrbana: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoZonaUrbana = tipoZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listarZonaUrbana = res;
+                    console.log(this.listarZonaUrbana);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar zonas ');
+                }
+            });
+
+    }
+
+    listarSubZonaUrbana(SubZonaUrbana: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoSubZonaUrbana = SubZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarSubZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoSubZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaSubZona = res;
+                    console.log(this.listaSubZona);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Sub Zona');
+                }
+            });
+    }
+
+
+
+    listarSubZonaUrbana2(SubZonaUrbana: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoSubZonaUrbana = SubZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarSubZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoSubZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaSubZona = res;
+                    console.log(this.listaSubZona);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Sub Zona');
+                }
+            });
+    }
+
+
+    listarEdificaciones(tipoEdificacion: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoEdificacion = tipoEdificacion;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoEdificacion, 'valorTipoEdificacion');
+
+        this.serviceVia.listarEdificacion(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoEdificacion)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaNombreEdificacion = res;
+                    console.log(this.listaNombreEdificacion);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Edificacion');
+                }
+            });
+    }
+
+    listarEdificaciones2(tipoEdificacion: any) {
+
+        this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoEdificacion = tipoEdificacion;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoEdificacion, 'valorTipoEdificacion');
+
+        this.serviceVia.listarEdificacion(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoEdificacion)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaNombreEdificacion = res;
+                    console.log(this.listaNombreEdificacion);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Edificacion');
+                }
+            });
+    }
 
 
 
@@ -446,8 +713,8 @@ export class ContribuyenteComponent implements OnInit {
 
 
     createContribuyente() {
-        console.log(this.registerFormContribuyente.value);
-        this.service.guardar(this.registerFormContribuyente.value)
+        console.log(this.registerFormContribuyenteDomicilio.value);
+        this.service.guardar(this.registerFormContribuyenteDomicilio.value)
             .pipe(first())
             .subscribe(() => {
                 Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
@@ -457,6 +724,24 @@ export class ContribuyenteComponent implements OnInit {
             })
             .add(() => this.loading = false);
     }
+
+
+
+
+
+    createDomicilioContribuyente() {
+        console.log(this.registerFormContribuyenteDomicilio.value);
+        this.serviceDomicilio.guardar(this.registerFormContribuyenteDomicilio.value)
+            .pipe(first())
+            .subscribe(() => {
+                Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
+                //this.router.navigate(['../contribuyente/list']);
+                // this.mostrarSnakbar('Registro se ha creado satisfactoriamente..!')
+                //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
+            })
+            .add(() => this.loading = false);
+    }
+
 
 
     createCondicionContribuyente() {
@@ -470,7 +755,26 @@ export class ContribuyenteComponent implements OnInit {
                 //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
             })
             .add(() => this.loading = false);
+    }
 
+    createContribuyenteRelacionado() {
+
+    //     this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+    //     this.valorProvincia = this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+    //     this.valorDistrito = this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+
+    //   this.registerFormContribuyenteRelacionado.controls['viaDepartamentoId'].value = this.valorDepartamento;
+
+
+        console.log(this.registerFormContribuyenteRelacionado.value);
+        this.serviceRelacionado.guardar(this.registerFormContribuyenteRelacionado.value)
+            .pipe(first())
+            .subscribe(() => {
+                Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
+                this.router.navigate(['../contribuyente/list']);
+
+            })
+            .add(() => this.loading = false);
     }
 
     public guardar(): void {
@@ -579,6 +883,27 @@ export class ContribuyenteComponent implements OnInit {
                         console.log(matriz);
                         this.maestroEstadoRegistroCondicion = res;
                     }
+                    if (matriz == 'maestroTipoVias') {
+                        console.log(matriz);
+                        this.maestroTipoVias = res;
+                    }
+                    if (matriz == 'maestrosTipoZonaUrbana') {
+                        console.log(matriz);
+                        this.maestrosTipoZonaUrbana = res;
+                    }
+                    if (matriz == 'maestrosTipoSubZona') {
+                        console.log(matriz);
+                        this.maestrosTipoSubZona = res;
+                    }
+                    if (matriz == 'maestroTipoPredio') {
+                        console.log(matriz);
+                        this.maestroTipoPredio = res;
+                    }
+                    if (matriz == 'maestroTipoRelacion') {
+                        console.log(matriz);
+                        this.maestroTipoRelacion = res;
+                    }
+
 
                 },
                 error: (error) => {

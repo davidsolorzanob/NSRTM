@@ -7,7 +7,7 @@
         <h1> Nuevo Contribuyente </h1>
     </h2>
     <ng-template #elseEdicion>
-        <h1> Edición de Contribuyente</h1>
+        <h1> Nuevo de Contribuyente</h1>
     </ng-template>
 
     <mat-accordion>
@@ -34,14 +34,11 @@
             </mat-expansion-panel-header>
             <p>
 
-
                 <!-- Form -->
             <form [formGroup]="registerFormContribuyente" (ngSubmit)="createContribuyente()"
                 class="flex flex-col w-full form-container">
 
 
-                <!-- Divider -->
-                <div class="mt-12 mb-10 border-t"></div>
 
                 <!-- Section -->
                 <div class="w-full">
@@ -52,7 +49,7 @@
 
                 <div class="grid grid-cols-12 gap-10 w-full mt-10">
 
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Cod. Contribuyente</mat-label>
                             <input matInput name="codContribuyente" id="codContribuyente"
@@ -60,7 +57,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>N° de Declaración</mat-label>
                             <input matInput name="nroDeclaracion" id="nroDeclaracion" formControlName="nroDeclaracion">
@@ -123,6 +120,11 @@
                         </mat-form-field>
                     </div>
 
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
                     <!-- Modalidad Oficio -->
                     <div class="col-span-2 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -137,9 +139,6 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
-
-                <div class="grid grid-cols-12 gap-6 w-full mt-8">
 
                     <!-- Contribuyente -->
                     <div class="col-span-2 sm:col-span-2">
@@ -300,8 +299,7 @@
 
 
                 </div>
-                <!-- Divider -->
-                <div class="mt-11 mb-10 border-t"></div>
+
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end">
@@ -499,9 +497,6 @@
 
                 </div>
 
-                <!-- Divider -->
-                <div class="mt-11 mb-10 border-t"></div>
-
                 <!-- Actions -->
                 <div class="flex items-center justify-end">
                     <!-- <button mat-stroked-button type="button" [routerLink]="['../list']">
@@ -548,11 +543,10 @@
             </mat-expansion-panel-header>
 
             <!-- Form -->
-            <form class="flex flex-col w-full form-container" [formGroup]="registerFormContribuyenteDomicilio" (ngSubmit)="createContribuyente()" class="flex flex-col w-full form-container">
+            <form class="flex flex-col w-full form-container" [formGroup]="registerFormContribuyenteDomicilio"
+                (ngSubmit)="createDomicilioContribuyente()" class="flex flex-col w-full form-container">
 
 
-                <!-- Divider -->
-                <div class="mt-12 mb-10 border-t"></div>
 
                 <!-- Section -->
                 <div class="w-full">
@@ -567,7 +561,8 @@
                             <mat-label>Departamento</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="departamentoId" id="departamentoId" formControlName="departamentoId" (valueChange)="maestroProvincia($event)">
+                            <mat-select name="departamentoId" id="departamentoId" formControlName="departamentoId"
+                                (valueChange)="maestroProvincia($event)">
                                 <mat-option>--Seleccione el departamento--</mat-option>
                                 <mat-option *ngFor="let mae of ubigeo" [value]="mae.departamentoId">
                                     {{mae.descripcion}}
@@ -582,8 +577,10 @@
                             <mat-label>Provincia</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="provinciaId" id="provinciaId" formControlName="provinciaId" (valueChange)="maestroDistrito($event)">
-                                <mat-option *ngFor="let pro of ubigeoProvincia" [value]="pro.provinciaId">{{pro.descripcion}}</mat-option>
+                            <mat-select name="provinciaId" id="provinciaId" formControlName="provinciaId"
+                                (valueChange)="maestroDistrito($event)">
+                                <mat-option *ngFor="let pro of ubigeoProvincia" [value]="pro.provinciaId">
+                                    {{pro.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -594,7 +591,7 @@
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
                             <mat-select name="distritoId" id="distritoId" formControlName="distritoId">
-                                <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.descripcion">
+                                <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.distritoId">
                                     {{dis.descripcion}}
                                 </mat-option>
                             </mat-select>
@@ -607,41 +604,49 @@
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
                             <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId">
-                                <mat-option [value]="'1'">Santiago</mat-option>
+                                <mat-option *ngFor="let tipopredio of maestroTipoPredio" [value]="tipopredio.maestroId">
+                                    {{tipopredio.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
 
-                    <div class="col-span-4 sm:col-span-2">
-                        <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Via</mat-label>
-                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
-                            </mat-icon>
-                            <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId">
-                                <mat-option [value]="'1'">Fiscal</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
 
                     <div class="col-span-2 sm:col-span-2">
-                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-form-field appearance="fill">
                             <mat-label>Fecha de declaración</mat-label>
-                            <input matInput name="fechaRegistro" id="fechaRegistro" formControlName="fechaRegistro">
+                            <input matInput [matDatepicker]="fechaRegistro" formControlName="fechaRegistro">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaRegistro"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaRegistro></mat-datepicker>
                         </mat-form-field>
                     </div>
+
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Tipo de Vía</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="viaId" id="viaId" formControlName="viaId">
-                                <mat-option [value]="'1'">Avenida</mat-option>
+                            <mat-select name="tipoViaId" id="tipoViaId" formControlName="tipoViaId"
+                                (valueChange)="listarVias($event)">
+                                <mat-option *ngFor="let tipovias of maestroTipoVias" [value]="tipovias.maestroId">
+                                    {{tipovias.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
 
-
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Vía</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="viaId" id="viaId" formControlName="viaId">
+                                <mat-option *ngFor="let tipovias of listaVias" [value]="tipovias.ubicacionId">
+                                    {{tipovias.descripcion}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
                     <div class="col-span-2 sm:col-span-1">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -649,7 +654,6 @@
                             <input matInput name="numero1" id="numero1" formControlName="numero1">
                         </mat-form-field>
                     </div>
-
 
                     <div class="col-span-2 sm:col-span-1">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -664,7 +668,6 @@
                             <input matInput name="numero2" id="numero2" formControlName="numero2">
                         </mat-form-field>
                     </div>
-
                     <div class="col-span-2 sm:col-span-1">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Letra 2</mat-label>
@@ -693,11 +696,30 @@
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Zona Urbana</mat-label>
+                            <mat-label>Tipo Zona Urbana</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="zonaUrbanaId" id="zonaUrbanaId" formControlName="zonaUrbanaId">
-                                <mat-option [value]="'1'">Avenida</mat-option>
+                            <mat-select name="zonaUrbanaId" id="zonaUrbanaId" formControlName="zonaUrbanaId"
+                                (valueChange)="listarNombreZonaUrbana($event)">
+                                <mat-option *ngFor="let tipozonzaurbana of maestrosTipoZonaUrbana"
+                                    [value]="tipozonzaurbana.maestroId">
+                                    {{tipozonzaurbana.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Zona Urbana</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="nombreZonaUrbana" id="nombreZonaUrbana"
+                                formControlName="nombreZonaUrbana">
+                                <mat-option *ngFor="let nombrezonaurbana of listarZonaUrbana"
+                                    [value]="nombrezonaurbana.ubicacionId">
+                                    {{nombrezonaurbana.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -705,39 +727,70 @@
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Zona Urbana</mat-label>
+                            <mat-label>Tipo Sub Zona</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="zonaUrbanaId" id="zonaUrbanaId" formControlName="zonaUrbanaId">
-                                <mat-option [value]="'1'">Avenida</mat-option>
+                            <mat-select name="subZonaUrbanaId" id="subZonaUrbanaId" formControlName="subZonaUrbanaId"
+                                (valueChange)="listarSubZonaUrbana($event)">
+                                <mat-option *ngFor="let tiposubzona of maestrosTipoSubZona"
+                                    [value]="tiposubzona.maestroId">
+                                    {{tiposubzona.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-
 
 
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Sub Zona</mat-label>
+                            <mat-label>Nombre Sub Zona Urbana</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="subZonaUrbanaId" id="subZonaUrbanaId" formControlName="subZonaUrbanaId">
-                                <mat-option [value]="'1'">Avenida</mat-option>
+                            <mat-select name="nombreSubZonaUrbana" id="nombreSubZonaUrbana"
+                                formControlName="nombreSubZonaUrbana">
+                                <mat-option *ngFor="let nombresubzonaurbana of listaSubZona"
+                                    [value]="nombresubzonaurbana.ubicacionId">
+                                    {{nombresubzonaurbana.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
+
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Edificación</mat-label>
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
-                            <mat-select name="edificacionId" id="edificacionId" formControlName="edificacionId">
-                                <mat-option [value]="'1'">Edificacion</mat-option>
+                            <mat-select name="edificacionId" id="edificacionId" formControlName="edificacionId"
+                                (valueChange)="listarEdificaciones($event)">
+                                <mat-option *ngFor="let tipoedificacion of maestrosEdificacion"
+                                    [value]="tipoedificacion.maestroId">
+                                    {{tipoedificacion.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre de Edificación</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="nombreEdificacion" id="nombreEdificacion"
+                                formControlName="nombreEdificacion">
+                                <mat-option *ngFor="let nombreedificacion of listaNombreEdificacion"
+                                    [value]="nombreedificacion.ubicacionId">
+                                    {{nombreedificacion.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+
 
                     <div class="col-span-4 sm:col-span-2">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -745,7 +798,9 @@
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
                             </mat-icon>
                             <mat-select name="tipoInteriorId" id="tipoInteriorId" formControlName="tipoInteriorId">
-                                <mat-option [value]="'1'">Interior</mat-option>
+                                <mat-option *ngFor="let interior of maestrosInterior" [value]="interior.maestroId">
+                                    {{interior.descripcion}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -796,11 +851,578 @@
 
                 </div>
 
-                <!-- Divider -->
-                <div class="mt-11 mb-10 border-t"></div>
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end">
+                    <button class="ml-4" mat-flat-button type="button" [color]="'primary'" type="submit">Siguiente
+                    </button>
+                </div>
+            </form>
+
+
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel (opened)="panelContribuyenteRelacionadoOpenState = true"
+            (closed)="panelContribuyenteOpenState = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder ;">
+                    <!-- <p *ngIf="panelOpenState>=true">+</p> <p *ngIf="panelOpenState=false">-</p>  Contribuyente -->
+
+                    <h2 *ngIf="panelContribuyenteRelacionadoOpenState>=true else elseBlockContribuyenteRelacionado">
+                        <p> - Relacionado Contribuyente</p>
+                    </h2>
+                    <ng-template #elseBlockContribuyenteRelacionado>
+                        <p> + Relacionado Contribuyente</p>
+                    </ng-template>
+
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>
+
+                <!-- Form -->
+            <form [formGroup]="registerFormContribuyenteRelacionado" (ngSubmit)="createContribuyenteRelacionado()"
+                class="flex flex-col w-full form-container">
+
+
+                <!-- Section -->
+                <div class="w-full">
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Cod. Relacionado</mat-label>
+                            <input matInput name="relContribuyenteNumero" id="relContribuyenteNumero" formControlName="relContribuyenteNumero">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Documento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="docIdentidadId" id="docIdentidadId"
+                                formControlName="docIdentidadId">
+                                <mat-option> -- Seleccionar Tipo Documento --</mat-option>
+                                <mat-option *ngFor="let mae of maestrosTipoDocumento" [value]="mae.maestroId">
+                                    {{mae.descripcion}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Numero de documento -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número de Documento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
+                            </mat-icon>
+                            <input matInput id="numDocIdentidad" name="numDocIdentidad"
+                                formControlName="numDocIdentidad">
+                            <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Apellido Paterno</mat-label>
+                            <input matInput name="apellidoPaterno" id="apellidoPaterno"
+                                formControlName="apellidoPaterno">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Apellido Materno</mat-label>
+                            <input matInput name="apellidoMaterno" id="apellidoMaterno"
+                                formControlName="apellidoMaterno">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombres</mat-label>
+                            <input matInput name="nombres" id="nombres"
+                                formControlName="nombres">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Relación</mat-label>
+                            <mat-select name="tipoRelacionadoId" id="tipoRelacionadoId" formControlName="tipoRelacionadoId">
+                                <mat-option>-- Seleccionar tipo de relación --</mat-option>
+                                <mat-option *ngFor="let listatiporelacion of maestroTipoRelacion " [value]="listatiporelacion.maestroId">
+{{listatiporelacion.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Razon Social</mat-label>
+                            <input matInput name="razonSocial" id="razonSocial"
+                                formControlName="razonSocial">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Fecha de Inicio -->
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de Inicio</mat-label>
+                            <input matInput [matDatepicker]="fechaVigenciaInicialRela" formControlName="fechaVigenciaInicialRela">
+                            <mat-hint>DD/MM/YYYY </mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaVigenciaInicialRela"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaVigenciaInicialRela></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Fecha fin -->
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha Final</mat-label>
+                            <input matInput [matDatepicker]="fechaVigenciaFinalRela" formControlName="fechaVigenciaFinalRela">
+                            <mat-hint>DD/MM/YYYY </mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaVigenciaFinalRela"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaVigenciaFinalRela></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Telefono fijo -->
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Telefono fijo</mat-label>
+                            <input matInput name="telefonoFijo" id="telefonoFijo">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Anexo -->
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Anexo</mat-label>
+                            <input matInput name="relacionadoAnexo" id="relacionadoAnexo"
+                                >
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Telefono Celular -->
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Celular</mat-label>
+                            <input matInput name="relacionadoCelular" id="relacionadoCelular">
+                        </mat-form-field>
+                    </div>
+<!--
+                   // Correo
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Correo Electrónico</mat-label>
+                            <input matInput name="correoElectronico" id="correoElectronico">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- fECHA DE DECLARACION -->
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Fecha de declaración</mat-label>
+                            <input matInput [matDatepicker]="fechaDeclaracionRela" formControlName="fechaDeclaracionRela">
+                            <mat-hint>DD/MM/YYYY </mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="fechaDeclaracionRela"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaDeclaracionRela></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+
+                    <input  hidden="true" value="15"  name="viaDepartamentoId" id="viaDepartamentoId" formControlName="viaDepartamentoId">
+                    <input  hidden="true" value="135"  name="viaProvinciaId" id="viaProvinciaId" formControlName="viaProvinciaId">
+                    <input  hidden="true" value="121" name="viaDistritoId" id="viaDistritoId" formControlName="viaDistritoId">
+
+                </div>
+
+
+                <!-- Domicilio del relacionado -->
+                <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+                    <!-- Departamento -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Departamento</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="departamentoId" id="departamentoId" formControlName="departamentoId"
+                                (valueChange)="maestroProvincia($event)">
+                                <mat-option>--Seleccione el departamento--</mat-option>
+                                <mat-option *ngFor="let mae of ubigeo" [value]="mae.departamentoId">
+                                    {{mae.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Procinvia -->
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Provincia</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="provinciaId" id="provinciaId" formControlName="provinciaId"
+                                (valueChange)="maestroDistrito2($event)">
+                                <mat-option *ngFor="let pro of ubigeoProvincia" [value]="pro.provinciaId">
+                                    {{pro.descripcion}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Distrito</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="distritoId" id="distritoId" formControlName="distritoId">
+                                <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.distritoId">
+                                    {{dis.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo Predio</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId">
+                                <mat-option *ngFor="let tipopredio of maestroTipoPredio" [value]="tipopredio.maestroId">
+                                    {{tipopredio.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Vía</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoViaId" id="tipoViaId" formControlName="tipoViaId"
+                                (valueChange)="listarVias2($event)">
+                                <mat-option *ngFor="let tipovias of maestroTipoVias" [value]="tipovias.maestroId">
+                                    {{tipovias.descripcion}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Vía</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="viaId" id="viaId" formControlName="viaId">
+                                <mat-option *ngFor="let tipovias of listaVias" [value]="tipovias.ubicacionId">
+                                    {{tipovias.descripcion}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número 1</mat-label>
+                            <input matInput name="numero1" id="numero1" formControlName="numero1">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Número 2</mat-label>
+                            <input matInput name="numero2" id="numero2" formControlName="numero2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Letra 1</mat-label>
+                            <input matInput name="letra1" id="letra1" formControlName="letra1" >
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Letra 2</mat-label>
+                            <input matInput name="letra2" id="letra2" formControlName="letra2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Manzana</mat-label>
+                            <input matInput name="mazana" id="manzana" formControlName="manzana">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Lote</mat-label>
+                            <input matInput name="lote" id="lote" formControlName="lote">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Sub Lote</mat-label>
+                            <input matInput name="subLote" id="subLote" formControlName="subLote">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo Zona Urbana</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoZonaUrbanaId" id="tipoZonaUrbanaId"
+                                (valueChange)="listarNombreZonaUrbana2($event)">
+                                <mat-option *ngFor="let tipozonzaurbana of maestrosTipoZonaUrbana"
+                                    [value]="tipozonzaurbana.maestroId">
+                                    {{tipozonzaurbana.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Zona Urbana</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="zonaUrbanaId" id="zonaUrbanaId"
+                                formControlName="zonaUrbanaId">
+                                <mat-option *ngFor="let nombrezonaurbana of listarZonaUrbana"
+                                    [value]="nombrezonaurbana.ubicacionId">
+                                    {{nombrezonaurbana.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo Sub Zona</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="subZonaUrbanaId" id="subZonaUrbanaId" formControlName="subZonaUrbanaId"
+                                (valueChange)="listarSubZonaUrbana2($event)">
+                                <mat-option *ngFor="let tiposubzona of maestrosTipoSubZona"
+                                    [value]="tiposubzona.maestroId">
+                                    {{tiposubzona.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre Sub Zona Urbana</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="zonaUrbanaId" id="zonaUrbanaId"
+                                formControlName="zonaUrbanaId">
+                                <mat-option *ngFor="let nombresubzonaurbana of listaSubZona"
+                                    [value]="nombresubzonaurbana.ubicacionId">
+                                    {{nombresubzonaurbana.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Edificación</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="edificacionId" id="edificacionId" formControlName="edificacionId"
+                                (valueChange)="listarEdificaciones2($event)">
+                                <mat-option *ngFor="let tipoedificacion of maestrosEdificacion"
+                                    [value]="tipoedificacion.maestroId">
+                                    {{tipoedificacion.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Nombre de Edificación</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="edificacionId" id="edificacionId"
+                                formControlName="edificacionId">
+                                <mat-option *ngFor="let nombreedificacion of listaNombreEdificacion"
+                                    [value]="nombreedificacion.ubicacionId">
+                                    {{nombreedificacion.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+
+
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Interior</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoInteriorId" id="tipoInteriorId" formControlName="tipoInteriorId">
+                                <mat-option *ngFor="let interior of maestrosInterior" [value]="interior.maestroId">
+                                    {{interior.descripcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Piso</mat-label>
+                            <input matInput name="piso" id="piso" formControlName="piso">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Ingreso</mat-label>
+                            <input matInput name="ingreso" id="ingreso" formControlName="ingreso">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Km</mat-label>
+                            <input matInput name="kilometro" id="kilometro" formControlName="kilometro">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Referencia</mat-label>
+                            <input matInput name="referencia" id="referencia" formControlName="referencia">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-span-4 sm:col-span-1">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Estado</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="Estado" id="Estado">
+                                <mat-option [value]="'1'">Activo</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+
+                </div>
+
+
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end">
+                    <!-- Actions -->
+                    <div class="flex items-center justify-end">
+                        <button class="ml-4" mat-flat-button type="button" [color]="'primary'" type="submit">Siguiente
+                        </button>
+                    </div>
+                </div>
+
+
+
+            </form>
+
+        </mat-expansion-panel>
+
+
+       <mat-expansion-panel (opened)="panelContacto = true" (closed)="panelContacto = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelContacto>=true  else elsepanelContacto">
+                        <p> - Contacto</p>
+                    </h2>
+                    <ng-template #elsepanelContacto>
+                        <p> + Contacto </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <form class="flex flex-col w-full form-container" [formGroup]="registerFormContribuyenteContacto" (ngSubmit)="createContribuyente()">
+
+                <div class="grid grid-cols-12 gap-4 w-full mt-12">
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Tipo de Contacto</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="tipoContacto" id="tipoContacto">
+                                <mat-option [value]="'1'">Familiar</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Medio de Contacto</mat-label>
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'" matPrefix>
+                            </mat-icon>
+                            <mat-select name="medioContacto" id="medioContacto">
+                                <mat-option [value]="'1'">Familiar</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Detalle </mat-label>
+                            <input matInput name="detalleContacto" id="detalleContacto">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <br>
+                        <br>
+                        <mat-checkbox class="fuse-mat-no-subscript w-full">
+                            <mat-label>Principal </mat-label>
+                        </mat-checkbox>
+                    </div>
+
+                </div>
+
+
+
+                <div class="flex items-center justify-end">
+
                     <button class="ml-4" mat-flat-button type="button" [color]="'primary'"
                         (click)="contribuyente.contribuyenteNumero? editar(): crear()">{{
                         contribuyente.contribuyenteNumero?
@@ -809,8 +1431,40 @@
                 </div>
             </form>
 
-
         </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelInformacionAdicional = true" (closed)="panelInformacionAdicional = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelInformacionAdicional>=true  else elsepanelInformacionAdicional">
+                        <p> - Información Adicional</p>
+                    </h2>
+                    <ng-template #elsepanelInformacionAdicional>
+                        <p> + Información Adicional </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelSustento = true" (closed)="panelSustento = false">
+            <mat-expansion-panel-header style="background-color: #c6c6c6">
+                <mat-panel-title style="font-weight: bolder;">
+                    <h2 *ngIf="panelSustento>=true  else elsepanelSustento">
+                        <p> - Sustento</p>
+                    </h2>
+                    <ng-template #elsepanelSustento>
+                        <p> + Sustento </p>
+                    </ng-template>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+
 
 
     </mat-accordion>
