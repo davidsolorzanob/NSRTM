@@ -2,3 +2,23 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+.bg-red{
+    background-color: #dc2626e6 !important;
+}
+
+.bg-red .mat-icon{
+    color: white !important;
+}
+
+.mat-flat-button.mat-primary
+{
+    background-color: #dc2626e6 !important;
+}
+
+body.dark {
+    background-color: #3c4043 !important;
+}
+
+.dark {
+    background-color: #3c4043 !important;
+}
