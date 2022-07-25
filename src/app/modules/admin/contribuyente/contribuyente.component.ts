@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { Domicilio } from 'app/models/domicilio.models';
@@ -22,6 +22,7 @@ import { ViaService } from 'app/services/via.service';
 import { DomicilioService } from 'app/services/domicilio.service';
 import { RelacionadoService } from 'app/services/relacionado.service';
 import { Ubicacion } from 'app/models/ubicacion.models';
+import { MatAccordion } from '@angular/material/expansion';
 
 const moment = _moment;
 
@@ -34,7 +35,7 @@ const moment = _moment;
 
 
 export class ContribuyenteComponent implements OnInit {
-
+    @ViewChild(MatAccordion) accordion: MatAccordion;
     contribuyente: Contribuyente = new Contribuyente();
     domicilio: Domicilio = new Domicilio();
     relacionado: Relacionado = new Relacionado();
@@ -94,8 +95,8 @@ export class ContribuyenteComponent implements OnInit {
 
     maestrosCondicionContribuyente: Maestro[] = [];
 
-    panelContribuyenteOpenState = false;
-    panelDomicilioFiscal = false;
+    panelContribuyenteOpenState = true;
+    panelDomicilioFiscal = true;
     panelContribuyenteRelacionadoOpenState = false;
     panelCondicion = false;
     panelContacto = false;
@@ -112,9 +113,6 @@ export class ContribuyenteComponent implements OnInit {
     public registerFormContribuyenteCondicion!: FormGroup;
     public registerFormContribuyenteContacto!: FormGroup;
 
-
-    selectedFood1: string;
-    selectedFood2: string;
 
     isAddMode!: boolean;
     loading = false;
@@ -678,8 +676,11 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
-    public crear(): void {
-        this.service.crear(this.contribuyente).subscribe({
+    public contribuyenteCrear(): void {
+
+
+
+        this.service.crear(this.registerFormContribuyente.value,this.registerFormContribuyenteCondicion.value,this.registerFormContribuyenteDomicilio.value,this.registerFormContribuyenteRelacionado.value).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -696,9 +697,6 @@ export class ContribuyenteComponent implements OnInit {
     }
 
 
-
-
-
     // private createContribuyente() {
     //     this.service.guardar(this.registerForm.value)
     //       .pipe(first())
@@ -711,13 +709,18 @@ export class ContribuyenteComponent implements OnInit {
     //       .add(() => this.loading = false);
     //   }
 
+///-------------------------------------------------------------------------------------------------
+///--------Registro de los Formularios--------------------------------------------------------------
 
+
+//1) Create Contriuyente
     createContribuyente() {
-        console.log(this.registerFormContribuyenteDomicilio.value);
-        this.service.guardar(this.registerFormContribuyenteDomicilio.value)
+        console.log(this.registerFormContribuyente.value);
+        this.service.guardar(this.registerFormContribuyente.value)
             .pipe(first())
             .subscribe(() => {
                 Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
+
                 //this.router.navigate(['../contribuyente/list']);
                 // this.mostrarSnakbar('Registro se ha creado satisfactoriamente..!')
                 //this.router.navigate(['/nsrtm-rate-payer-app'], { relativeTo: this.activatedRoute });
@@ -727,8 +730,7 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
-
-
+//2) Create Contribuyente Domicilio
     createDomicilioContribuyente() {
         console.log(this.registerFormContribuyenteDomicilio.value);
         this.serviceDomicilio.guardar(this.registerFormContribuyenteDomicilio.value)
@@ -743,7 +745,7 @@ export class ContribuyenteComponent implements OnInit {
     }
 
 
-
+// 3) Create Contribuyente Condicion
     createCondicionContribuyente() {
         console.log(this.registerFormContribuyenteCondicion.value);
         this.serviceCondicion.guardar(this.registerFormContribuyenteCondicion.value)
@@ -757,6 +759,7 @@ export class ContribuyenteComponent implements OnInit {
             .add(() => this.loading = false);
     }
 
+ // 4)  Create Contribuyente Relacionado
     createContribuyenteRelacionado() {
 
     //     this.valorDepartamento = this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
@@ -777,6 +780,16 @@ export class ContribuyenteComponent implements OnInit {
             .add(() => this.loading = false);
     }
 
+// 5) Guardar Todo
+
+
+
+
+
+
+///-------Fin
+
+
     public guardar(): void {
         this.setDefaultDate();
         console.log('llego');
@@ -795,6 +808,10 @@ export class ContribuyenteComponent implements OnInit {
             }
         });
     }
+
+
+///-------------------------------------------------------------------------------------------------
+///-------------------------------------------------------------------------------------------------
 
     public editar(): void {
         this.service.editar(this.contribuyente).subscribe({
@@ -816,6 +833,35 @@ export class ContribuyenteComponent implements OnInit {
             }
         });
     }
+
+
+
+
+
+    public guardarTodo(): void {
+
+        console.log('llego Guardar Todo');
+        this.service.guardar(this.contribuyente).subscribe({
+            next: (contribuyente) => {
+                console.log(contribuyente);
+                // alert('Contribuyente creado con exito ${contribuyente.nombres}');
+                //Swal.fire('Nuevo:', `Registro se ha creado satisfactoriamente`, 'success');
+                //this.router.navigate(['../contribuyente/list']);
+            }
+            , error: (err) => {
+                if (err.status === 400) {
+                    this.error = err.error;
+                    console.log(this.error);
+                }
+            }
+        });
+
+
+
+
+
+    }
+
 
 
 

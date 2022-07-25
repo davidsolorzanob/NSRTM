@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Condicion } from 'app/models/condicion.models';
+import { Domicilio } from 'app/models/domicilio.models';
 import { Relacionado } from 'app/models/relacionado.models';
+import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
 import { map, Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 
@@ -31,10 +34,17 @@ export class ContribuyenteService {
 
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
     }
-    public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
+    // public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
+    //     //enviar un body
+    //     return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
+    // }
+
+    public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio): Observable<Contribuyente> {
         //enviar un body
-        return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
+        return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, condicioncontribuyente, domicilioContribuyente, relacionado, { headers: this.cabeceras });
     }
+
+
     public guardar(contribuyente: Contribuyente): Observable<Contribuyente> {
         //enviar un body
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
