@@ -14,7 +14,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'configuracion',
         title: 'Configuracion',
         type : 'basic',
-        icon : 'heroicons_outline:user-circle',
+        icon : 'heroicons_outline:cog',
         link : '/settings'
     }
 
@@ -32,7 +32,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         id   : 'configuracion',
         title: 'Configuracion',
         type : 'basic',
-        icon : 'heroicons_outline:user-circle',
+        icon : 'heroicons_outline:cog',
         link : '/settings'
     }
 ];
@@ -49,7 +49,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         id   : 'configuracion',
         title: 'Configuracion',
         type : 'basic',
-        icon : 'heroicons_outline:user-circle',
+        icon : 'heroicons_outline:cog',
         link : '/settings'
     }
     
@@ -67,7 +67,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         id   : 'configuracion',
         title: 'Configuracion',
         type : 'basic',
-        icon : 'heroicons_outline:user-circle',
+        icon : 'heroicons_outline:cog',
         link : '/settings'
     }
 ];

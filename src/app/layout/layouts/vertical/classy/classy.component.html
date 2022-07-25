@@ -43,12 +43,6 @@
     <!-- Navigation footer hook -->
    
     <ng-container fuseVerticalNavigationContentFooter>
-   
-        <!-- <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
-              <img
-                class="max-w-36"
-                src="assets/images/logo/logo-text-on-dark.svg"> 
-        </div> -->
     </ng-container>
 </fuse-vertical-navigation>
 
@@ -57,7 +51,7 @@
 
     <!-- Header -->
     <div style="background-color:#eb373c;"
-        class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow light:shadow-none  print:hidden">
+        class="relative flex flex-0 items-center w-full px-4 md:px-6 z-49 shadow light:shadow-none  print:hidden">
         <!-- Navigation toggle button -->
         <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
@@ -65,32 +59,21 @@
         <label style="color: white;">Módulo de Registro de Contribuyente</label>
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
-            <!--     <languages></languages> -->
-            <!--         <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-            <search [appearance]="'bar'"></search>
-            <shortcuts></shortcuts>
-            <messages></messages> -->
-            <!--  <button
-                class="lg:hidden"
-                mat-icon-button
-                (click)="quickChat.toggle()">
-                <mat-icon [svgIcon]="'heroicons_outline:chat-alt-2'"></mat-icon>
-            </button> -->
-            <!-- User -->
-            <div class="flex flex-col items-center w-full p-4">
-               
-                <div class="flex flex-col items-end justify-center w-full mt-6">
-                    <div
-                        style="color: white;">
-                        {{user.name}}
-                    </div>
-                    <div
-                    style="color: white;">
-                        {{user.email}}
-                    </div>
-                </div>
-            </div>
             <notifications></notifications>
+            <user>
+                <button mat-icon-button="" class="mat-focus-indicator mat-menu-trigger mat-icon-button mat-button-base" aria-haspopup="menu">
+                <span class="mat-button-wrapper">
+                    <span class="relative">
+                        <img class="w-7 h-7 rounded-full ng-star-inserted" src="assets/images/avatars/brian-hughes.jpg"><!----><!---->
+                        <span class="absolute right-0 bottom-0 w-2 h-2 rounded-full bg-green-500"></span>
+                    </span>
+                </span>
+                <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round">
+
+                </span>
+                <span class="mat-button-focus-overlay"></span>
+            </button><!---->
+        </user>
         </div>
     </div>
 
@@ -107,6 +90,3 @@
     </div>-->
 
 </div>
-
-<!-- Quick chat -->
-<!-- <quick-chat #quickChat="quickChat"></quick-chat> -->
