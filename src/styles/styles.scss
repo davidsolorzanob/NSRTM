@@ -22,3 +22,10 @@ body.dark {
 .dark {
     background-color: #3c4043 !important;
 }
+.mat-button, .mat-fab, .mat-flat-button, .mat-icon-button, .mat-mini-fab, .mat-raised-button, .mat-stroked-button{
+    min-height: 35 px !important;
+    height: 35 px !important;
+}
+.no-radius {
+    border-radius: 0px !important;
+}

@@ -1,324 +1,252 @@
-<div class="flex flex-col bg-card">
-Hola
-</div>
-<form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow ">
-aaa
-</form>
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div class="flex flex-col flex-auto min-w-0">
+
     <!-- Header -->
-    <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
-        <!-- Loader -->
-        <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Contribuyente
-            <button class="float-left" mat-flat-button [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'" [routerLink]="['../contribuyente']"
-                    routerLinkActive="router-link-active"></mat-icon>
-                <span class="ml-2 mr-1">
-                </span>
-            </button>
-        </div>
-
-    </div>
-    <!-- Actions -->
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
-        <!-- Search -->
-
-
-        <div class="mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
-                <mat-label>Codi. Contribuyente :</mat-label>
-                <input matInput [autocomplete]="'off'" name="busquedaCodigo" id="busquedaCodigo">
-            </mat-form-field>
-        </div>
-
-    </div>
-
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-        <div class="mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
-                <mat-label>Tipo de documento :</mat-label>
-                <mat-select name="busquedatipoDocumento" id="busquedatipoDocumento">
-                    <mat-option [value]="'1'">DNI</mat-option>
-                    <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
-                    <mat-option [value]="'3'">Pasaporte</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-        </div>
-
-        <div class="mr-4">
-
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
-                <mat-label>Número documento :</mat-label>
-                <input matInput [autocomplete]="'off'" name="busquedaNumeroDocumento" id="busquedaNumeroDocumento">
-            </mat-form-field>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-        <div class=" mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
-                <mat-label>Apellido Paterno :</mat-label>
-                <input matInput [autocomplete]="'off'" name="busquedaApellidoPaterno" id="busquedaApellidoMaterno">
-            </mat-form-field>
-        </div>
-        <div class="mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
-                <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
-                <input matInput [autocomplete]="'off'" name="busquedaApellidoMaterno" id="busquedaApellidoMaterno">
-            </mat-form-field>
-        </div>
-        <div class="mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
-                <mat-label>Nombres :</mat-label>
-                <input matInput [autocomplete]="'off'" name="busquedaNombres" id="busquedaNombres">
-            </mat-form-field>
-        </div>
-    </div>
-
-
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-6  col-span-4">
-        <div class="mr-4">
-
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-128">
-                <mat-label>Razón social</mat-label>
-                <input matInput name="busquedaRazonSocial" id="busquedaRazonSocial" [autocomplete]="'off'">
-            </mat-form-field>
-        </div>
-
-        <div class="mr-4">
-            <button class="float-left" mat-flat-button [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:search'" [routerLink]="['../contribuyente']"
-                    routerLinkActive="router-link-active"></mat-icon>
-                <span class="ml-2 mr-1">
-                </span>
-            </button>
-        </div>
-        <div class="mr-4">
-            <button class="float-left" mat-flat-button [color]="'accent'">
-                <mat-icon [svgIcon]="'heroicons_outline:x-circle'" [routerLink]="['../contribuyente']"
-                    routerLinkActive="router-link-active"></mat-icon>
-                <span class="ml-2 mr-1">
-                </span>
-            </button>
-        </div>
-
-    </div>
-
-
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-        <div><mat-icon [svgIcon]="'heroicons_outline:view-list'"></mat-icon>
-            <button mat-button color="basic">Detalle</button>
-        </div>
-        <div><mat-icon [svgIcon]="'heroicons_outline:menu-alt-1'"></mat-icon>
-            <button mat-button color="warn">Historico</button>
-        </div>
-    </div>
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-        <div>
-            <mat-icon [svgIcon]="'heroicons_outline:save'"></mat-icon>
-        </div>
-        <div>
-            <mat-icon [svgIcon]="'heroicons_outline:printer'"></mat-icon>
-        </div>
-        <div>
-            <button class="m-2" mat-flat-button [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:external-link'"></mat-icon>
-                <span class="m-2 mr-1" [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">DJ
-                    Predial</span>
-            </button>
-        </div>
-        <div>
-            <button class="m-2" mat-flat-button [color]="'primary'">
-                <mat-icon [svgIcon]="'heroicons_outline:external-link'"></mat-icon>
-                <span class="m-2 mr-1" [routerLink]="['../contribuyente']"
-                    routerLinkActive="router-link-active">Notificación</span>
-            </button>
-        </div>
-        <div>
-
-        </div>
-        <div>
-
-        </div>
-        <div style="float: right;">
-            <!-- <ng-container>
-                <mat-paginator [length]="totalRows" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
-                    [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" [showFirstLastButtons]="true">
-                </mat-paginator>
-            </ng-container> -->
-        </div>
-
- <!-- <mat-paginator [length]="totalRegistros"
-                [pageSize]="totalPorPagina"
-                [pageIndex]="paginaActual"
-                [pageSizeOptions]="pageSizeOptions"
-                (page) ="paginar($event)"
-                showFirstLastButtons
-                class="float-left mx-2">
-              </mat-paginator> -->
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Main -->
-    <div class="flex flex-auto overflow-hidden">
-
-
-
-        <!-- Products list -->
-        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-
-            <ng-container>
-                <div class="grid">
-                    <!-- Header -->
-                    <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                        matSort matSortDisableClear>
-
-                        <div class="sm:block">
-                            Codigo
-                        </div>
-
-                        <div class="truncate">
-                           Fecha de Registro
-                        </div>
-
-                        <!-- <div class="hidden sm:block">
-                            Documento
-                        </div> -->
-
-
-
-                        <div class="hidden sm:block">
-                            Estado
-                        </div>
-
-                        <div class="hidden sm:block">
-                           Apellidos y Nombres
-                        </div>
-
-                        <div class="hidden sm:block">
-                            DNI
-                        </div>
-
-                        <div class="hidden sm:block">
-                            N Documento
-                        </div>
-
-
-                        <div class="hidden sm:block">
-                            Acciones
-                        </div>
-
-                    </div>
-                    <!-- Rows -->
-                    <ng-container>
-                        <ng-container *ngFor="let contribuyente of contribuyentes">
-                            <div
-                                class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b hover:bg-red-100">
-
-
-                                <!-- SKU -->
-                                <div>
-                                    {{contribuyente.contribuyenteNumero}}
-                                </div>
-                                   <!-- SKU -->
-                                   <div>
-                                   20/07/22
-                                </div>
-                                  <!-- SKU -->
-                                  <div class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase">
-
-
-                                  Activo
-
-
-
-                                </div>
-
-                                <!-- SKU -->
-                                <div class="sm:block truncate">
-                                    {{contribuyente.apellidoPaterno + ' ' + contribuyente.apellidoMaterno + ' ' +
-                                    contribuyente.nombres}}
-                                </div>
-                                <div>
-                                    DNI
-                                </div>
-                                <!-- SKU
-                                <div class="hidden sm:block truncate">
-                                    {{contribuyente.tipoDocumento}}
-                                </div> -->
-                                <!-- SKU -->
-                                <div class="hidden sm:block truncate">
-                                   {{contribuyente.numDocIdentidad}}
-                                </div>
-
-
-                                <!-- SKU -->
-                                <div>
-                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"
-                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]">
-                                    </mat-icon>
-                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:pencil'"
-                                        [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]"
-                                        routerLinkActive="router-link-active">
-                                    </mat-icon>
-                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:trash'"
-                                        (click)="eliminar(contribuyente)">
-                                    </mat-icon>
-                                </div>
-
-
-
-                            </div>
-                            <div class="grid">
-
-                            </div>
-                        </ng-container>
-                    </ng-container>
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Contribuyente >> Bandeja</a>
                 </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-1">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Contribuyente
+                    <button class="float-left" mat-flat-button [color]="'primary'">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'" [routerLink]="['../contribuyente']"
+                            routerLinkActive="router-link-active"></mat-icon>
+                    </button>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="flex-auto p-6 sm:p-2">
 
+        <div class="max-w-12xl">
 
+            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden">
+                <p class="text-lg font-medium pb-3">Búsqueda de Contribuyentes</p>
+                <hr/>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
+                        <!-- Search -->
+                        <div class="mr-4">
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                                <mat-label>Código Contribuyente :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="busquedaCodigo" id="busquedaCodigo">
+                            </mat-form-field>
+                        </div>
+                
+                    </div>
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
+                        <div class="mr-4">
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                                <mat-label>Tipo de documento :</mat-label>
+                                <mat-select name="busquedatipoDocumento" id="busquedatipoDocumento">
+                                    <mat-option [value]="'1'">DNI</mat-option>
+                                    <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
+                                    <mat-option [value]="'3'">Pasaporte</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4">
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                                <mat-label>Número documento :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="busquedaNumeroDocumento" id="busquedaNumeroDocumento">
+                            </mat-form-field>                
+                        </div>                
+                    </div>
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
+                        <div class=" mr-4">
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                                <mat-label>Apellido Paterno :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="busquedaApellidoPaterno" id="busquedaApellidoMaterno">
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4">                
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                                <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="busquedaApellidoMaterno" id="busquedaApellidoMaterno">
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4">
+                
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                                <mat-label>Nombres :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="busquedaNombres" id="busquedaNombres">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
+                        <div class="mr-4">  
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" [name]="'rbtnBusqueda'"></mat-radio-button>              
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                                <mat-label>Razón social</mat-label>
+                                <input matInput name="busquedaRazonSocial" id="busquedaRazonSocial" [autocomplete]="'off'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-end border-t -mx-8 mt-2 px-4 py-2 bg-gray-50 dark:bg-gray-700">
+                    <button mat-button [color]="'accent'" >
+                        <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active"></mat-icon>   
+                        Cancelar                     
+                    </button>
+                    <button
+                        class="px-6 ml-3"
+                        mat-flat-button
+                        [color]="'primary'" (click)="calcularRangos()">
+                        <mat-icon [svgIcon]="'heroicons_outline:search'" routerLinkActive="router-link-active"></mat-icon>
+                        Buscar
+                    </button>
+                </div>
+            </form>
+            <div class="flex justify-end pt-4 pb-4">
 
-            </ng-container>
+                <div class="inline-flex" role="group" aria-label="Button group">
+                    <button class="no-radius" mat-raised-button>
+                        <mat-icon [svgIcon]="'heroicons_outline:clipboard-check'"></mat-icon>
+                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                            Detalle</span>
+                    </button>
+                    <button class="no-radius" mat-raised-button color="default">
+                        <mat-icon [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
+                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                            Histórico</span>
+                    </button>
+                    <button class="no-radius" mat-raised-button color="default">
+                        <mat-icon [svgIcon]="'heroicons_outline:download'"></mat-icon>
+                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                            Descargar</span>
+                    </button>
+                    <button class="no-radius" mat-raised-button color="default">
+                        <mat-icon [svgIcon]="'heroicons_outline:clipboard-list'"></mat-icon>
+                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                            DJ Predial</span>
+                    </button>
+                    <button class="no-radius" mat-raised-button color="default">
+                        <mat-icon [svgIcon]="'heroicons_outline:mail'"></mat-icon>
+                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                            Notificación</span>
+                    </button>
+                </div>
+              </div>
+                <!-- Main -->
+                <div class="flex flex-auto overflow-hidden">
+                    <!-- Products list -->
+                    <div mat-table class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <ng-container>
+                            <div class="grid">
+                                <!-- Header -->
+                                <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                    matSort matSortDisableClear>
+            
+                                    <div class="sm:block">
+                                        Codigo
+                                    </div>
+            
+                                    <div class="sm:block">
+                                       Fecha de Registro
+                                    </div>
 
-             <!-- <mat-paginator [length]="totalRegistros"
-                [pageSize]="totalPorPagina"
-                [pageIndex]="paginaActual"
-                [pageSizeOptions]="pageSizeOptions"
-                (page) ="paginar($event)"
-                showFirstLastButtons
-                class="float-left mx-2">
-              </mat-paginator> -->
-
-
+                                    <div class="hidden sm:block">
+                                        Estado
+                                    </div>
+            
+                                    <div class="hidden sm:block">
+                                       Apellidos y Nombres
+                                    </div>
+            
+                                    <div class="hidden sm:block">
+                                        Tipo Documento
+                                    </div>
+            
+                                    <div class="hidden sm:block">
+                                        N Documento
+                                    </div>
+                                    <div class="hidden sm:block">
+                                        Acciones
+                                    </div>
+            
+                                </div>
+                                <!-- Rows -->
+                                <ng-container>
+                                    <ng-container *ngFor="let contribuyente of contribuyentes">
+                                        <div
+                                            class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b hover:bg-red-100">
+            
+            
+                                            <!-- SKU -->
+                                            <div>
+                                                {{contribuyente.contribuyenteNumero}}
+                                            </div>
+                                               <!-- SKU -->
+                                               <div>
+                                               20/07/22
+                                            </div>
+                                              <!-- SKU -->
+                                              <div class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase">
+                                              Activo
+                                            </div>
+            
+                                            <!-- SKU -->
+                                            <div class="sm:block truncate">
+                                                {{contribuyente.apellidoPaterno + ' ' + contribuyente.apellidoMaterno + ' ' +
+                                                contribuyente.nombres}}
+                                            </div>
+                                            <div>
+                                                DNI
+                                            </div>
+                                            <!-- SKU
+                                            <div class="hidden sm:block truncate">
+                                                {{contribuyente.tipoDocumento}}
+                                            </div> -->
+                                            <!-- SKU -->
+                                            <div class="hidden sm:block truncate">
+                                               {{contribuyente.numDocIdentidad}}
+                                            </div>
+                                            <!-- SKU -->
+                                            <div>
+                                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"
+                                                    [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]">
+                                                </mat-icon>
+                                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:pencil'"
+                                                    [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]"
+                                                    routerLinkActive="router-link-active">
+                                                </mat-icon>
+                                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:trash'"
+                                                    (click)="eliminar(contribuyente)">
+                                                </mat-icon>
+                                            </div>
+                                        </div>
+                                        <div class="grid">
+            
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+            
+                        </ng-container>
+            
+                         <!-- <mat-paginator [length]="totalRegistros"
+                            [pageSize]="totalPorPagina"
+                            [pageIndex]="paginaActual"
+                            [pageSizeOptions]="pageSizeOptions"
+                            (page) ="paginar($event)"
+                            showFirstLastButtons
+                            class="float-left mx-2">
+                          </mat-paginator> -->
+            
+            
+            
+                    </div>
+            
+                </div>
+            
 
         </div>
 
@@ -326,4 +254,4 @@ aaa
 
 </div>
 
-<router-outlet></router-outlet>
+
