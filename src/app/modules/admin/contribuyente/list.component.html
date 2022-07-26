@@ -1,6 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0">
 
     <!-- Header -->
+<<<<<<< HEAD
     <div
         class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
         <!-- Loader -->
@@ -298,6 +299,14 @@
                             </div>
                         </ng-container>
                     </ng-container>
+=======
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Contribuyente >> Bandeja</a>
+>>>>>>> 83b66c2a0b2472f23857643d42e4bf06c7413ffb
                 </div>
             </div>
             <!-- Title -->
@@ -329,7 +338,7 @@
                                 <mat-error *ngIf="myError('contribuyenteNumero', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
-                
+
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class="mr-4">
@@ -347,10 +356,16 @@
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Número documento :</mat-label>
+<<<<<<< HEAD
                                 <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
                                 <mat-error *ngIf="myError('numDocIdentidad', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>                
                         </div>                
+=======
+                                <input matInput [autocomplete]="'off'" name="busquedaNumeroDocumento" id="busquedaNumeroDocumento">
+                            </mat-form-field>
+                        </div>
+>>>>>>> 83b66c2a0b2472f23857643d42e4bf06c7413ffb
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class=" mr-4">
@@ -361,14 +376,19 @@
                                 <mat-error *ngIf="myError('apellidoPaterno', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="mr-4">                
+                        <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno" formControlName="apellidoMaterno">
                                 <mat-error *ngIf="myError('apellidoMaterno', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
+<<<<<<< HEAD
                         <div class="mr-4">                
+=======
+                        <div class="mr-4">
+
+>>>>>>> 83b66c2a0b2472f23857643d42e4bf06c7413ffb
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Nombres :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="nombres" id="nombres" formControlName="nombres">
@@ -377,8 +397,13 @@
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
+<<<<<<< HEAD
                         <div class="mr-4">  
                             <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>              
+=======
+                        <div class="mr-4">
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" [name]="'rbtnBusqueda'"></mat-radio-button>
+>>>>>>> 83b66c2a0b2472f23857643d42e4bf06c7413ffb
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Razón social</mat-label>
                                 <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
@@ -389,8 +414,8 @@
                 </div>
                 <div class="flex items-center justify-end border-t -mx-8 mt-2 px-4 py-2 bg-gray-50 dark:bg-gray-700">
                     <button mat-button [color]="'accent'" >
-                        <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active"></mat-icon>   
-                        Cancelar                     
+                        <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active"></mat-icon>
+                        Cancelar
                     </button>
                     <button
                         class="px-6 ml-3"
@@ -438,11 +463,16 @@
                             <div class="grid">
                                 <!-- Header -->
                                 <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+<<<<<<< HEAD
                                     matSort matSortDisableClear>            
+=======
+                                    matSort matSortDisableClear>
+
+>>>>>>> 83b66c2a0b2472f23857643d42e4bf06c7413ffb
                                     <div class="sm:block">
                                         Codigo
                                     </div>
-            
+
                                     <div class="sm:block">
                                        Fecha de Registro
                                     </div>
@@ -450,30 +480,30 @@
                                     <div class="hidden sm:block">
                                         Estado
                                     </div>
-            
+
                                     <div class="hidden sm:block">
                                        Apellidos y Nombres
                                     </div>
-            
+
                                     <div class="hidden sm:block">
                                         Tipo Documento
                                     </div>
-            
+
                                     <div class="hidden sm:block">
                                         N Documento
                                     </div>
                                     <div class="hidden sm:block">
                                         Acciones
                                     </div>
-            
+
                                 </div>
                                 <!-- Rows -->
                                 <ng-container>
                                     <ng-container *ngFor="let contribuyente of contribuyentes">
                                         <div
                                             class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b hover:bg-red-100">
-            
-            
+
+
                                             <!-- SKU -->
                                             <div>
                                                 {{contribuyente.contribuyenteNumero}}
@@ -486,7 +516,7 @@
                                               <div class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase">
                                               Activo
                                             </div>
-            
+
                                             <!-- SKU -->
                                             <div class="sm:block truncate">
                                                 {{contribuyente.apellidoPaterno + ' ' + contribuyente.apellidoMaterno + ' ' +
@@ -506,10 +536,10 @@
                                             <!-- SKU -->
                                             <div>
                                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"
-                                                    [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]">
+                                                    [routerLink]="['../contribuyente-ver/' ,contribuyente.contribuyenteNumero]">
                                                 </mat-icon>
                                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:pencil'"
-                                                    [routerLink]="['../contribuyente/' ,contribuyente.contribuyenteNumero]"
+                                                    [routerLink]="['../contribuyente-editar/' ,contribuyente.contribuyenteNumero]"
                                                     routerLinkActive="router-link-active">
                                                 </mat-icon>
                                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:trash'"
@@ -518,14 +548,14 @@
                                             </div>
                                         </div>
                                         <div class="grid">
-            
+
                                         </div>
                                     </ng-container>
                                 </ng-container>
                             </div>
-            
+
                         </ng-container>
-            
+
                          <!-- <mat-paginator [length]="totalRegistros"
                             [pageSize]="totalPorPagina"
                             [pageIndex]="paginaActual"
@@ -534,13 +564,13 @@
                             showFirstLastButtons
                             class="float-left mx-2">
                           </mat-paginator> -->
-            
-            
-            
+
+
+
                     </div>
-            
+
                 </div>
-            
+
 
         </div>
 

@@ -22,5 +22,10 @@ export class DomicilioService {
 
     }
 
+    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Domicilio> {
+
+        return this.http.get<Domicilio>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    }
+
 
 }

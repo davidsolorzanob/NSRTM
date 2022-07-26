@@ -2,11 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Maestro } from 'app/models/maestro.models';
+import { Condicion } from 'app/models/condicion.models'
+import { Domicilio } from 'app/models/domicilio.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
+import { CondicionService } from 'app/services/condicion.service';
+import { DomicilioService } from 'app/services/domicilio.service';
 import { ContribuyenteModule } from './contribuyente.module';
 import { MaestroService } from 'app/services/maestro.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
-
+import { via } from 'app/models/via.models';
+import { Ubicacion } from 'app/models/ubicacion.models';
+import { UbigeoService } from 'app/services/ubigeo.service';
+import { ViaService } from 'app/services/via.service';
+import { RelacionadoService } from 'app/services/relacionado.service';
+import { UbigeoDepartamento } from 'app/models/UbigeoDepartamento.models';
+import { ubigeoProvincia } from 'app/models/ubigeoProvincia.models';
+import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
+import { Relacionado } from 'app/models/relacionado.models';
+import Swal from 'sweetalert2';
+import { first } from 'rxjs';
 @Component({
     selector: 'app-contribuyente-editar',
     templateUrl: './contribuyente-editar.component.html'
@@ -14,7 +28,7 @@ import { Contribuyente } from 'app/models/contribuyente.models';
 export class ContribuyenteEditarComponent implements OnInit {
     public verticalStepperForm!: FormGroup;
 
-
+    loading = false;
     contribuyentes: Contribuyente[];
     maestrosTipoMedio: Maestro[] = [];
     maestrosMedio: Maestro[] = [];
@@ -47,12 +61,14 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
-
-    // listaVias: via[] = [];
-    // listaZonas: Ubicacion[] = [];
-    // listaSubZona: Ubicacion[] = [];
-    // listaNombreEdificacion: Ubicacion[] = [];
-    // listarZonaUrbana: Ubicacion[] = [];
+    ubigeo: UbigeoDepartamento[] = [];
+    ubigeoProvincia: ubigeoProvincia[] = [];
+    ubigeoDistrito: ubigeoDistrito[] = [];
+    listaVias: via[] = [];
+    listaZonas: Ubicacion[] = [];
+    listaSubZona: Ubicacion[] = [];
+    listaNombreEdificacion: Ubicacion[] = [];
+    listarZonaUrbana: Ubicacion[] = [];
     //Condición
     valorDepartamento: number;
     valorProvincia: number;
@@ -68,20 +84,28 @@ export class ContribuyenteEditarComponent implements OnInit {
         private router: Router,
         private contribuyenteService: ContribuyenteService,
         private formBuilder: FormBuilder,
-        private serviceMaestro: MaestroService
+        private serviceMaestro: MaestroService,
+        private CondicionService: CondicionService,
+        private DomicilioService: DomicilioService,
+        private serviceUbigeo: UbigeoService,
+        private serviceVia: ViaService,
+        private serviceRelacionado: RelacionadoService
     ) { }
 
     ngOnInit(): void {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         console.log('id', id);
         this.cargarContribuyente(id);
+        this.cargarContribuyenteCondicion(id);
+        this.cargarContribuyenteDomicilio(id);
+        this.cargarContribuyenteRelacionado(id);
 
 
 
         // Vertical stepper form
         this.verticalStepperForm = this.formBuilder.group({
             step1: this.formBuilder.group({
-                codContribuyente: [{ value: '', disabled: true }],
+                contribuyenteNumero: [{ value: '', disabled: true }],
                 nroDeclaracion: [{ value: '', disabled: true }],
                 fechaDJ: [''],
                 tipoMedioDeterminacionId: [''],
@@ -106,6 +130,131 @@ export class ContribuyenteEditarComponent implements OnInit {
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
             }),
+            step2: this.formBuilder.group({
+                //tipoCondicionInafectacionId para contribuyente y tipoCondicionInafectacion null o cer tomaria el otro campo
+                tipoCondicionInafectacionId: ['', [Validators.required]],
+                tipoCondicionConcursalId: ['0', [Validators.required]],
+                tipoDocumentoId: ['', [Validators.required]],
+                // nombreDocumento: ['', [Validators.required]],
+                desDocumento: ['', [Validators.required]],
+                numeroDocumento: ['', [Validators.required]],
+                fechaDocumento: ['', [Validators.required]],
+                fechaVigenciaInicial: ['', [Validators.required]],
+                fechaVigenciaFinal: ['', [Validators.required]],
+                importePension: ['', [Validators.required]],
+                estadoId: ['', [Validators.required]],
+                numeroLicencia: ['', [Validators.required]],
+                numeroExpediente: ['', [Validators.required]],
+                fechaExpediente: ['', [Validators.required]],
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+                municipalidadId: ['1'],
+                "contribuyenteNumero": "5",
+                "conContribuyenteId": null,
+            }),
+            step3: this.formBuilder.group({
+                municipalidadId: ['1'],
+                contribuyenteNumero: "5",
+                domContribuyenteDomicilioNumero: null,
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                // viaDepartamentoId: ['', [Validators.required]],
+                fechaRegistro: ['', [Validators.required]],
+                tipoViaId: ['', [Validators.required]],
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: ['', [Validators.required]],
+                letra2: ['', [Validators.required]],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                nombreZonaUrbana: ['', [Validators.required]],
+                subZonaUrbanaId: ['', [Validators.required]],
+                nombreSubZonaUrbana: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                nombreEdificacion: ['', [Validators.required]],
+                tipoInteriorId: ['', [Validators.required]],
+                ingreso: ['', [Validators.required]],
+                piso: ['', [Validators.required]],
+                kilometro: ['', [Validators.required]],
+                referencia: ['', [Validators.required]],
+                latitud: ['', [Validators.required]],
+                longitud: ['', [Validators.required]],
+                // usuarioRegistro: [''],
+                // fechaRegistro: [''],
+                // usuarioEdicion: [''],
+                // fechaEdicion: [''],
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+            }),
+            step4: this.formBuilder.group({
+                relContribuyenteNumero: null,
+                personaId: null,
+                docIdentidadId: ['', [Validators.required]],
+                numDocIdentidad: ['', [Validators.required]],
+                apellidoPaterno: ['', [Validators.required]],
+                apellidoMaterno: ['', [Validators.required]],
+                nombres: ['', [Validators.required]],
+                razonSocial: ['', [Validators.required]],
+               //  fechaVigenciaInicial: [''],
+               //  fechaVigenciaFinal: [''],
+                fechaVigenciaInicialRela: ['', [Validators.required]],
+                fechaVigenciaFinalRela: ['', [Validators.required]],
+                //fechaDeclaracionRela: ['', [Validators.required]],
+                //telefonoFijo: ['', [Validators.required]],
+               // celular: ['', [Validators.required]],
+
+                //anexo: ['', [Validators.required]],
+                tipoRelacionadoId: ['', [Validators.required]],
+                //fechaInscripcion: null,
+                estadoId: "1",
+                //estadoCivil: "1",
+                //numeroMunicipal: ['', [Validators.required]],
+                domicilioRelacionadoNumero: null,
+
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                tipoViaId: ['', [Validators.required]],
+                viaDistritoId: ['121'],
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: ['', [Validators.required]],
+                letra2: ['', [Validators.required]],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                 subZonaUrbanaId: ['', [Validators.required]],
+                 edificacionId: ['', [Validators.required]],
+                 tipoInteriorId: ['', [Validators.required]],
+                 descripcionInterior: null,
+                 ingreso: ['', [Validators.required]],
+                 piso: ['', [Validators.required]],
+                 kilometro: ['', [Validators.required]],
+                 referencia: ['', [Validators.required]],
+                 //latitud: ['', [Validators.required]],
+                 //longitud: ['', [Validators.required]],
+                 //descripcionDomicilio: null,
+                 //estructurado: null,
+                 //fuenteInformacionId: null,
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+                 municipalidadId: ['1'],
+                "contribuyenteNumero": "5",
+                "conContribuyenteId": null,
+
+
+             })
+
 
 
         });
@@ -240,7 +389,7 @@ export class ContribuyenteEditarComponent implements OnInit {
     cargarContribuyente(id: any) {
         this.contribuyenteService.obtener(1, id)
             .subscribe({
-                next: (res: ContribuyenteModule) => {
+                next: (res: Contribuyente) => {
                     console.log('DATOS CONTRIBUYENTE', res);
                     // this.verticalStepperForm.patchValue(res);
                     this.verticalStepperForm.get('step1').patchValue(res);
@@ -255,7 +404,372 @@ export class ContribuyenteEditarComponent implements OnInit {
     }
 
 
+    cargarContribuyenteCondicion(id: any) {
+        this.CondicionService.obtener(1, id)
+            .subscribe({
+                next: (res: Condicion) => {
+                    console.log('DATOS DE CONDICION CONTRIBUYENTE', res);
+                    // this.verticalStepperForm.patchValue(res);
+                    this.verticalStepperForm.get('step2').patchValue(res);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de la condicion del Contribuyente');
+                }
+            });
+    }
 
 
+    cargarContribuyenteDomicilio(id: any) {
+        this.DomicilioService.obtener(1, id)
+            .subscribe({
+                next: (res: Domicilio) => {
+                    console.log('DATOS DOMICILIO DE CONTRIBUYENTE', res);
+                    // this.verticalStepperForm.patchValue(res);
+                    this.verticalStepperForm.get('step3').patchValue(res);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación deL domicilio del Contribuyente');
+                }
+            });
+    }
+
+
+
+    cargarContribuyenteRelacionado(id: any) {
+        this.serviceRelacionado.obtener(1, id)
+            .subscribe({
+                next: (res: Relacionado) => {
+                    console.log('DATOS DEl  RELACIONADO DEL CONTRIBUYENTE', res);
+                    // this.verticalStepperForm.patchValue(res);
+                    this.verticalStepperForm.get('step4').patchValue(res);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación deL relacionado del Contribuyente');
+                }
+            });
+    }
+
+
+
+
+    // this.serviceUbigeo.todos().subscribe(p => this.ubigeo = p);
+
+    maestroDepartamento() {
+        // this.ubigeoProvincia = [];
+        // this.ubigeo = [];
+        this.serviceUbigeo.todos()
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    // matriz = res;
+
+                    this.ubigeo = res;
+                    console.log(this.ubigeo);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Departamento');
+                }
+            });
+    }
+
+
+    maestroProvincia(departamentoId: any) {
+        console.log(departamentoId + 'depa llego');
+        this.serviceUbigeo.verProvincia(departamentoId)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Provincia limpio', res);
+                    // matriz = res;
+
+                    this.ubigeoProvincia = res;
+                    console.log(this.ubigeoProvincia);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Provincia');
+                }
+            });
+    }
+
+    maestroDistrito(provinciaId: any) {
+
+        this.valorDepartamento = 15; //this.step1.get('step1')  //this.verticalStepperForm.get('step1').['departamentoId'].value;
+        console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
+        console.log(provinciaId + 'DEPARTAMENTO(2)');
+
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    // matriz = res;
+                    // this.ubigeoDistrito = [];
+                    this.ubigeoDistrito = res;
+                    console.log(this.ubigeoDistrito);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Distrito');
+                }
+            });
+    }
+
+
+    maestroDistrito2(provinciaId: any) {
+
+        this.valorDepartamento = 15;// this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
+        console.log(provinciaId + 'DEPARTAMENTO(2)');
+
+
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    // matriz = res;
+                    // this.ubigeoDistrito = [];
+                    this.ubigeoDistrito = res;
+                    console.log(this.ubigeoDistrito);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Distrito');
+                }
+            });
+    }
+
+
+
+    listarVias(tipoViaId: any) {
+
+        this.valorDepartamento = 15; //this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoVia = 1; //tipoViaId;
+
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoVia, 'valorTipovia');
+
+        this.serviceVia.listarVias(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoVia)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaVias = res;
+                    console.log(this.listaVias);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar vias');
+                }
+            });
+    }
+
+
+    listarVias2(tipoViaId: any) {
+
+        this.valorDepartamento = 15; //this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoVia = 1;//tipoViaId;
+
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoVia, 'valorTipovia');
+
+        this.serviceVia.listarVias(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoVia)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaVias = res;
+                    console.log(this.listaVias);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar vias');
+                }
+            });
+    }
+
+    listarNombreZonaUrbana(tipoZonaUrbana: any) {
+
+        this.valorDepartamento = 15;//this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoZonaUrbana = 1; //tipoZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listarZonaUrbana = res;
+                    console.log(this.listarZonaUrbana);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar zonas ');
+                }
+            });
+
+    }
+
+
+
+    listarNombreZonaUrbana2(tipoZonaUrbana: any) {
+
+        this.valorDepartamento = 15;//this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = 135; //this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = 121; //this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoZonaUrbana = 1; //tipoZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listarZonaUrbana = res;
+                    console.log(this.listarZonaUrbana);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de listar zonas ');
+                }
+            });
+
+    }
+
+    listarSubZonaUrbana(SubZonaUrbana: any) {
+
+        this.valorDepartamento = 15;// this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoSubZonaUrbana = 1; //SubZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarSubZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoSubZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaSubZona = res;
+                    console.log(this.listaSubZona);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Sub Zona');
+                }
+            });
+    }
+
+
+
+    listarSubZonaUrbana2(SubZonaUrbana: any) {
+
+        this.valorDepartamento = 15;//this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoSubZonaUrbana = 1;//SubZonaUrbana;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
+
+        this.serviceVia.listarSubZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoSubZonaUrbana)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaSubZona = res;
+                    console.log(this.listaSubZona);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Sub Zona');
+                }
+            });
+    }
+
+
+    listarEdificaciones(tipoEdificacion: any) {
+
+        this.valorDepartamento = 15; //this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
+        this.valorProvincia = 135; //this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
+        this.valorDistrito = 121; //this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
+        this.valorTipoEdificacion = 1; //tipoEdificacion;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoEdificacion, 'valorTipoEdificacion');
+
+        this.serviceVia.listarEdificacion(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoEdificacion)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaNombreEdificacion = res;
+                    console.log(this.listaNombreEdificacion);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Edificacion');
+                }
+            });
+    }
+
+    listarEdificaciones2(tipoEdificacion: any) {
+
+        this.valorDepartamento = 15;//this.registerFormContribuyenteRelacionado.controls['departamentoId'].value;
+        this.valorProvincia = 135;//this.registerFormContribuyenteRelacionado.controls['provinciaId'].value;
+        this.valorDistrito = 121;//this.registerFormContribuyenteRelacionado.controls['distritoId'].value;
+        this.valorTipoEdificacion = 1; //tipoEdificacion;
+        console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoEdificacion, 'valorTipoEdificacion');
+
+        this.serviceVia.listarEdificacion(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoEdificacion)
+            .subscribe({
+                next: (res: any) => {
+                    console.log('Motivo', res);
+                    this.listaNombreEdificacion = res;
+                    console.log(this.listaNombreEdificacion);
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación de Edificacion');
+                }
+            });
+    }
+
+
+
+     updateContribuyente() {
+        console.log('editando..');
+        this.contribuyenteService.guardar(this.verticalStepperForm.get('step1').value)
+          .pipe(first())
+          .subscribe(() => {
+            Swal.fire('Edición:', `Se editó con éxito`, 'success');
+                this.router.navigate(['../contribuyente/list']);
+          })
+          .add(() => this.loading = false);
+      }
 
 }
