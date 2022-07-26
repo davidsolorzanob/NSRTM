@@ -1,0 +1,346 @@
+<!-- Wizard INicio-->
+
+<!-- Main -->
+<div class="flex-auto p-12 sm:p-12">
+
+    <div class="max-w-12xl">
+
+        <div class="prose prose-sm max-w-12xl">
+            <p> Registro de contribuyente
+            </p>
+        </div>
+
+
+        <!-- Vertical stepper -->
+        <div class="mt-16 mb-8 text-12xl font-bold">Mantenimiento de Contribuyente</div>
+
+        <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="verticalStepperForm">
+            <mat-vertical-stepper [linear]="true" #verticalStepper >
+                <mat-step [formGroupName]="'step1'" [stepControl]="verticalStepperForm.get('step1')"
+                    #verticalStepperStep1 class="background-color: coral;">
+                    <ng-template matStepLabel>Información del Contribuyente</ng-template>
+                    <p class="my-6 font-medium">
+                        Registro de la información básica del contribuyente
+                    </p>
+
+                    <div class="flex flex-col gt-xs:flex-row">
+
+
+                        <!-- Form -->
+                        <!-- <form [formGroup]="registerFormContribuyente" (ngSubmit)="createContribuyente()"
+                    class="flex flex-col w-full form-container"> -->
+
+
+
+                        <!-- Section -->
+                        <div class="w-full">
+
+                        </div>
+
+
+
+                        <div class="grid grid-cols-12 gap-10 w-full mt-10">
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Cod. Contribuyente</mat-label>
+                                    <input matInput name="codContribuyente" id="codContribuyente"
+                                        formControlName="codContribuyente">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>N° de Declaración</mat-label>
+                                    <input matInput name="nroDeclaracion" id="nroDeclaracion"
+                                        formControlName="nroDeclaracion">
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha de Declaración</mat-label>
+                                    <input matInput [matDatepicker]="fechaDJ" formControlName="fechaDJ">
+                                    <mat-hint>DD/MM/YYYY </mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaDJ"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaDJ></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Tipo de Medio -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Medio</mat-label>
+                                    <mat-select id="tipoMedioDeterminacionId" name="tipoMedioDeterminacionId"
+                                        formControlName="tipoMedioDeterminacionId">
+                                        <mat-option>-- Seleccionar Tipo de Medio Determinación --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosTipoMedio" [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Medio -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Medio</mat-label>
+                                    <mat-select name="medioDeterminacionId" id="medioDeterminacionId"
+                                        formControlName="medioDeterminacionId">
+                                        <mat-option> -- Seleccionar Medio --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosMedio" [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Motivo -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Motivo</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
+                                        matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="motivoDjId" id="motivoDjId" formControlName="motivoDjId">
+                                        <mat-option> -- Seleccionar Motivo --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosMotivo" [value]="mae.maestroId">
+                                            {{mae.descripcion}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 w-full mt-8">
+
+                            <!-- Modalidad Oficio -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Modalidad de Oficio</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
+                                        matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="modalidadOficio" id="modalidadOficio"
+                                        formControlName="modalidadOficio">
+                                        <mat-option> -- Seleccionar Modalidad de Oficio --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosModalidadOficio" [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Contribuyente -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Contribuyente</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
+                                        matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="tipoPersonaId" id="tipoPersonaId" formControlName="tipoPersonaId">
+                                        <mat-option> -- Seleccionar Tipo Contribuyente --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosTipoContribuyente"
+                                            [value]="mae.maestroId">
+                                            {{mae.descripcion}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Documento</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
+                                        matPrefix>
+                                    </mat-icon>
+                                    <mat-select name="docIdentidadId" formControlName="docIdentidadId"
+                                        id="docIdentidadId">
+                                        <mat-option> -- Seleccionar Tipo Documento --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosTipoDocumento" [value]="mae.maestroId">
+                                            {{mae.descripcion}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Numero de documento -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Número de Documento</mat-label>
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
+                                    </mat-icon>
+                                    <input matInput id="numDocIdentidad" formControlName="numDocIdentidad"
+                                        name="numDocIdentidad">
+                                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha de Presentación </mat-label>
+                                    <input matInput [matDatepicker]="fechaInscripcion"
+                                        formControlName="fechaInscripcion">
+                                    <mat-hint>DD/MM/YYYY </mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaInscripcion"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaInscripcion></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha de Nacimiento</mat-label>
+                                    <input matInput [matDatepicker]="fechaNacimiento" formControlName="fechaNacimiento">
+                                    <mat-hint>DD/MM/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaNacimiento></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Estado -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Estado</mat-label>
+                                    <mat-select id="estadoDjId" name="estadoDjId" formControlName="estadoDjId">
+                                        <mat-option>-- Seleccionar Estado --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosEstadoDj" [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Apellido  Paterno-->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Apellido Paterno</mat-label>
+                                    <input matInput name="apellidoPaterno" id="apellidoPaterno"
+                                        formControlName="apellidoPaterno" placeholder="Apellido paterno">
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Apellido  Materno-->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Apellido Materno</mat-label>
+                                    <input matInput name="apellidoMaterno" id="apellidoMaterno"
+                                        formControlName="apellidoMaterno" placeholder="Apellido materno">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Nombres-->
+                            <div class="col-span-6 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput name="nombres" id="nombres" formControlName="nombres"
+                                        placeholder="nombres">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Estado Civil-->
+                            <div class="col-span-2 sm:col-span-2">
+
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Estado Civil</mat-label>
+                                    <mat-select id="estadoCivil" name="estadoCivil" formControlName="estadoCivil">
+                                        <mat-option>-- Seleccionar Estado Civil --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosEstadoCivil" [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fallecido</mat-label>
+                                    <input matInput id="fallecido" name="fallecido" formControlName="fallecido">
+                                </mat-form-field>
+                            </div>
+
+
+                            <!-- Fecha Fallecio-->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Fecha Fallecimiento</mat-label>
+                                    <input matInput id="fechaFallecimiento" name="fechaFallecimiento"
+                                        formControlName="fechaFallecimiento">
+                                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-span-4 sm:col-span-4">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Razon Social</mat-label>
+                                    <input matInput name="razonSocial" id="razonSocial" formControlName="razonSocial">
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Segamentación -->
+                            <div class="col-span-4 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Segmentación</mat-label>
+                                    <input matInput name="segContribuyenteId" id="segContribuyenteId"
+                                        formControlName="segContribuyenteId" readonly="true">
+                                </mat-form-field>
+                            </div>
+                            <!-- Usuario de Creacion Hidden -->
+
+
+                            <input hidden matInput name="usuarioCreacion" id="usuarioCreacion"
+                                formControlName="usuarioCreacion" value="2">
+                            <input hidden matInput name="terminalCreacion" id="terminalCreacion"
+                                formControlName="usuarioCreacion" value="192.168.1.2">
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="flex justify-end">
+                        <button class="px-8" mat-flat-button [color]="'primary'"
+                            [disabled]="verticalStepperStep1.stepControl.pristine || verticalStepperStep1.stepControl.invalid"
+                            type="button" matStepperNext>
+                            Siguiente
+                        </button>
+                    </div>
+                </mat-step>
+
+
+
+
+            </mat-vertical-stepper>
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Wizard Fin-->
+

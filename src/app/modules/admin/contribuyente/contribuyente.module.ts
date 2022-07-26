@@ -24,11 +24,15 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../contribuyente/date-format';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ContribuyenteEditarComponent } from './contribuyente-editar.component';
+
 
 @NgModule({
   declarations: [
     ContribuyenteComponent,
-    ListComponent
+    ListComponent,
+    ContribuyenteEditarComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,8 @@ import { MY_DATE_FORMATS } from '../contribuyente/date-format';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MomentDateModule
+    MomentDateModule,
+    MatStepperModule
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
