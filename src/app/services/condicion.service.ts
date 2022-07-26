@@ -21,35 +21,18 @@ export class CondicionService {
 
     }
 
-    //  public listarPaginas(page: string, size:  string): Observable<any> {
-    //      const params = new HttpParams()
-    //     .set('nroPage',page)
-    //     .set('size', size);
-    //     return this.http.get<any>(this.baseEndpoint+'/pagina/', {params: params});
-
-    //  }
-
     public listarPaginas(size: string, page: string): Observable<any> {
         var params = {
             "data": { "tipoFiltro": null, "municipalidadId": "1" },
             "size": size,
             "nroPage": page
         };
-        //return this.http.get<any>(this.baseEndpoint+'/listaContribuyentePaginado/', params);
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
-
-
-
     }
-
     public ver(contribuyenteId: number): Observable<Condicion> {
-
         return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
-
     }
-
     public crear(contribuyente: Condicion): Observable<Condicion> {
-        //enviar un body
         return this.http.post<Condicion>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
     }
     public guardar(contribuyente: Condicion): Observable<Condicion> {
@@ -57,20 +40,19 @@ export class CondicionService {
         return this.http.post<Condicion>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
     public editar(contribuyente: Condicion): Observable<Condicion> {
-
         return this.http.put<Condicion>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
-
     }
-
     public eliminar(contribuyenteId: number): Observable<void> {  //cuando se elimina no devuelve nada
-
         return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
-
     }
-
     public filtrarPorNombre(contribuyente: Condicion): Observable<Condicion[]> {
         return this.http.post<Condicion[]>(this.baseEndpoint + '/filtrar/', contribuyente, { headers: this.cabeceras });
     }
+    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Condicion> {
+
+        return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    }
+
 
 
 }

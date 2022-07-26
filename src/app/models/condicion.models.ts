@@ -1,24 +1,25 @@
 export class Condicion{
 
-
+    municipalidadId: number;
    conContribuyenteId:number;
    contribuyenteNumero:number;
-   desDocumento:string;
-   estadoId:number;
-   fechaDocumento:Date;
-   fechaExpediente:Date;
-   fechaVigenciaFinal:Date;
-   fechaVigenciaInicial:Date;
-   importePension:number;
-   municipalidadId: number;
-   numeroDocumento:string;
-   numeroExpediente:string;
-   numeroLicencia:string;
-   tipoCondicionConcursalId:number;
+
    tipoCondicionInafectacionId:number;
+   tipoCondicionConcursalId:number;
+   desTipoConcursal: string;
    tipoDocumentoId:number;
-   //nombreDocumento:string;
-   terminalCreacion: string;
+   nombreDocumento:string;
+   numeroDocumento:string;
+   fechaDocumento:Date;
+   fechaVigenciaInicial:Date;
+   fechaVigenciaFinal:Date;
+   importePension:number;
+   estadoId:number;
+   numeroLicencia:string;
+   numeroExpediente:string;
+   fechaExpediente:Date;
+//   desTipoDocumento:string;
+  // terminalCreacion: string;
 
 }
 

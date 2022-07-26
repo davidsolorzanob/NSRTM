@@ -12,15 +12,13 @@ export class RelacionadoService {
     private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
     constructor(private http: HttpClient) { }
 
-
-
-
     public guardar(relacionado: Relacionado): Observable<Relacionado> {
         //enviar un body
         console.log('llego relacionado', relacionado);
         return this.http.post<Relacionado>(this.baseEndpoint + '/guardar', relacionado, { headers: this.cabeceras });
-
     }
+    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Relacionado> {
 
-
+        return this.http.get<Relacionado>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    }
 }

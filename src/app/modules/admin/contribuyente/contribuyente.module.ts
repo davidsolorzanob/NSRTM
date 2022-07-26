@@ -26,13 +26,15 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../contribuyente/date-format';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ContribuyenteEditarComponent } from './contribuyente-editar.component';
+import { ContribuyenteVerComponent } from './contribuyente-ver.component';
 
 
 @NgModule({
   declarations: [
     ContribuyenteComponent,
     ListComponent,
-    ContribuyenteEditarComponent
+    ContribuyenteEditarComponent,
+    ContribuyenteVerComponent
   ],
   imports: [
     CommonModule,
