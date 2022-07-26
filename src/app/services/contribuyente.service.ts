@@ -45,13 +45,13 @@ export class ContribuyenteService {
 
         var params = {
             "contribuyente": contribuyente,
-            "condicioncontribuyente": condicioncontribuyente,
+            "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado
 
         };
 
-        return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/crear', params, { headers: this.cabeceras });
+        return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
 
@@ -68,6 +68,11 @@ export class ContribuyenteService {
 
         return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
 
+    }
+//ObtenerPorId(Long municipalidadId, Long contribuyenteNumero)
+    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
+
+        return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
 
     public filtrarPorNombre(contribuyente: Contribuyente): Observable<Contribuyente[]> {
