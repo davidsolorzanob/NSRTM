@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
@@ -40,45 +41,120 @@ export class ListComponent implements OnInit {
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  public formBusquedaContribuyente!: FormGroup;
 
-
-  constructor(private service: ContribuyenteService) { }
+  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     //  this.service.todos().subscribe(contribuyentes=>{
     //    this.contribuyentes = contribuyentes;
     //    console.log(contribuyentes);
     //  });
-    this.calcularRangos();
+    
 
 
-   this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
-  
-    this.contribuyentes = p.data as Contribuyente[];
+    this.formBusquedaContribuyente = this.formBuilder.group({    
+        municipalidadId: ['1'],
+        docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        numDocIdentidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        contribuyenteNumero: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+        apellidoPaterno:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        apellidoMaterno:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        nombres: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        razonSocial:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        tipoFiltro:new FormControl('')
+    });
 
-  });
+    this.removeValidators();
+    this.buscarContribuyentes();
+  }
 
+  public submit(){
+    console.log(this.formBusquedaContribuyente);
+    if(this.formBusquedaContribuyente.valid){
+      this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+        //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+        //this.contribuyentes = p.content as Contribuyente[];
+        //this.totalRegistros = p.totalElements as number;
+      // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
+
+        this.contribuyentes = p.data as Contribuyente[];
+        console.log(p);
+      });
+    }
+  };
+
+  public myError = (controlName: string, errorName: string) =>{
+    return this.formBusquedaContribuyente.controls[controlName].hasError(errorName);
+  }
+
+  public removeValidators = () =>{
+    this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('apellidoPaterno').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required); 
+
+    this.formBusquedaContribuyente.get('docIdentidadId').disable(); 
+    this.formBusquedaContribuyente.get('numDocIdentidad').disable(); 
+    this.formBusquedaContribuyente.get('contribuyenteNumero').disable(); 
+    this.formBusquedaContribuyente.get('apellidoPaterno').disable(); 
+    this.formBusquedaContribuyente.get('apellidoMaterno').disable(); 
+    this.formBusquedaContribuyente.get('nombres').disable(); 
+    this.formBusquedaContribuyente.get('razonSocial').disable(); 
+  }
+
+  public changeFiltro (e){
+    this.removeValidators();
+
+    switch(e.value){
+      case "1":
+        console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
+        this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
+        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
+        break;
+      case "2":
+        this.formBusquedaContribuyente.get('docIdentidadId').enable(); 
+        this.formBusquedaContribuyente.get('numDocIdentidad').enable(); 
+        this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
+        break;
+      case "3":
+        this.formBusquedaContribuyente.get('apellidoPaterno').enable(); 
+        this.formBusquedaContribuyente.get('apellidoMaterno').enable(); 
+        this.formBusquedaContribuyente.get('nombres').enable(); 
+        this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required); 
+        break;
+      case "4":
+        this.formBusquedaContribuyente.get('razonSocial').enable(); 
+        this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required); 
+        break;
+      default:
+          break;
+    }
   }
 
   paginar(event: PageEvent): void {
 
     this.paginaActual = event.pageIndex;
     this.totalPorPagina = event.pageSize;
-    this.calcularRangos();
+    this.buscarContribuyentes();
   }
 
+  public buscarContribuyentes() {
+      this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+        //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+        //this.contribuyentes = p.content as Contribuyente[];
+        //this.totalRegistros = p.totalElements as number;
+      // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
 
-  public calcularRangos() {
-
-    this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-      //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-      //this.contribuyentes = p.content as Contribuyente[];
-      //this.totalRegistros = p.totalElements as number;
-     // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
-
-      this.contribuyentes = p.data as Contribuyente[];
-      console.log(p);
-    });
+        this.contribuyentes = p.data as Contribuyente[];
+        console.log(p);
+      });    
   }
 
   public eliminar(contribuyente: Contribuyente): void {

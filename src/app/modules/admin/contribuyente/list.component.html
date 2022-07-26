@@ -25,68 +25,73 @@
 
         <div class="max-w-12xl">
 
-            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden">
+            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden" [formGroup]="formBusquedaContribuyente" (ngSubmit)="submit()">
                 <p class="text-lg font-medium pb-3">Búsqueda de Contribuyentes</p>
-                <hr/>
                 <div class="flex flex-col gt-xs:flex-row">
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
                         <!-- Search -->
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Código Contribuyente :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="busquedaCodigo" id="busquedaCodigo">
+                                <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
+                                <mat-error *ngIf="myError('contribuyenteNumero', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                 
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Tipo de documento :</mat-label>
-                                <mat-select name="busquedatipoDocumento" id="busquedatipoDocumento">
+                                <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
                                     <mat-option [value]="'1'">DNI</mat-option>
                                     <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
                                     <mat-option [value]="'3'">Pasaporte</mat-option>
                                 </mat-select>
+                                <mat-error *ngIf="myError('docIdentidadId', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Número documento :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="busquedaNumeroDocumento" id="busquedaNumeroDocumento">
+                                <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
+                                <mat-error *ngIf="myError('numDocIdentidad', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>                
                         </div>                
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class=" mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" [name]="'rbtnBusqueda'"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Apellido Paterno :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="busquedaApellidoPaterno" id="busquedaApellidoMaterno">
+                                <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
+                                <mat-error *ngIf="myError('apellidoPaterno', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">                
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="busquedaApellidoMaterno" id="busquedaApellidoMaterno">
+                                <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno" formControlName="apellidoMaterno">
+                                <mat-error *ngIf="myError('apellidoMaterno', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="mr-4">
-                
+                        <div class="mr-4">                
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Nombres :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="busquedaNombres" id="busquedaNombres">
+                                <input matInput [autocomplete]="'off'" name="nombres" id="nombres" formControlName="nombres">
+                                <mat-error *ngIf="myError('nombres', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
                         <div class="mr-4">  
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" [name]="'rbtnBusqueda'"></mat-radio-button>              
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>              
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput name="busquedaRazonSocial" id="busquedaRazonSocial" [autocomplete]="'off'">
+                                <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
+                                <mat-error *ngIf="myError('razonSocial', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -99,14 +104,13 @@
                     <button
                         class="px-6 ml-3"
                         mat-flat-button
-                        [color]="'primary'" (click)="calcularRangos()">
-                        <mat-icon [svgIcon]="'heroicons_outline:search'" routerLinkActive="router-link-active"></mat-icon>
+                        [color]="'primary'" type="submit">
+                        <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
                         Buscar
                     </button>
                 </div>
             </form>
             <div class="flex justify-end pt-4 pb-4">
-
                 <div class="inline-flex" role="group" aria-label="Button group">
                     <button class="no-radius" mat-raised-button>
                         <mat-icon [svgIcon]="'heroicons_outline:clipboard-check'"></mat-icon>
@@ -143,8 +147,7 @@
                             <div class="grid">
                                 <!-- Header -->
                                 <div class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
-                                    matSort matSortDisableClear>
-            
+                                    matSort matSortDisableClear>            
                                     <div class="sm:block">
                                         Codigo
                                     </div>
