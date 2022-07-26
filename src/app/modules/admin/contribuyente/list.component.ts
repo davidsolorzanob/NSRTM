@@ -49,19 +49,13 @@ export class ListComponent implements OnInit {
     //    this.contribuyentes = contribuyentes;
     //    console.log(contribuyentes);
     //  });
-   // this.calcularRangos();
+    this.calcularRangos();
 
 
    this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
-    //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+  
     this.contribuyentes = p.data as Contribuyente[];
-    //this.totalRegistros = p.totalRows as number;
-    //this.paginator._intl.itemsPerPageLabel =  'Registro por página';
 
-   //this.contribuyentesAny = p;
-
-   console.log(p);
-   console.log('llego');
   });
 
   }
@@ -74,7 +68,7 @@ export class ListComponent implements OnInit {
   }
 
 
-  private calcularRangos() {
+  public calcularRangos() {
 
     this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
       //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
@@ -90,21 +84,21 @@ export class ListComponent implements OnInit {
   public eliminar(contribuyente: Contribuyente): void {
 
     Swal.fire({
-      title: 'Esta seguro?',
-      text: `Usted desea eliminar a ${contribuyente.nombres}`,
+      title: 'Confirmación',
+      text: `¿Usted desea eliminar a ${contribuyente.nombres}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar!'
+      confirmButtonText: 'Sí, estoy seguro'
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.eliminar(contribuyente.contribuyenteNumero).subscribe(() => {
           this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
         })
         Swal.fire(
-          'Eliminado!',
-          'Este registro ha sido eliminado',
+          'Información',
+          'El registro ha sido eliminado',
           'success'
         )
       }
