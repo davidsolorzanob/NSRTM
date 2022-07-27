@@ -23,9 +23,9 @@ export class ContribuyenteService {
         return this.http.get<Contribuyente[]>(this.baseEndpoint + '/todos');
     }
 
-    public listarPaginas(size: string, page: string): Observable<any> {
+    public listarPaginas(contribuyente: Contribuyente, size: string, page: string): Observable<any> {
         var params = {
-            "data": { "tipoFiltro": null, "municipalidadId": "1" },
+            "data": contribuyente,
             "size": size,
             "nroPage": page
         };

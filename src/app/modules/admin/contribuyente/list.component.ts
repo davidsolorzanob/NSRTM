@@ -72,15 +72,7 @@ export class ListComponent implements OnInit {
   public submit(){
     console.log(this.formBusquedaContribuyente);
     if(this.formBusquedaContribuyente.valid){
-      this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-        //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-        //this.contribuyentes = p.content as Contribuyente[];
-        //this.totalRegistros = p.totalElements as number;
-      // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
-
-        this.contribuyentes = p.data as Contribuyente[];
-        console.log(p);
-      });
+      this.buscarContribuyentes();
     }
   };
 
@@ -108,7 +100,7 @@ export class ListComponent implements OnInit {
 
   public changeFiltro (e){
     this.removeValidators();
-
+    this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
     switch(e.value){
       case "1":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
@@ -146,7 +138,7 @@ export class ListComponent implements OnInit {
   }
 
   public buscarContribuyentes() {
-      this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
+      this.service.listarPaginas(this.formBusquedaContribuyente.value, this.totalPorPagina.toString(), this.paginaActual.toString()).subscribe(p => {
         //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
         //this.contribuyentes = p.content as Contribuyente[];
         //this.totalRegistros = p.totalElements as number;
@@ -179,9 +171,8 @@ export class ListComponent implements OnInit {
         )
       }
     })
-
-
   }
+
   public filtrar(nombres: string): void {
     this.contribuyente = new Contribuyente();
     this.contribuyente.nombres = nombres
