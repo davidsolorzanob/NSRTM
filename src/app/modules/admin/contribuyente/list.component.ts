@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 
@@ -39,19 +40,14 @@ export class ListComponent implements OnInit {
   paginaActual = 1;
   totalPorPagina = 10;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource<Contribuyente>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   public formBusquedaContribuyente!: FormGroup;
 
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    //  this.service.todos().subscribe(contribuyentes=>{
-    //    this.contribuyentes = contribuyentes;
-    //    console.log(contribuyentes);
-    //  });
-    
-
 
     this.formBusquedaContribuyente = this.formBuilder.group({    
         municipalidadId: ['1'],
@@ -67,6 +63,7 @@ export class ListComponent implements OnInit {
 
     this.removeValidators();
     this.buscarContribuyentes();
+    this.dataSource.paginator = this.paginator;
   }
 
   public submit(){
