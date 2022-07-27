@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -36,14 +36,17 @@ export class ListComponent implements OnInit {
   contribuyentes: Contribuyente[] = [];
   contribuyentesAny: any[] = [] ;
   contribuyente: Contribuyente;
-  totalRegistros = 0;
-  paginaActual = 1;
-  totalPorPagina = 10;
+  isLoadingBusqueda = false;
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 0;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<Contribuyente>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns: string[] = ['contribuyenteNumero', 'fechaDJ', 'desEstadoDj', 'apellidoPaterno', 'descDocIdentidad', 'numDocIdentidad', 'acciones' ];
+  dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
+
   public formBusquedaContribuyente!: FormGroup;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
@@ -63,12 +66,14 @@ export class ListComponent implements OnInit {
 
     this.removeValidators();
     this.buscarContribuyentes();
+    
     this.dataSource.paginator = this.paginator;
   }
 
   public submit(){
     console.log(this.formBusquedaContribuyente);
     if(this.formBusquedaContribuyente.valid){
+      this.currentPage = 0;
       this.buscarContribuyentes();
     }
   };
@@ -127,22 +132,30 @@ export class ListComponent implements OnInit {
     }
   }
 
-  paginar(event: PageEvent): void {
-
-    this.paginaActual = event.pageIndex;
-    this.totalPorPagina = event.pageSize;
+  pageBusquedaChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
     this.buscarContribuyentes();
   }
 
   public buscarContribuyentes() {
-      this.service.listarPaginas(this.formBusquedaContribuyente.value, this.totalPorPagina.toString(), this.paginaActual.toString()).subscribe(p => {
-        //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-        //this.contribuyentes = p.content as Contribuyente[];
-        //this.totalRegistros = p.totalElements as number;
-      // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
+      this.isLoadingBusqueda = true;
+      this.service.listarPaginas(this.formBusquedaContribuyente.value, this.pageSize.toString(), (this.currentPage +1).toString()).subscribe(p => {
+        
+        this.dataSource.data = p.data as Contribuyente[];
+        setTimeout(() => {
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = p.totalRows;
+        });
+        this.isLoadingBusqueda = false;
+      });    
+  }
 
-        this.contribuyentes = p.data as Contribuyente[];
-        console.log(p);
+  public descargarReporteExcel() {
+      this.service.getReporteBusquedaExcel(this.formBusquedaContribuyente.value).subscribe(p => {
+        let file = new Blob([p], { type: 'application/vnd.ms-excel' });
+        var fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
       });    
   }
 
@@ -175,4 +188,5 @@ export class ListComponent implements OnInit {
     this.contribuyente.nombres = nombres
     this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
   }
+
 }

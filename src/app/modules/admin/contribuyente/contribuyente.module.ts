@@ -27,7 +27,8 @@ import { MY_DATE_FORMATS } from '../contribuyente/date-format';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ContribuyenteEditarComponent } from './contribuyente-editar.component';
 import { ContribuyenteVerComponent } from './contribuyente-ver.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import { ContribuyenteVerComponent } from './contribuyente-ver.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MomentDateModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTableModule,
+    HttpClientModule
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }

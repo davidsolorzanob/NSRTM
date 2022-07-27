@@ -4,9 +4,10 @@ import { Condicion } from 'app/models/condicion.models';
 import { Domicilio } from 'app/models/domicilio.models';
 import { Relacionado } from 'app/models/relacionado.models';
 import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 import { contribuyenteCrear } from 'app/models/contribuyenteCrear';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -31,47 +32,42 @@ export class ContribuyenteService {
         };
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
+
+    public getReporteBusquedaExcel(busqueda: any ) {
+        //let params = new HttpParams().set("keyword", busqueda);
+        this.http.get("",)
+        //return this.http.get<any>(this.baseEndpoint + '/exportarExcel', busqueda);
+        return this.http.get(this.baseEndpoint + '/exportarExcel', { params: busqueda, responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
+    }
+
     public ver(contribuyenteId: number): Observable<Contribuyente> {
 
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
     }
-    // public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
-    //     //enviar un body
-    //     return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
-    // }
 
     public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio): Observable<contribuyenteCrear> {
-        //enviar un body
-
         var params = {
             "contribuyente": contribuyente,
             "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado
-
         };
-
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
-
     public guardar(contribuyente: Contribuyente): Observable<Contribuyente> {
-        //enviar un body
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
-    public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
 
+    public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
         return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
 
     public eliminar(contribuyenteId: number): Observable<void> {  //cuando se elimina no devuelve nada
-
         return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
-
     }
-//ObtenerPorId(Long municipalidadId, Long contribuyenteNumero)
-    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
 
+    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
 
