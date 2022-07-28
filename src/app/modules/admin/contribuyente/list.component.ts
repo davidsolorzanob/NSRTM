@@ -70,7 +70,7 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public submit(){
+  public submit(){    
     console.log(this.formBusquedaContribuyente);
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
@@ -104,8 +104,7 @@ export class ListComponent implements OnInit {
     this.removeValidators();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
     switch(e.value){
-      case "1":
-        console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
+      case "1":        
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
         this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
         break;
@@ -152,11 +151,15 @@ export class ListComponent implements OnInit {
   }
 
   public descargarReporteExcel() {
-      this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
-        let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        var fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
-      });    
+    
+    var formValue = this.formBusquedaContribuyente.value;
+    var data = formValue == null || formValue =='' ? { municipalidad : '1', tipoFiltro:'' }: formValue;
+
+    this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
+      let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });    
   }
 
   public eliminar(contribuyente: Contribuyente): void {
