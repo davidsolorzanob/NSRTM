@@ -173,6 +173,7 @@ export class ListComponent implements OnInit {
       if (result.isConfirmed) {
         this.service.eliminar(1,contribuyente.contribuyenteNumero).subscribe(() => {
           this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
+          this.buscarContribuyentes();
         })
         Swal.fire(
           'Información',
