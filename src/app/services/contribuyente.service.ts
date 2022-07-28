@@ -64,11 +64,24 @@ export class ContribuyenteService {
         return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
 
-    public eliminar(contribuyenteId: number): Observable<void> {  //cuando se elimina no devuelve nada
+    public eliminar(municipalidadId: number , contribuyenteNumero: number): Observable<void> {  //cuando se elimina no devuelve nada
 
-        return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
+        var params = {
+            "municipalidadId": municipalidadId,
+            "contribuyenteNumero": contribuyenteNumero
+        };
+
+        return this.http.post<void>(this.baseEndpoint + '/eliminar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteNumero,  {headers: this.cabeceras});
 
     }
+
+    // public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Condicion> {
+
+    //     return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    // }
+
+
+
 //ObtenerPorId(Long municipalidadId, Long contribuyenteNumero)
     public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
 

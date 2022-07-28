@@ -53,7 +53,7 @@ export class ListComponent implements OnInit {
 
 
    this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
-  
+
     this.contribuyentes = p.data as Contribuyente[];
 
   });
@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
       confirmButtonText: 'Sí, estoy seguro'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.eliminar(contribuyente.contribuyenteNumero).subscribe(() => {
+        this.service.eliminar(1,contribuyente.contribuyenteNumero).subscribe(() => {
           this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
         })
         Swal.fire(

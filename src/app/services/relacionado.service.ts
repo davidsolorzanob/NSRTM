@@ -19,6 +19,7 @@ export class RelacionadoService {
     }
     public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Relacionado> {
 
-        return this.http.get<Relacionado>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+        return this.http.get<Relacionado>(this.baseEndpoint + '/obtenercondomicilio/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+
     }
 }
