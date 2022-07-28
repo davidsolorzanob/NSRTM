@@ -52,35 +52,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
 
-<<<<<<< HEAD
-
-   this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
-
-    this.contribuyentes = p.data as Contribuyente[];
-
-  });
-
-  }
-
-  paginar(event: PageEvent): void {
-
-    this.paginaActual = event.pageIndex;
-    this.totalPorPagina = event.pageSize;
-    this.calcularRangos();
-  }
-
-
-  public calcularRangos() {
-
-    this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-      //  this.service.listarPaginas(this.paginaActual.toString(), this.totalPorPagina.toString()).subscribe(p => {
-      //this.contribuyentes = p.content as Contribuyente[];
-      //this.totalRegistros = p.totalElements as number;
-     // this.paginator._intl.itemsPerPageLabel = 'Registro por página';
-
-      this.contribuyentes = p.data as Contribuyente[];
-      console.log(p);
-=======
     this.formBusquedaContribuyente = this.formBuilder.group({    
         municipalidadId: ['1'],
         docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -91,7 +62,6 @@ export class ListComponent implements OnInit {
         nombres: new FormControl('', [Validators.required, Validators.maxLength(50)]),
         razonSocial:new FormControl('', [Validators.required, Validators.maxLength(50)]),
         tipoFiltro:new FormControl('')
->>>>>>> 5904dab5abf14abfaf3da39c603d67ed1fe7c4fc
     });
 
     this.removeValidators();

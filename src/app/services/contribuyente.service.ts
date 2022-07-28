@@ -23,68 +23,50 @@ export class ContribuyenteService {
         return this.http.get<Contribuyente[]>(this.baseEndpoint + '/todos');
     }
 
-    public listarPaginas(size: string, page: string): Observable<any> {
+    public listarPaginas(contribuyente: Contribuyente, size: string, page: string): Observable<any> {
         var params = {
-            "data": { "tipoFiltro": null, "municipalidadId": "1" },
+            "data": contribuyente,
             "size": size,
             "nroPage": page
         };
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
-    public ver(contribuyenteId: number): Observable<Contribuyente> {
 
+    public getReporteBusquedaExcel(busqueda: string ) {
+        return this.http.get(this.baseEndpoint + '/exportarExcel?data='+ encodeURIComponent(busqueda), { responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
+    }
+
+    public ver(contribuyenteId: number): Observable<Contribuyente> {
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
     }
-    // public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
-    //     //enviar un body
-    //     return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
-    // }
 
     public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio): Observable<contribuyenteCrear> {
-        //enviar un body
-
         var params = {
             "contribuyente": contribuyente,
             "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado
-
         };
-
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
-
     public guardar(contribuyente: Contribuyente): Observable<Contribuyente> {
-        //enviar un body
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
-    public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
 
+    public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
         return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
 
     public eliminar(municipalidadId: number , contribuyenteNumero: number): Observable<void> {  //cuando se elimina no devuelve nada
-
         var params = {
             "municipalidadId": municipalidadId,
             "contribuyenteNumero": contribuyenteNumero
         };
-
         return this.http.post<void>(this.baseEndpoint + '/eliminar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteNumero,  {headers: this.cabeceras});
-
     }
 
-    // public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Condicion> {
-
-    //     return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
-    // }
-
-
-
-//ObtenerPorId(Long municipalidadId, Long contribuyenteNumero)
     public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
-
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
 
@@ -92,9 +74,7 @@ export class ContribuyenteService {
         return this.http.post<Contribuyente[]>(this.baseEndpoint + '/filtrar/', contribuyente, { headers: this.cabeceras });
     }
 
-    //Relacionado
     public crearRelacionado(relacionado: Relacionado): Observable<Relacionado> {
-        //enviar un body
         return this.http.post<Relacionado>(this.baseEndpoint + '/crear', relacionado, { headers: this.cabeceras });
     }
 }
