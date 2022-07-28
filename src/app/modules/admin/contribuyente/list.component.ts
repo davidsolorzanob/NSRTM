@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -34,23 +36,23 @@ export class ListComponent implements OnInit {
   contribuyentes: Contribuyente[] = [];
   contribuyentesAny: any[] = [] ;
   contribuyente: Contribuyente;
-  totalRegistros = 0;
-  paginaActual = 1;
-  totalPorPagina = 10;
+  isLoadingBusqueda = false;
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 0;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns: string[] = ['contribuyenteNumero', 'fechaDJ', 'desEstadoDj', 'apellidoPaterno', 'descDocIdentidad', 'numDocIdentidad', 'acciones' ];
+  dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
 
+  public formBusquedaContribuyente!: FormGroup;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
-
-  constructor(private service: ContribuyenteService) { }
+  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    //  this.service.todos().subscribe(contribuyentes=>{
-    //    this.contribuyentes = contribuyentes;
-    //    console.log(contribuyentes);
-    //  });
-    this.calcularRangos();
 
+<<<<<<< HEAD
 
    this.service.listarPaginas(this.totalPorPagina.toString(),this.paginaActual.toString()).subscribe(p => {
 
@@ -78,7 +80,113 @@ export class ListComponent implements OnInit {
 
       this.contribuyentes = p.data as Contribuyente[];
       console.log(p);
+=======
+    this.formBusquedaContribuyente = this.formBuilder.group({    
+        municipalidadId: ['1'],
+        docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        numDocIdentidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        contribuyenteNumero: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+        apellidoPaterno:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        apellidoMaterno:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        nombres: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        razonSocial:new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        tipoFiltro:new FormControl('')
+>>>>>>> 5904dab5abf14abfaf3da39c603d67ed1fe7c4fc
     });
+
+    this.removeValidators();
+    this.buscarContribuyentes();
+    
+    this.dataSource.paginator = this.paginator;
+  }
+
+  public submit(){
+    console.log(this.formBusquedaContribuyente);
+    if(this.formBusquedaContribuyente.valid){
+      this.currentPage = 0;
+      this.buscarContribuyentes();
+    }
+  };
+
+  public myError = (controlName: string, errorName: string) =>{
+    return this.formBusquedaContribuyente.controls[controlName].hasError(errorName);
+  }
+
+  public removeValidators = () =>{
+    this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('apellidoPaterno').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required); 
+
+    this.formBusquedaContribuyente.get('docIdentidadId').disable(); 
+    this.formBusquedaContribuyente.get('numDocIdentidad').disable(); 
+    this.formBusquedaContribuyente.get('contribuyenteNumero').disable(); 
+    this.formBusquedaContribuyente.get('apellidoPaterno').disable(); 
+    this.formBusquedaContribuyente.get('apellidoMaterno').disable(); 
+    this.formBusquedaContribuyente.get('nombres').disable(); 
+    this.formBusquedaContribuyente.get('razonSocial').disable(); 
+  }
+
+  public changeFiltro (e){
+    this.removeValidators();
+    this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
+    switch(e.value){
+      case "1":
+        console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
+        this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
+        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
+        break;
+      case "2":
+        this.formBusquedaContribuyente.get('docIdentidadId').enable(); 
+        this.formBusquedaContribuyente.get('numDocIdentidad').enable(); 
+        this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
+        break;
+      case "3":
+        this.formBusquedaContribuyente.get('apellidoPaterno').enable(); 
+        this.formBusquedaContribuyente.get('apellidoMaterno').enable(); 
+        this.formBusquedaContribuyente.get('nombres').enable(); 
+        this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required); 
+        break;
+      case "4":
+        this.formBusquedaContribuyente.get('razonSocial').enable(); 
+        this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required); 
+        break;
+      default:
+          break;
+    }
+  }
+
+  pageBusquedaChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.buscarContribuyentes();
+  }
+
+  public buscarContribuyentes() {
+      this.isLoadingBusqueda = true;
+      this.service.listarPaginas(this.formBusquedaContribuyente.value, this.pageSize.toString(), (this.currentPage +1).toString()).subscribe(p => {
+        
+        this.dataSource.data = p.data as Contribuyente[];
+        setTimeout(() => {
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = p.totalRows;
+        });
+        this.isLoadingBusqueda = false;
+      });    
+  }
+
+  public descargarReporteExcel() {
+      this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
+        let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      });    
   }
 
   public eliminar(contribuyente: Contribuyente): void {
@@ -103,12 +211,12 @@ export class ListComponent implements OnInit {
         )
       }
     })
-
-
   }
+
   public filtrar(nombres: string): void {
     this.contribuyente = new Contribuyente();
     this.contribuyente.nombres = nombres
     this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
   }
+
 }
