@@ -24,4 +24,7 @@ export class Domicilio{
     fechaRegistro: string;
     usuarioEdicion: string;
     fechaEdicion: string;
+    viaDepartamentoId: number;
+    viaProvinciaId: number;
+    viaDistritoId: number;
 }

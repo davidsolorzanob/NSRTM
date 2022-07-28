@@ -309,11 +309,11 @@
 
                     </div>
                     <div class="flex justify-end">
-                        <button class="px-8" mat-flat-button [color]="'primary'"
 
-                            type="button" (click)="updateContribuyente()" matStepperNext>
-                            Siguiente
-                        </button>
+                            <button class="px-8" mat-flat-button [color]="'primary'"
+                                 type="button" matStepperNext>
+                                Siguiente
+                            </button>
                     </div>
                 </mat-step>
 
@@ -680,8 +680,8 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="nombreZonaUrbana" id="nombreZonaUrbana"
-                                        formControlName="nombreZonaUrbana">
+                                    <mat-select name="zonaUrbanaId" id="zonaUrbanaId"
+                                        formControlName="zonaUrbanaId">
                                         <mat-option *ngFor="let nombrezonaurbana of listarZonaUrbana"
                                             [value]="nombrezonaurbana.ubicacionId">
                                             {{nombrezonaurbana.descripcion}}
@@ -697,8 +697,8 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="subZonaUrbanaId" id="subZonaUrbanaId"
-                                        formControlName="subZonaUrbanaId" (valueChange)="listarSubZonaUrbana($event)">
+                                    <mat-select name="tipoSubZonaUrbanaId" id="tipoSubZonaUrbanaId"
+                                        formControlName="tipoSubZonaUrbanaId" (valueChange)="listarSubZonaUrbana($event)">
                                         <mat-option *ngFor="let tiposubzona of maestrosTipoSubZona"
                                             [value]="tiposubzona.maestroId">
                                             {{tiposubzona.descripcion}}
@@ -715,8 +715,8 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="nombreSubZonaUrbana" id="nombreSubZonaUrbana"
-                                        formControlName="nombreSubZonaUrbana">
+                                    <mat-select name="subZonaUrbanaId" id="subZonaUrbanaId"
+                                        formControlName="subZonaUrbanaId">
                                         <mat-option *ngFor="let nombresubzonaurbana of listaSubZona"
                                             [value]="nombresubzonaurbana.ubicacionId">
                                             {{nombresubzonaurbana.descripcion}}
@@ -748,8 +748,8 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="nombreEdificacion" id="nombreEdificacion"
-                                        formControlName="nombreEdificacion">
+                                    <mat-select name="edificacionId" id="edificacionId"
+                                        formControlName="edificacionId">
                                         <mat-option *ngFor="let nombreedificacion of listaNombreEdificacion"
                                             [value]="nombreedificacion.ubicacionId">
                                             {{nombreedificacion.descripcion}}
@@ -822,7 +822,12 @@
                             </div>
 
 
-
+                            <input hidden matInput name="viaProvinciaId" id="viaProvinciaId"
+                            formControlName="viaProvinciaId" value="15">
+                        <input hidden matInput name="viaDepartamentoId" id="viaDepartamentoId"
+                            formControlName="viaDepartamentoId" value="135">
+                            <input hidden matInput name="viaDistritoId" id="viaDistritoId"
+                            formControlName="viaDistritoId" value="121">
 
                         </div>
 
@@ -1183,7 +1188,7 @@
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                     matPrefix>
                                 </mat-icon>
-                                <mat-select name="tipoZonaUrbanaId" id="tipoZonaUrbanaId"
+                                <mat-select name="tipoZonaUrbanaId" id="tipoZonaUrbanaId" formControlName="tipoZonaUrbanaId"
                                     (valueChange)="listarNombreZonaUrbana2($event)">
                                     <mat-option *ngFor="let tipozonzaurbana of maestrosTipoZonaUrbana"
                                         [value]="tipozonzaurbana.maestroId">
