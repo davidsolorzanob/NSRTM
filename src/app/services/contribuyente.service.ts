@@ -4,10 +4,9 @@ import { Condicion } from 'app/models/condicion.models';
 import { Domicilio } from 'app/models/domicilio.models';
 import { Relacionado } from 'app/models/relacionado.models';
 import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 import { contribuyenteCrear } from 'app/models/contribuyenteCrear';
-import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -24,49 +23,68 @@ export class ContribuyenteService {
         return this.http.get<Contribuyente[]>(this.baseEndpoint + '/todos');
     }
 
-    public listarPaginas(contribuyente: Contribuyente, size: string, page: string): Observable<any> {
+    public listarPaginas(size: string, page: string): Observable<any> {
         var params = {
-            "data": contribuyente,
+            "data": { "tipoFiltro": null, "municipalidadId": "1" },
             "size": size,
             "nroPage": page
         };
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
-
-    public getReporteBusquedaExcel(busqueda: string ) {
-        //let params = new HttpParams().set("keyword", busqueda);
-        //return this.http.get<any>(this.baseEndpoint + '/exportarExcel', busqueda);
-        return this.http.get(this.baseEndpoint + '/exportarExcel?data='+ encodeURIComponent(busqueda), { responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
-    }
-
     public ver(contribuyenteId: number): Observable<Contribuyente> {
 
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
     }
+    // public crear(contribuyente: Contribuyente): Observable<Contribuyente> {
+    //     //enviar un body
+    //     return this.http.post<Contribuyente>(this.baseEndpoint + '/crear', contribuyente, { headers: this.cabeceras });
+    // }
 
     public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio): Observable<contribuyenteCrear> {
+        //enviar un body
+
         var params = {
             "contribuyente": contribuyente,
             "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado
+
         };
+
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
+
     public guardar(contribuyente: Contribuyente): Observable<Contribuyente> {
+        //enviar un body
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
-
     public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
+
         return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
 
-    public eliminar(contribuyenteId: number): Observable<void> {  //cuando se elimina no devuelve nada
-        return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
+    public eliminar(municipalidadId: number , contribuyenteNumero: number): Observable<void> {  //cuando se elimina no devuelve nada
+
+        var params = {
+            "municipalidadId": municipalidadId,
+            "contribuyenteNumero": contribuyenteNumero
+        };
+
+        return this.http.post<void>(this.baseEndpoint + '/eliminar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteNumero,  {headers: this.cabeceras});
+
     }
 
+    // public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Condicion> {
+
+    //     return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    // }
+
+
+
+//ObtenerPorId(Long municipalidadId, Long contribuyenteNumero)
     public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
+
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
 

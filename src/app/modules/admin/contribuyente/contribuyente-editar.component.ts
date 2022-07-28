@@ -21,13 +21,14 @@ import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
 import { Relacionado } from 'app/models/relacionado.models';
 import Swal from 'sweetalert2';
 import { first } from 'rxjs';
+import { relativeTimeThreshold } from 'moment';
 @Component({
     selector: 'app-contribuyente-editar',
     templateUrl: './contribuyente-editar.component.html'
 })
 export class ContribuyenteEditarComponent implements OnInit {
     public verticalStepperForm!: FormGroup;
-
+    contribuyente: Contribuyente = new Contribuyente();
     loading = false;
     contribuyentes: Contribuyente[];
     maestrosTipoMedio: Maestro[] = [];
@@ -78,6 +79,7 @@ export class ContribuyenteEditarComponent implements OnInit {
     valorTipoSubZonaUrbana: number;
     valorTipoEdificacion: number;
 
+    error: any;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -95,6 +97,34 @@ export class ContribuyenteEditarComponent implements OnInit {
     ngOnInit(): void {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         console.log('id', id);
+
+
+        this.maestroGenerico(3, 'maestrosMedio', 0);
+        this.maestroGenerico(2, 'maestrosTipoMedio', 0);
+        this.maestroGenerico(4, 'maestrosMotivo', 0);
+        this.maestroGenerico(12, 'maestrosModalidadOficio', 0);
+        this.maestroGenerico(14, 'maestrosTipoContribuyente', 0);
+        this.maestroGenerico(1, 'maestrosTipoDocumento', 0);
+        this.maestroGenerico(19, 'maestrosEstadoDj', 0);
+        this.maestroGenerico(17, 'maestrosEstadoCivil', 0);
+        this.maestroGenerico(8, 'maestrosEdificacion', 0);
+        this.maestroGenerico(9, 'maestrosInterior', 0);
+        this.maestroGenerico(7, 'maestrosTipoVia', 0);
+        this.maestroGenerico(5, 'maestrosCondicionTipoContribuyente', 1);
+        this.maestroGenerico(6, 'maestrosCondicionConcursalTipo', 1);
+        this.maestroGenerico(20, 'maestroEstadoRegistroCondicion', 0)
+        this.maestroGenerico(21, 'maestroTipoVias', 0);
+        this.maestroGenerico(22, 'maestrosTipoZonaUrbana', 0);
+        this.maestroGenerico(23, 'maestrosTipoSubZona', 0);
+        this.maestroGenerico(13, 'maestroTipoPredio', 0);
+        this.maestroGenerico(10, 'maestroTipoRelacion', 0);
+        this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
+        this.maestroDepartamento();
+        //console.log(this.verticalStepperForm.get('step3').get('departamentoId').value);
+
+
+
+
         this.cargarContribuyente(id);
         this.cargarContribuyenteCondicion(id);
         this.cargarContribuyenteDomicilio(id);
@@ -105,8 +135,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         // Vertical stepper form
         this.verticalStepperForm = this.formBuilder.group({
             step1: this.formBuilder.group({
-                contribuyenteNumero: [{ value: '', disabled: true }],
-                nroDeclaracion: [{ value: '', disabled: true }],
+                contribuyenteNumero: [{ value: ''}],
+                numeroDJ: [{ value: ''}],
                 fechaDJ: [''],
                 tipoMedioDeterminacionId: [''],
                 medioDeterminacionId: [''],
@@ -151,6 +181,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 municipalidadId: ['1'],
                 "contribuyenteNumero": "5",
                 "conContribuyenteId": null,
+                usuarioModificion: ['2025']
+
             }),
             step3: this.formBuilder.group({
                 municipalidadId: ['1'],
@@ -161,7 +193,7 @@ export class ContribuyenteEditarComponent implements OnInit {
                 distritoId: ['', [Validators.required]],
                 tipoPredioId: ['', [Validators.required]],
                 // viaDepartamentoId: ['', [Validators.required]],
-                fechaRegistro: ['', [Validators.required]],
+                //fechaRegistro: ['', [Validators.required]],
                 tipoViaId: ['', [Validators.required]],
                 viaId: ['', [Validators.required]],
                 numero1: ['', [Validators.required]],
@@ -171,6 +203,7 @@ export class ContribuyenteEditarComponent implements OnInit {
                 manzana: ['', [Validators.required]],
                 lote: ['', [Validators.required]],
                 subLote: ['', [Validators.required]],
+                tipoZonaUrbanaId: ['', [Validators.required]],
                 zonaUrbanaId: ['', [Validators.required]],
                 nombreZonaUrbana: ['', [Validators.required]],
                 subZonaUrbanaId: ['', [Validators.required]],
@@ -192,7 +225,7 @@ export class ContribuyenteEditarComponent implements OnInit {
                 terminalCreacion: ['192.168.1.1'],
             }),
             step4: this.formBuilder.group({
-                relContribuyenteNumero: null,
+                relContribuyenteNumero: ['', [Validators.required]],
                 personaId: null,
                 docIdentidadId: ['', [Validators.required]],
                 numDocIdentidad: ['', [Validators.required]],
@@ -262,26 +295,33 @@ export class ContribuyenteEditarComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        this.maestroGenerico(3, 'maestrosMedio', 0);
-        this.maestroGenerico(2, 'maestrosTipoMedio', 0);
-        this.maestroGenerico(4, 'maestrosMotivo', 0);
-        this.maestroGenerico(12, 'maestrosModalidadOficio', 0);
-        this.maestroGenerico(14, 'maestrosTipoContribuyente', 0);
-        this.maestroGenerico(1, 'maestrosTipoDocumento', 0);
-        this.maestroGenerico(19, 'maestrosEstadoDj', 0);
-        this.maestroGenerico(17, 'maestrosEstadoCivil', 0);
-        this.maestroGenerico(8, 'maestrosEdificacion', 0);
-        this.maestroGenerico(9, 'maestrosInterior', 0);
-        this.maestroGenerico(7, 'maestrosTipoVia', 0);
-        this.maestroGenerico(5, 'maestrosCondicionTipoContribuyente', 1);
-        this.maestroGenerico(6, 'maestrosCondicionConcursalTipo', 1);
-        this.maestroGenerico(20, 'maestroEstadoRegistroCondicion', 0)
-        this.maestroGenerico(21, 'maestroTipoVias', 0);
-        this.maestroGenerico(22, 'maestrosTipoZonaUrbana', 0);
-        this.maestroGenerico(23, 'maestrosTipoSubZona', 0);
-        this.maestroGenerico(13, 'maestroTipoPredio', 0);
-        this.maestroGenerico(10, 'maestroTipoRelacion', 0);
-        this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
+        // this.maestroGenerico(3, 'maestrosMedio', 0);
+        // this.maestroGenerico(2, 'maestrosTipoMedio', 0);
+        // this.maestroGenerico(4, 'maestrosMotivo', 0);
+        // this.maestroGenerico(12, 'maestrosModalidadOficio', 0);
+        // this.maestroGenerico(14, 'maestrosTipoContribuyente', 0);
+        // this.maestroGenerico(1, 'maestrosTipoDocumento', 0);
+        // this.maestroGenerico(19, 'maestrosEstadoDj', 0);
+        // this.maestroGenerico(17, 'maestrosEstadoCivil', 0);
+        // this.maestroGenerico(8, 'maestrosEdificacion', 0);
+        // this.maestroGenerico(9, 'maestrosInterior', 0);
+        // this.maestroGenerico(7, 'maestrosTipoVia', 0);
+        // this.maestroGenerico(5, 'maestrosCondicionTipoContribuyente', 1);
+        // this.maestroGenerico(6, 'maestrosCondicionConcursalTipo', 1);
+        // this.maestroGenerico(20, 'maestroEstadoRegistroCondicion', 0)
+        // this.maestroGenerico(21, 'maestroTipoVias', 0);
+        // this.maestroGenerico(22, 'maestrosTipoZonaUrbana', 0);
+        // this.maestroGenerico(23, 'maestrosTipoSubZona', 0);
+        // this.maestroGenerico(13, 'maestroTipoPredio', 0);
+        // this.maestroGenerico(10, 'maestroTipoRelacion', 0);
+        // this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
+        // this.maestroDepartamento();
+
+        // this.maestroProvincia(0);
+        // this.maestroDistrito(0);
+        // this.listarNombreZonaUrbana2(0);
+
+
 
     }
 
@@ -428,7 +468,28 @@ export class ContribuyenteEditarComponent implements OnInit {
                 next: (res: Domicilio) => {
                     console.log('DATOS DOMICILIO DE CONTRIBUYENTE', res);
                     // this.verticalStepperForm.patchValue(res);
+
                     this.verticalStepperForm.get('step3').patchValue(res);
+                    this.valorDepartamento = this.verticalStepperForm.get('step3').get('departamentoId').value;
+                    console.log(this.valorDepartamento);
+                    this.maestroProvincia(this.valorDepartamento);
+                    this.valorProvincia = this.verticalStepperForm.get('step3').get('provinciaId').value;
+                    this.maestroDistrito(this.valorProvincia);
+
+                    this.valorTipoVia = this.verticalStepperForm.get('step3').get('tipoViaId').value;
+                    this.listarVias(this.valorTipoVia);
+
+                    this.valorTipoZonaUrbana = this.verticalStepperForm.get('step3').get('tipoZonaUrbanaId').value;
+                    this.listarNombreZonaUrbana(this.valorTipoZonaUrbana);
+
+                    this.verticalStepperForm.patchValue(res);
+                    //this.listarNombreZonaUrbana(0);
+
+
+
+
+
+                    //this.listarNombreZonaUrbana2(0);
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -438,8 +499,6 @@ export class ContribuyenteEditarComponent implements OnInit {
                 }
             });
     }
-
-
 
     cargarContribuyenteRelacionado(id: any) {
         this.serviceRelacionado.obtener(1, id)
@@ -458,11 +517,7 @@ export class ContribuyenteEditarComponent implements OnInit {
             });
     }
 
-
-
-
     // this.serviceUbigeo.todos().subscribe(p => this.ubigeo = p);
-
     maestroDepartamento() {
         // this.ubigeoProvincia = [];
         // this.ubigeo = [];
@@ -613,7 +668,7 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.valorDepartamento = 15;//this.registerFormContribuyenteDomicilio.controls['departamentoId'].value;
         this.valorProvincia = 135;//this.registerFormContribuyenteDomicilio.controls['provinciaId'].value;
         this.valorDistrito = 121;//this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
-        this.valorTipoZonaUrbana = 1; //tipoZonaUrbana;
+        this.valorTipoZonaUrbana = tipoZonaUrbana; //tipoZonaUrbana;
         console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
 
         this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
@@ -622,12 +677,15 @@ export class ContribuyenteEditarComponent implements OnInit {
                     console.log('Motivo', res);
                     this.listarZonaUrbana = res;
                     console.log(this.listarZonaUrbana);
+
+
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
                 },
                 complete: () => {
-                    console.log('completo la recuperación de listar zonas ');
+                    console.log('completo la recuperación de listar zonas urbanas');
                 }
             });
 
@@ -761,15 +819,43 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
-     updateContribuyente() {
-        console.log('editando..');
-        this.contribuyenteService.guardar(this.verticalStepperForm.get('step1').value)
-          .pipe(first())
-          .subscribe(() => {
-            Swal.fire('Edición:', `Se editó con éxito`, 'success');
+     updateContribuyente(): void {
+        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value).subscribe({
+            next: (contribuyente) => {
+                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value);
+                // alert('Contribuyente creado con exito ${contribuyente.nombres}');
+                Swal.fire('Edición:', `Contribuyente actualizado con éxito`, 'success');
                 this.router.navigate(['../contribuyente/list']);
-          })
-          .add(() => this.loading = false);
+            }
+            , error: (err) => {
+                if (err.status === 400) {
+                    this.error = err.error;
+                    console.log(this.error);
+                }
+            }
+        });
       }
+
+
+
+    // public contribuyenteCrear(): void {
+
+
+    //     this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value).subscribe({
+    //         next: (contribuyente) => {
+    //             console.log(contribuyente);
+    //             // alert('Contribuyente creado con exito ${contribuyente.nombres}');
+    //             Swal.fire('Nuevo:', `Contribuyente ${this.contribuyente.nombres} creado con éxito`, 'success');
+    //             this.router.navigate(['../contribuyente/list']);
+    //         }
+    //         , error: (err) => {
+    //             if (err.status === 400) {
+    //                 this.error = err.error;
+    //                 console.log(this.error);
+    //             }
+    //         }
+    //     });
+    // }
+
 
 }

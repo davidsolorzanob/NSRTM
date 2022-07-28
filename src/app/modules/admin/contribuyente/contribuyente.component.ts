@@ -847,7 +847,6 @@ export class ContribuyenteComponent implements OnInit {
     public contribuyenteCrear(): void {
 
 
-
         this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
