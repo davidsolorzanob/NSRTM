@@ -33,11 +33,10 @@ export class ContribuyenteService {
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
 
-    public getReporteBusquedaExcel(busqueda: any ) {
+    public getReporteBusquedaExcel(busqueda: string ) {
         //let params = new HttpParams().set("keyword", busqueda);
-        this.http.get("",)
         //return this.http.get<any>(this.baseEndpoint + '/exportarExcel', busqueda);
-        return this.http.get(this.baseEndpoint + '/exportarExcel', { params: busqueda, responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
+        return this.http.get(this.baseEndpoint + '/exportarExcel?data='+ encodeURIComponent(busqueda), { responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
     }
 
     public ver(contribuyenteId: number): Observable<Contribuyente> {

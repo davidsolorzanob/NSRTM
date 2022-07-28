@@ -152,8 +152,8 @@ export class ListComponent implements OnInit {
   }
 
   public descargarReporteExcel() {
-      this.service.getReporteBusquedaExcel(this.formBusquedaContribuyente.value).subscribe(p => {
-        let file = new Blob([p], { type: 'application/vnd.ms-excel' });
+      this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
+        let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
       });    
