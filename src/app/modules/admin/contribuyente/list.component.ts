@@ -153,7 +153,7 @@ export class ListComponent implements OnInit {
   public descargarReporteExcel() {
     
     var formValue = this.formBusquedaContribuyente.value;
-    var data = formValue == null || formValue =='' ? { municipalidad : '1', tipoFiltro:'' }: formValue;
+    var data = formValue == null || formValue.tipoFiltro =='' ? {municipalidad : 1, tipoFiltro:null}: formValue;
 
     this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
       let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
