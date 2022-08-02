@@ -30,7 +30,7 @@
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
                         <!-- Search -->
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Código Contribuyente :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Tipo de documento :</mat-label>
                                 <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class=" mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Apellido Paterno :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
                         <div class="mr-4">  
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>              
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>              
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Razón social</mat-label>
                                 <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
@@ -109,96 +109,109 @@
                     </button>
                 </div>
             </form>
-            <div class="flex justify-end pt-4 pb-4">
-                <div class="inline-flex" role="group" aria-label="Button group">
-                    <button class="no-radius" mat-raised-button>
-                        <mat-icon [svgIcon]="'heroicons_outline:clipboard-check'"></mat-icon>
-                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
-                            Detalle</span>
-                    </button>
-                    <button class="no-radius" mat-raised-button color="default">
-                        <mat-icon [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
-                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
-                            Histórico</span>
-                    </button>
-                    <button class="no-radius" mat-raised-button color="default" (click)="descargarReporteExcel()">
-                        <mat-icon [svgIcon]="'heroicons_outline:download'"></mat-icon>
-                        <span>
-                            Descargar</span>
-                    </button>
-                    <button class="no-radius" mat-raised-button color="default">
-                        <mat-icon [svgIcon]="'heroicons_outline:clipboard-list'"></mat-icon>
-                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
-                            DJ Predial</span>
-                    </button>
-                    <button class="no-radius" mat-raised-button color="default">
-                        <mat-icon [svgIcon]="'heroicons_outline:mail'"></mat-icon>
-                        <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
-                            Notificación</span>
-                    </button>
-                </div>
-            </div>
-        
-                <!-- Main -->
-                <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                    <div class="flex flex-col flex-auto overflow-hidden">
-                        <div class="mat-elevation-z8">
-                            <mat-progress-bar mode="indeterminate" *ngIf="isLoadingBusqueda"></mat-progress-bar>
-                            <table mat-table [dataSource]="dataSource" class="w-full overflow-y-visible">
-                                <ng-container matColumnDef="contribuyenteNumero">
-                                    <th mat-header-cell *matHeaderCellDef> Código </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.contribuyenteNumero}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="fechaDJ">
-                                    <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.fechaDJ | date  : 'dd/MM/yyyy'}}</td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="desEstadoDj">
-                                    <th mat-header-cell *matHeaderCellDef> Estado </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.desEstadoDj}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="apellidoPaterno">
-                                    <th mat-header-cell *matHeaderCellDef>  Apellidos y Nombres </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno + ' ' + element.apellidoMaterno + ' ' +
-                                        element.nombres}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="descDocIdentidad">
-                                    <th mat-header-cell *matHeaderCellDef>  Tipo Documento </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.descDocIdentidad}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="numDocIdentidad">
-                                    <th mat-header-cell *matHeaderCellDef>  N° Documento </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.numDocIdentidad}} </td>
-                                </ng-container>
-                                
-                                <ng-container matColumnDef="acciones">
-                                    <th mat-header-cell *matHeaderCellDef>  Acciones </th>
-                                    <td mat-cell *matCellDef="let element"> 
-                                        <button mat-icon-button color="primary" title="Ver detalle" 
-                                        [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
-                                            <mat-icon>search</mat-icon>
-                                        </button>
-                                        <button mat-icon-button color="primary" title="Editar" 
-                                        [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero]">
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
-                                        <button mat-icon-button color="primary" title="Eliminar" (click)="eliminar(element)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </td>
-                                </ng-container>
-                                
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            </table>
-                        
-                            <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-                            [pageSizeOptions]="pageSizeOptions" (page)="pageBusquedaChanged($event)" aria-label="Página">
-                            </mat-paginator>
+            
+            
+            <mat-tab-group mat-align-tabs="end" class="p-2">
+                <mat-tab label="Detalle"> 
+                    <div class="flex justify-end">
+                        <div class="inline-flex pb-3" role="group" aria-label="Button group">
+                            <button class="no-radius" mat-raised-button>
+                                <mat-icon [svgIcon]="'heroicons_outline:clipboard-check'"></mat-icon>
+                                <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                                    Detalle</span>
+                            </button>
+                            <button class="no-radius" mat-raised-button color="default">
+                                <mat-icon [svgIcon]="'heroicons_outline:document-text'"></mat-icon>
+                                <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                                    Histórico</span>
+                            </button>
+                            <button class="no-radius" mat-raised-button color="default" (click)="descargarReporteExcel()">
+                                <mat-icon [svgIcon]="'heroicons_outline:download'"></mat-icon>
+                                <span>
+                                    Descargar</span>
+                            </button>
+                            <button class="no-radius" mat-raised-button color="default" (click)="printResult()">
+                                <mat-icon [svgIcon]="'heroicons_outline:printer'"></mat-icon>
+                                <span>
+                                    Imprimir</span>
+                            </button>
+                            <button class="no-radius" mat-raised-button color="default">
+                                <mat-icon [svgIcon]="'heroicons_outline:clipboard-list'"></mat-icon>
+                                <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                                    DJ Predial</span>
+                            </button>
+                            <button class="no-radius" mat-raised-button color="default">
+                                <mat-icon [svgIcon]="'heroicons_outline:mail'"></mat-icon>
+                                <span [routerLink]="['../contribuyente']" routerLinkActive="router-link-active">
+                                    Notificación</span>
+                            </button>
                         </div>
                     </div>
-                </div>
+                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                        <div class="flex flex-col flex-auto overflow-hidden">
+                            <div class="mat-elevation-z8">
+                                <mat-progress-bar mode="indeterminate" *ngIf="isLoadingBusqueda"></mat-progress-bar>
+                                <table mat-table [dataSource]="dataSource" class="w-full overflow-y-visible" id="tblContribuyentes">
+                                    <ng-container matColumnDef="contribuyenteNumero">
+                                        <th mat-header-cell *matHeaderCellDef> Código </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.contribuyenteNumero}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="fechaDJ">
+                                        <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fechaDJ | date  : 'dd/MM/yyyy'}}</td>
+                                    </ng-container>
+    
+                                    <ng-container matColumnDef="desEstadoDj">
+                                        <th mat-header-cell *matHeaderCellDef> Estado </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.desEstadoDj}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="apellidoPaterno">
+                                        <th mat-header-cell *matHeaderCellDef>  Apellidos y Nombres </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno + ' ' + element.apellidoMaterno + ' ' +
+                                            element.nombres}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="descDocIdentidad">
+                                        <th mat-header-cell *matHeaderCellDef>  Tipo Documento </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.descDocIdentidad}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="numDocIdentidad">
+                                        <th mat-header-cell *matHeaderCellDef>  N° Documento </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.numDocIdentidad}} </td>
+                                    </ng-container>
+                                    
+                                    <ng-container matColumnDef="acciones">
+                                        <th mat-header-cell *matHeaderCellDef>  Acciones </th>
+                                        <td mat-cell *matCellDef="let element"> 
+                                            <button mat-icon-button color="primary" title="Ver detalle" 
+                                            [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
+                                                <mat-icon>search</mat-icon>
+                                            </button>
+                                            <button mat-icon-button color="primary" title="Editar" 
+                                            [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero]">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button color="primary" title="Eliminar" (click)="eliminar(element)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                    
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            
+                                <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+                                [pageSizeOptions]="pageSizeOptions" (page)="pageBusquedaChanged($event)" aria-label="Página">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+    
+                </mat-tab>
+                <mat-tab label="Histórico"> </mat-tab>
+            </mat-tab-group>
+                <!-- Main -->
+                
         </div>
 
     </div>

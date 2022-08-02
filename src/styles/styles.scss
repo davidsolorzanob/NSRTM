@@ -29,3 +29,150 @@ body.dark {
 .no-radius {
     border-radius: 0px !important;
 }
+/*
+form.submitted input.ng-invalid, input.ng-dirty.ng-invalid {
+    border: 1px solid red;
+  }
+  */
+/*Tabs*/
+.mat-tab-group {
+    display: flex !important;
+    flex-direction: column !important;
+    font-family: Roboto,"Helvetica Neue",sans-serif !important;
+}
+
+.mat-tab-header {
+    display: flex !important;
+    overflow: hidden !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+}
+
+.mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: 1px solidrgba(0,0,0,.12) !important;
+}
+
+.mat-tab-header-pagination-disabled {
+    box-shadow: none !important;
+    cursor: default !important;
+}
+
+.mat-tab-header-pagination-before, .mat-tab-header-rtl .mat-tab-header-pagination-after {
+    padding-left: 4px !important;
+}
+
+.mat-tab-header-pagination {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    position: relative !important;
+    display: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-width: 32px !important; 
+    cursor: pointer !important;
+    z-index: 2 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: none !important;
+}
+
+.mat-tab-header-pagination-before .mat-tab-header-pagination-chevron, .mat-tab-header-rtl .mat-tab-header-pagination-after .mat-tab-header-pagination-chevron {
+    transform: rotate(-135deg) !important;
+}
+
+.mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron {
+    border-color: rgba(0,0,0,.38) !important;
+}
+
+.mat-tab-header-pagination-chevron {
+    border-style: solid !important;
+    border-width: 2px 2px 0 0 !important;
+    content: '' !important;
+    height: 8px !important;
+    width: 8px !important;
+}
+
+.mat-tab-list {
+    flex-grow: 1 !important;
+    position: relative !important;
+    transition: transform .5s cubic-bezier(.35,0,.25,1) !important;
+}
+
+.mat-tab-labels {
+    display: flex !important;
+}
+
+.mat-tab-label {
+    height: 48px !important;
+    padding: 0 24px !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    opacity: .6 !important;
+    min-width: 160px !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    position: relative !important;
+    font-family: Roboto,"Helvetica Neue",sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.mat-tab-label, .mat-tab-link {
+    color: rgba(0,0,0,.87) !important;
+}
+
+.mat-tab-label .mat-tab-label-content {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #dc2626e6 !important;
+}
+
+.mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-ink-bar {
+    display: block !important;
+}
+
+.mat-ink-bar {
+    position: absolute !important;
+    bottom: 0 !important;
+    height: 2px !important;
+    transition: .5s cubic-bezier(.35,0,.25,1) !important;
+}
+
+.mat-ripple {
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.mat-tab-label-container {
+    display: flex !important;
+    flex-grow: 1 !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+}
+
+guide-viewer .mat-tab-label:focus ,app-component-viewer .mat-tab-label:focus {
+    color: #000000de !important;
+}
+
+.mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label-active {
+    --tw-bg-opacity: 0.1 !important;
+    background-color: transparent !important;
+}
+
+.mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+    
+    height: 40px !important;
+    min-width: 160px !important;
+    border-radius: 0px !important;
+    --tw-text-opacity: 1;
+    color: rgba(var(--fuse-text-secondary-rgb), var(--tw-text-opacity));
+}

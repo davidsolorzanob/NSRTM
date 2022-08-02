@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -45,13 +45,13 @@ export class ListComponent implements OnInit {
   dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
 
   public formBusquedaContribuyente!: FormGroup;
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  public formControl: FormControl;  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-
+    this.formControl = this.formBuilder.control('', Validators.required);
     this.formBusquedaContribuyente = this.formBuilder.group({    
         municipalidadId: ['1'],
         docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -191,6 +191,21 @@ export class ListComponent implements OnInit {
     this.contribuyente = new Contribuyente();
     this.contribuyente.nombres = nombres
     this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
+  }
+
+  public printResult(): void {  
+    var divToPrint = document.getElementById("tblContribuyentes").innerHTML;  
+    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto'); 
+    //newWin.document.write(divToPrint.outerHTML);  
+    newWin.document.open();
+    newWin.document.write(`<html>
+        <head>
+          <title>Imprimir</title>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        </head>
+    <body onload="window.print();window.close()">${divToPrint}</body>
+      </html>`)
+    newWin.document.close();
   }
 
 }
