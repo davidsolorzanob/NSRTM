@@ -52,7 +52,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.formBusquedaContribuyente = this.formBuilder.group({    
+    this.formBusquedaContribuyente = this.formBuilder.group({
         municipalidadId: ['1'],
         docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         numDocIdentidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -66,7 +66,7 @@ export class ListComponent implements OnInit {
 
     this.removeValidators();
     this.buscarContribuyentes();
-    
+
     this.dataSource.paginator = this.paginator;
   }
 
@@ -83,21 +83,21 @@ export class ListComponent implements OnInit {
   }
 
   public removeValidators = () =>{
-    this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('apellidoPaterno').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required); 
-    this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required); 
+    this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('apellidoPaterno').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required);
+    this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required);
 
-    this.formBusquedaContribuyente.get('docIdentidadId').disable(); 
-    this.formBusquedaContribuyente.get('numDocIdentidad').disable(); 
-    this.formBusquedaContribuyente.get('contribuyenteNumero').disable(); 
-    this.formBusquedaContribuyente.get('apellidoPaterno').disable(); 
-    this.formBusquedaContribuyente.get('apellidoMaterno').disable(); 
-    this.formBusquedaContribuyente.get('nombres').disable(); 
-    this.formBusquedaContribuyente.get('razonSocial').disable(); 
+    this.formBusquedaContribuyente.get('docIdentidadId').disable();
+    this.formBusquedaContribuyente.get('numDocIdentidad').disable();
+    this.formBusquedaContribuyente.get('contribuyenteNumero').disable();
+    this.formBusquedaContribuyente.get('apellidoPaterno').disable();
+    this.formBusquedaContribuyente.get('apellidoMaterno').disable();
+    this.formBusquedaContribuyente.get('nombres').disable();
+    this.formBusquedaContribuyente.get('razonSocial').disable();
   }
 
   public changeFiltro (e){
@@ -106,26 +106,26 @@ export class ListComponent implements OnInit {
     switch(e.value){
       case "1":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
-        this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
-        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
+        this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
+        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
         break;
       case "2":
-        this.formBusquedaContribuyente.get('docIdentidadId').enable(); 
-        this.formBusquedaContribuyente.get('numDocIdentidad').enable(); 
-        this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('docIdentidadId').enable();
+        this.formBusquedaContribuyente.get('numDocIdentidad').enable();
+        this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
         this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
         break;
       case "3":
-        this.formBusquedaContribuyente.get('apellidoPaterno').enable(); 
-        this.formBusquedaContribuyente.get('apellidoMaterno').enable(); 
-        this.formBusquedaContribuyente.get('nombres').enable(); 
-        this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required); 
-        this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required); 
-        this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('apellidoPaterno').enable();
+        this.formBusquedaContribuyente.get('apellidoMaterno').enable();
+        this.formBusquedaContribuyente.get('nombres').enable();
+        this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required);
+        this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
+        this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
         break;
       case "4":
-        this.formBusquedaContribuyente.get('razonSocial').enable(); 
-        this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required); 
+        this.formBusquedaContribuyente.get('razonSocial').enable();
+        this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
         break;
       default:
           break;
@@ -141,14 +141,14 @@ export class ListComponent implements OnInit {
   public buscarContribuyentes() {
       this.isLoadingBusqueda = true;
       this.service.listarPaginas(this.formBusquedaContribuyente.value, this.pageSize.toString(), (this.currentPage +1).toString()).subscribe(p => {
-        
+
         this.dataSource.data = p.data as Contribuyente[];
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = p.totalRows;
         });
         this.isLoadingBusqueda = false;
-      });    
+      });
   }
 
   public descargarReporteExcel() {
@@ -156,7 +156,7 @@ export class ListComponent implements OnInit {
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
-      });    
+      });
   }
 
   public eliminar(contribuyente: Contribuyente): void {
