@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -45,14 +45,19 @@ export class ListComponent implements OnInit {
   dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
 
   public formBusquedaContribuyente!: FormGroup;
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  public formControl: FormControl;  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+<<<<<<< HEAD
 
     this.formBusquedaContribuyente = this.formBuilder.group({
+=======
+    this.formControl = this.formBuilder.control('', Validators.required);
+    this.formBusquedaContribuyente = this.formBuilder.group({    
+>>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
         municipalidadId: ['1'],
         docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         numDocIdentidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -70,7 +75,7 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public submit(){
+  public submit(){    
     console.log(this.formBusquedaContribuyente);
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
@@ -104,10 +109,16 @@ export class ListComponent implements OnInit {
     this.removeValidators();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
     switch(e.value){
+<<<<<<< HEAD
       case "1":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
         this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
+=======
+      case "1":        
+        this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
+        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
+>>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
         break;
       case "2":
         this.formBusquedaContribuyente.get('docIdentidadId').enable();
@@ -152,11 +163,23 @@ export class ListComponent implements OnInit {
   }
 
   public descargarReporteExcel() {
+<<<<<<< HEAD
       this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
       });
+=======
+    
+    var formValue = this.formBusquedaContribuyente.value;
+    var data = formValue == null || formValue.tipoFiltro =='' ? {municipalidad : 1, tipoFiltro:null}: formValue;
+
+    this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
+      let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });    
+>>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
   }
 
   public eliminar(contribuyente: Contribuyente): void {
@@ -188,6 +211,21 @@ export class ListComponent implements OnInit {
     this.contribuyente = new Contribuyente();
     this.contribuyente.nombres = nombres
     this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
+  }
+
+  public printResult(): void {  
+    var divToPrint = document.getElementById("tblContribuyentes").innerHTML;  
+    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto'); 
+    //newWin.document.write(divToPrint.outerHTML);  
+    newWin.document.open();
+    newWin.document.write(`<html>
+        <head>
+          <title>Imprimir</title>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        </head>
+    <body onload="window.print();window.close()">${divToPrint}</body>
+      </html>`)
+    newWin.document.close();
   }
 
 }

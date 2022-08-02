@@ -29,6 +29,7 @@ import { ContribuyenteEditarComponent } from './contribuyente-editar.component';
 import { ContribuyenteVerComponent } from './contribuyente-ver.component';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     MomentDateModule,
     MatStepperModule,
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
