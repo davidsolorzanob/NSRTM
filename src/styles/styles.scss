@@ -149,7 +149,11 @@ form.submitted input.ng-invalid, input.ng-dirty.ng-invalid {
 
 .mat-ripple {
     overflow: hidden !important;
-    position: relative !important;
+    //position: relative !important;
+}
+
+.mat-ripple:not(:empty) {
+    transform: translateZ(0) !important;
 }
 
 .mat-tab-label-container {
@@ -159,13 +163,20 @@ form.submitted input.ng-invalid, input.ng-dirty.ng-invalid {
     z-index: 1 !important;
 }
 
-guide-viewer .mat-tab-label:focus ,app-component-viewer .mat-tab-label:focus {
+.mat-tab-label:focus, .mat-tab-label:focus {
     color: #000000de !important;
+    font-weight: 400 !important;
+}
+
+.mat-tab-label:focus:not(.mat-tab-disabled) {
+    opacity: 1 !important;
 }
 
 .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label-active {
     --tw-bg-opacity: 0.1 !important;
     background-color: transparent !important;
+    color: #000000de !important;
+    font-weight: 400 !important;
 }
 
 .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
@@ -175,4 +186,17 @@ guide-viewer .mat-tab-label:focus ,app-component-viewer .mat-tab-label:focus {
     border-radius: 0px !important;
     --tw-text-opacity: 1;
     color: rgba(var(--fuse-text-secondary-rgb), var(--tw-text-opacity));
+}
+
+.mat-input-element:disabled, 
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix:after {
+    color: #00000061 !important;
+}
+
+input:disabled {
+ background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3)) !important;
+}
+
+body.light .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex, body .light .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+    background-color: rgba(0, 0, 0, 0.07) !important;
 }

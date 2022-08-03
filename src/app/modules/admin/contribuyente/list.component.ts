@@ -70,8 +70,12 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+<<<<<<< HEAD
   public submit(){
     console.log(this.formBusquedaContribuyente);
+=======
+  public submit(){    
+>>>>>>> 76e667efbb07096db2933503516843038de2604f
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
       this.buscarContribuyentes();
@@ -152,7 +156,15 @@ export class ListComponent implements OnInit {
   }
 
   public descargarReporteExcel() {
+<<<<<<< HEAD
       this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
+=======
+    var formValue = this.formBusquedaContribuyente.value;
+    var data = formValue == "" || formValue == null ? {municipalidadId:"1"}:(formValue.tipoFiltro =="" ? {municipalidadId:"1"}:this.formBusquedaContribuyente.value);
+    console.log(this.formBusquedaContribuyente);
+    console.log(data);
+      this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
+>>>>>>> 76e667efbb07096db2933503516843038de2604f
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
