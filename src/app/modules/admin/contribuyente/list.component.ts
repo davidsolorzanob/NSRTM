@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
   dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
 
   public formBusquedaContribuyente!: FormGroup;
-  public formControl: FormControl;  
+  public formControl: FormControl;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe) { }
