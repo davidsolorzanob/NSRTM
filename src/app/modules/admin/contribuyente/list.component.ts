@@ -71,7 +71,6 @@ export class ListComponent implements OnInit {
   }
 
   public submit(){    
-    console.log(this.formBusquedaContribuyente);
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
       this.buscarContribuyentes();
