@@ -51,13 +51,8 @@ export class ListComponent implements OnInit {
   constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-<<<<<<< HEAD
 
     this.formBusquedaContribuyente = this.formBuilder.group({
-=======
-    this.formControl = this.formBuilder.control('', Validators.required);
-    this.formBusquedaContribuyente = this.formBuilder.group({    
->>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
         municipalidadId: ['1'],
         docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         numDocIdentidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -108,16 +103,10 @@ export class ListComponent implements OnInit {
     this.removeValidators();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
     switch(e.value){
-<<<<<<< HEAD
       case "1":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
         this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
-=======
-      case "1":        
-        this.formBusquedaContribuyente.get('contribuyenteNumero').enable(); 
-        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);      
->>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
         break;
       case "2":
         this.formBusquedaContribuyente.get('docIdentidadId').enable();
@@ -162,23 +151,11 @@ export class ListComponent implements OnInit {
   }
 
   public descargarReporteExcel() {
-<<<<<<< HEAD
       this.service.getReporteBusquedaExcel(JSON.stringify(this.formBusquedaContribuyente.value)).subscribe(p => {
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
       });
-=======
-    
-    var formValue = this.formBusquedaContribuyente.value;
-    var data = formValue == null || formValue.tipoFiltro =='' ? {municipalidad : 1, tipoFiltro:null}: formValue;
-
-    this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
-      let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
-    });    
->>>>>>> 6ff1cdb36f08554a82090766b490cc180be43c8e
   }
 
   public eliminar(contribuyente: Contribuyente): void {
