@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common'
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -37,6 +38,7 @@ export class ListComponent implements OnInit {
   contribuyentesAny: any[] = [] ;
   contribuyente: Contribuyente;
   isLoadingBusqueda = false;
+  isSubmited = false;
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
@@ -48,7 +50,7 @@ export class ListComponent implements OnInit {
   public formControl: FormControl;  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder) { }
+  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe) { }
 
   ngOnInit() {
 
@@ -61,7 +63,7 @@ export class ListComponent implements OnInit {
         apellidoMaterno:new FormControl('', [Validators.required, Validators.maxLength(50)]),
         nombres: new FormControl('', [Validators.required, Validators.maxLength(50)]),
         razonSocial:new FormControl('', [Validators.required, Validators.maxLength(50)]),
-        tipoFiltro:new FormControl('')
+        tipoFiltro:new FormControl('', [Validators.required]),
     });
 
     this.removeValidators();
@@ -71,17 +73,29 @@ export class ListComponent implements OnInit {
   }
 
   public submit(){    
+    this.isSubmited = true;
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
       this.buscarContribuyentes();
+      this.isSubmited = false;
     }
   };
+
+  onReset(): void {
+    this.isSubmited = false;
+    this.formBusquedaContribuyente.reset();
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.formBusquedaContribuyente.controls;
+  }
 
   public myError = (controlName: string, errorName: string) =>{
     return this.formBusquedaContribuyente.controls[controlName].hasError(errorName);
   }
 
   public removeValidators = () =>{
+    /*
     this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required);
     this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required);
     this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required);
@@ -89,7 +103,7 @@ export class ListComponent implements OnInit {
     this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required);
     this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required);
     this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required);
-
+*/
     this.formBusquedaContribuyente.get('docIdentidadId').disable();
     this.formBusquedaContribuyente.get('numDocIdentidad').disable();
     this.formBusquedaContribuyente.get('contribuyenteNumero').disable();
@@ -100,31 +114,33 @@ export class ListComponent implements OnInit {
   }
 
   public changeFiltro (e){
-    this.removeValidators();
+    this.removeValidators();    
+    this.limpiar();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
+
     switch(e.value){
       case "1":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
-        this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
         break;
       case "2":
         this.formBusquedaContribuyente.get('docIdentidadId').enable();
         this.formBusquedaContribuyente.get('numDocIdentidad').enable();
-        this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
-        this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
         break;
       case "3":
         this.formBusquedaContribuyente.get('apellidoPaterno').enable();
         this.formBusquedaContribuyente.get('apellidoMaterno').enable();
         this.formBusquedaContribuyente.get('nombres').enable();
-        this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required);
-        this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
-        this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
         break;
       case "4":
         this.formBusquedaContribuyente.get('razonSocial').enable();
-        this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
+        //this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
         break;
       default:
           break;
@@ -135,6 +151,16 @@ export class ListComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.buscarContribuyentes();
+  }
+
+  public limpiar(){
+    this.formBusquedaContribuyente.get('contribuyenteNumero').setValue('');
+    this.formBusquedaContribuyente.get('docIdentidadId').setValue('');
+    this.formBusquedaContribuyente.get('numDocIdentidad').setValue('');
+    this.formBusquedaContribuyente.get('apellidoPaterno').setValue('');
+    this.formBusquedaContribuyente.get('apellidoMaterno').setValue('');
+    this.formBusquedaContribuyente.get('nombres').setValue('');
+    this.formBusquedaContribuyente.get('razonSocial').setValue('');
   }
 
   public buscarContribuyentes() {
@@ -195,15 +221,43 @@ export class ListComponent implements OnInit {
 
   public printResult(): void {  
     var divToPrint = document.getElementById("tblContribuyentes").innerHTML;  
-    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto'); 
-    //newWin.document.write(divToPrint.outerHTML);  
+    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');  
+    var gridHtml = '';
+
+    this.dataSource.data.map(data =>{
+      gridHtml += `<tr>
+                     <td>${data.contribuyenteNumero}</td>
+                     <td>${this.datepipe.transform(data.fechaDJ, 'dd/MM/yyyy')}</td> 
+                     <td>${data.desEstadoDj}</td>
+                     <td>${data.apellidoPaterno + ' ' + data.apellidoMaterno + ' ' +
+                     data.nombres}</td>
+                     <td>${data.descDocIdentidad}</td>
+                     <td>${data.numDocIdentidad}</td>
+                   </tr>`;
+    });
     newWin.document.open();
     newWin.document.write(`<html>
         <head>
           <title>Imprimir</title>
            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         </head>
-    <body onload="window.print();window.close()">${divToPrint}</body>
+    <body onload="window.print();window.close()">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Fecha de Registro</th>
+          <th>Estado</th>
+          <th>Apellidos y Nombres</th>
+          <th>Tipo Documento</th>
+          <th>N° Documento</th>
+        </tr>
+      </thead>
+      <tbody>
+       ${gridHtml}
+      </tbody>
+    </table>
+    </body>
       </html>`)
     newWin.document.close();
   }
