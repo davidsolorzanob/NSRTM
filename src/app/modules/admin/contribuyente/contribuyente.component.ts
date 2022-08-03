@@ -75,7 +75,8 @@ export class ContribuyenteComponent implements OnInit {
     maestroTipoDomicilio: Maestro[] = [];
     maestroTipoRelacion: Maestro[] = [];
     maestroDocumentoTipo: Maestro[] = [];
-
+    maestrosTipoContacto: Maestro[] = [];
+    maestrosTipoMedioContacto: Maestro[] = [];
 
 
     ubigeo: UbigeoDepartamento[] = [];
@@ -86,6 +87,10 @@ export class ContribuyenteComponent implements OnInit {
     listaSubZona: Ubicacion[] = [];
     listaNombreEdificacion: Ubicacion[] = [];
     listarZonaUrbana: Ubicacion[] = [];
+
+
+    // this.maestroGenerico(15, 'maestrosTipoContacto', 0);
+    // this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
     //Condición
     valorDepartamento: number;
     valorProvincia: number;
@@ -151,19 +156,17 @@ export class ContribuyenteComponent implements OnInit {
         console.log('llego ahora ok');
 
 
-
-
         // Vertical stepper form
         this.verticalStepperForm = this.formBuilder.group({
             step1: this.formBuilder.group({
                 codContribuyente: [{ value: '', disabled: true }],
                 nroDeclaracion: [{ value: '', disabled: true }],
                 fechaDJ: [''],
-                tipoMedioDeterminacionId: ['' ],
+                tipoMedioDeterminacionId: [''],
                 medioDeterminacionId: [''],
                 motivoDjId: ['', [Validators.required]],
                 modalidadOficio: [''],
-                tipoPersonaId: ['', ],
+                tipoPersonaId: ['',],
                 docIdentidadId: ['', [Validators.required]],
                 numDocIdentidad: ['', [Validators.required, Validators.pattern('[0-9]{8}')]],
                 fechaInscripcion: [''],
@@ -184,7 +187,7 @@ export class ContribuyenteComponent implements OnInit {
             step2: this.formBuilder.group({
                 //tipoCondicionInafectacionId para contribuyente y tipoCondicionInafectacion null o cer tomaria el otro campo
                 tipoCondicionInafectacionId: ['', [Validators.required]],
-                tipoCondicionConcursalId: [ '0' , [Validators.required]],
+                tipoCondicionConcursalId: ['0', [Validators.required]],
                 tipoDocumentoId: ['', [Validators.required]],
                 // nombreDocumento: ['', [Validators.required]],
                 desDocumento: ['', [Validators.required]],
@@ -203,7 +206,7 @@ export class ContribuyenteComponent implements OnInit {
                 "contribuyenteNumero": "5",
                 "conContribuyenteId": null,
             }),
-            step3:this.formBuilder.group({
+            step3: this.formBuilder.group({
                 municipalidadId: ['1'],
                 contribuyenteNumero: "5",
                 domContribuyenteDomicilioNumero: null,
@@ -214,8 +217,8 @@ export class ContribuyenteComponent implements OnInit {
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
-               // viaDepartamentoId: ['', [Validators.required]],
-               fechaRegistro: ['', [Validators.required]],
+                // viaDepartamentoId: ['', [Validators.required]],
+                fechaRegistro: ['', [Validators.required]],
                 tipoViaId: ['', [Validators.required]],
                 viaId: ['', [Validators.required]],
                 numero1: ['', [Validators.required]],
@@ -246,69 +249,98 @@ export class ContribuyenteComponent implements OnInit {
                 terminalCreacion: ['192.168.1.1'],
             })
             ,
-             step4: this.formBuilder.group({
-             relContribuyenteNumero: null,
-             personaId: null,
-             docIdentidadId: ['', [Validators.required]],
-             numDocIdentidad: ['', [Validators.required]],
-             apellidoPaterno: ['', [Validators.required]],
-             apellidoMaterno: ['', [Validators.required]],
-             nombres: ['', [Validators.required]],
-             razonSocial: ['', [Validators.required]],
-            //  fechaVigenciaInicial: [''],
-            //  fechaVigenciaFinal: [''],
-             fechaVigenciaInicialRela: ['', [Validators.required]],
-             fechaVigenciaFinalRela: ['', [Validators.required]],
-             //fechaDeclaracionRela: ['', [Validators.required]],
-             //telefonoFijo: ['', [Validators.required]],
-            // celular: ['', [Validators.required]],
+            step4: this.formBuilder.group({
+                relContribuyenteNumero: null,
+                personaId: null,
+                docIdentidadId: ['', [Validators.required]],
+                numDocIdentidad: ['', [Validators.required]],
+                apellidoPaterno: ['', [Validators.required]],
+                apellidoMaterno: ['', [Validators.required]],
+                nombres: ['', [Validators.required]],
+                razonSocial: ['', [Validators.required]],
+                //  fechaVigenciaInicial: [''],
+                //  fechaVigenciaFinal: [''],
+                fechaVigenciaInicialRela: ['', [Validators.required]],
+                fechaVigenciaFinalRela: ['', [Validators.required]],
+                //fechaDeclaracionRela: ['', [Validators.required]],
+                //telefonoFijo: ['', [Validators.required]],
+                // celular: ['', [Validators.required]],
 
-             //anexo: ['', [Validators.required]],
-             tipoRelacionadoId: ['', [Validators.required]],
-             //fechaInscripcion: null,
-             estadoId: "1",
-             //estadoCivil: "1",
-             //numeroMunicipal: ['', [Validators.required]],
-             domicilioRelacionadoNumero: null,
+                //anexo: ['', [Validators.required]],
+                tipoRelacionadoId: ['', [Validators.required]],
+                //fechaInscripcion: null,
+                estadoId: "1",
+                //estadoCivil: "1",
+                //numeroMunicipal: ['', [Validators.required]],
+                domicilioRelacionadoNumero: null,
 
-             departamentoId: ['', [Validators.required]],
-             provinciaId: ['', [Validators.required]],
-             distritoId: ['', [Validators.required]],
-             tipoPredioId: ['', [Validators.required]],
-             viaDepartamentoId: ['15'],
-             viaProvinciaId: ['135'],
-             tipoViaId: ['', [Validators.required]],
-             viaDistritoId: ['121'],
-             viaId: ['', [Validators.required]],
-             numero1: ['', [Validators.required]],
-             letra1: ['', [Validators.required]],
-             numero2: ['', [Validators.required]],
-             letra2: ['', [Validators.required]],
-             manzana: ['', [Validators.required]],
-             lote: ['', [Validators.required]],
-             subLote: ['', [Validators.required]],
-             zonaUrbanaId: ['', [Validators.required]],
-              subZonaUrbanaId: ['', [Validators.required]],
-              edificacionId: ['', [Validators.required]],
-              tipoInteriorId: ['', [Validators.required]],
-              descripcionInterior: null,
-              ingreso: ['', [Validators.required]],
-              piso: ['', [Validators.required]],
-              kilometro: ['', [Validators.required]],
-              referencia: ['', [Validators.required]],
-              //latitud: ['', [Validators.required]],
-              //longitud: ['', [Validators.required]],
-              //descripcionDomicilio: null,
-              //estructurado: null,
-              //fuenteInformacionId: null,
-             usuarioCreacion: ['2025'],
-             terminalCreacion: ['192.168.1.1'],
-              municipalidadId: ['1'],
-             "contribuyenteNumero": "5",
-             "conContribuyenteId": null,
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                tipoViaId: ['', [Validators.required]],
+                viaDistritoId: ['121'],
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: ['', [Validators.required]],
+                letra2: ['', [Validators.required]],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                subZonaUrbanaId: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                tipoInteriorId: ['', [Validators.required]],
+                descripcionInterior: null,
+                ingreso: ['', [Validators.required]],
+                piso: ['', [Validators.required]],
+                kilometro: ['', [Validators.required]],
+                referencia: ['', [Validators.required]],
+                //latitud: ['', [Validators.required]],
+                //longitud: ['', [Validators.required]],
+                //descripcionDomicilio: null,
+                //estructurado: null,
+                //fuenteInformacionId: null,
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+                municipalidadId: ['1'],
+                "contribuyenteNumero": "5",
+                "conContribuyenteId": null,
 
 
-          })
+            }),
+
+            step5: this.formBuilder.group({
+                contribuyenteNumero: null,
+                contactoContribuyenteId: null,
+                tipoMedioContactoId:  "1", //['', [Validators.required]],
+                claseMedioContactoId:  "1", //['', [Validators.required]],
+                desMedioContacto:  "1", //['', [Validators.required]],
+                principal:  "1",
+               // nombres: null,
+                estadoId: "1",
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+                municipalidadId: ['1'],
+
+            })
+
+
+
+            //   municipalidadId: number;
+            //   contribuyenteNumero: number;
+            //   contactoContribuyenteId: number;
+            //   desTipoMedioContacto: string;
+            //   claseMedioContactoId: number;
+            //   desClaseMedioContacto: string;
+            //   desMedioContacto: string;
+            //   principal: number;
+            //   estadoId: number;
+
+
         });
 
 
@@ -527,7 +559,9 @@ export class ContribuyenteComponent implements OnInit {
         this.maestroGenerico(23, 'maestrosTipoSubZona', 0);
         this.maestroGenerico(13, 'maestroTipoPredio', 0);
         this.maestroGenerico(10, 'maestroTipoRelacion', 0);
-        this.maestroGenerico(18,'maestroDocumentoTipo',1);
+        this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
+        this.maestroGenerico(15, 'maestrosTipoContacto', 0);
+        this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
 
     }
 
@@ -578,7 +612,7 @@ export class ContribuyenteComponent implements OnInit {
 
     maestroDistrito(provinciaId: any) {
 
-        this.valorDepartamento =  15; //this.step1.get('step1')  //this.verticalStepperForm.get('step1').['departamentoId'].value;
+        this.valorDepartamento = 15; //this.step1.get('step1')  //this.verticalStepperForm.get('step1').['departamentoId'].value;
         console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
@@ -850,7 +884,7 @@ export class ContribuyenteComponent implements OnInit {
     public contribuyenteCrear(): void {
 
 
-        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value).subscribe({
+        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.verticalStepperForm.get('step5').value).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -1128,7 +1162,14 @@ export class ContribuyenteComponent implements OnInit {
                         console.log(matriz);
                         this.maestroDocumentoTipo = res;
                     }
-
+                    if (matriz == 'maestrosTipoContacto') {
+                        console.log(matriz);
+                        this.maestrosTipoContacto = res;
+                    }
+                    if (matriz == 'maestrosTipoMedioContacto') {
+                        console.log(matriz);
+                        this.maestrosTipoMedioContacto = res;
+                    }
 
                 },
                 error: (error) => {

@@ -7,6 +7,7 @@ import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
 import { map, Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 import { contribuyenteCrear } from 'app/models/contribuyenteCrear';
+import { Contacto } from 'app/models/contacto.models';
 
 @Injectable({
     providedIn: 'root'
@@ -40,12 +41,16 @@ export class ContribuyenteService {
         return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?id=' + contribuyenteId);
     }
 
-    public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio): Observable<contribuyenteCrear> {
-        var params = {
+    public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio,
+        contactos: Contacto[]): Observable<contribuyenteCrear> {
+console.log('llego todoooooooo');
+       console.log(contribuyente,condicioncontribuyente,domicilioContribuyente,relacionado,contactos);
+            var params = {
             "contribuyente": contribuyente,
             "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
-            "relacionado": relacionado
+            "relacionado": relacionado,
+            "contactos":contactos
         };
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
