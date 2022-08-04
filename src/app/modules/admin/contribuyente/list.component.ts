@@ -68,7 +68,6 @@ export class ListComponent implements OnInit {
 
     this.removeValidators();
     this.buscarContribuyentes();
-
     this.dataSource.paginator = this.paginator;
   }
 
@@ -117,20 +116,20 @@ export class ListComponent implements OnInit {
     this.removeValidators();    
     this.limpiar();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
-
+    this.isSubmited = false;
     switch(e.value){
-      case "1":
+      case "2":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
         //this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
         break;
-      case "2":
+      case "3":
         this.formBusquedaContribuyente.get('docIdentidadId').enable();
         this.formBusquedaContribuyente.get('numDocIdentidad').enable();
         //this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
         //this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
         break;
-      case "3":
+      case "4":
         this.formBusquedaContribuyente.get('apellidoPaterno').enable();
         this.formBusquedaContribuyente.get('apellidoMaterno').enable();
         this.formBusquedaContribuyente.get('nombres').enable();
@@ -138,7 +137,7 @@ export class ListComponent implements OnInit {
         //this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
         //this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
         break;
-      case "4":
+      case "5":
         this.formBusquedaContribuyente.get('razonSocial').enable();
         //this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
         break;
@@ -154,6 +153,7 @@ export class ListComponent implements OnInit {
   }
 
   public limpiar(){
+    this.formBusquedaContribuyente.get('tipoFiltro').setValue('');
     this.formBusquedaContribuyente.get('contribuyenteNumero').setValue('');
     this.formBusquedaContribuyente.get('docIdentidadId').setValue('');
     this.formBusquedaContribuyente.get('numDocIdentidad').setValue('');
@@ -179,8 +179,6 @@ export class ListComponent implements OnInit {
   public descargarReporteExcel() {
     var formValue = this.formBusquedaContribuyente.value;
     var data = formValue == "" || formValue == null ? {municipalidadId:"1"}:(formValue.tipoFiltro =="" ? {municipalidadId:"1"}:this.formBusquedaContribuyente.value);
-    console.log(this.formBusquedaContribuyente);
-    console.log(data);
       this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
@@ -248,7 +246,7 @@ export class ListComponent implements OnInit {
           <th>Código</th>
           <th>Fecha de Registro</th>
           <th>Estado</th>
-          <th>Apellidos y Nombres</th>
+          <th>Apellidos y Nombres/Razón Social</th>
           <th>Tipo Documento</th>
           <th>N° Documento</th>
         </tr>
