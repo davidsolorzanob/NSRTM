@@ -30,73 +30,88 @@
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
                         <!-- Search -->
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'1'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Código Contribuyente :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
-                                <mat-error *ngIf="myError('contribuyenteNumero', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.contribuyenteNumero.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
 
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Tipo de documento :</mat-label>
                                 <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
+                                    <mat-option value="">Seleccionar</mat-option>
                                     <mat-option [value]="'1'">DNI</mat-option>
                                     <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
                                     <mat-option [value]="'3'">Pasaporte</mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="myError('docIdentidadId', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.docIdentidadId.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Número documento :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
+<<<<<<< HEAD
                                 <mat-error *ngIf="myError('numDocIdentidad', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
+=======
+                                <mat-error *ngIf="isSubmited && f.numDocIdentidad.errors" class="text-sm">Campo obligatorio</mat-error>
+                            </mat-form-field>                
+                        </div>                
+>>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class=" mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Apellido Paterno :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
-                                <mat-error *ngIf="myError('apellidoPaterno', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.apellidoPaterno.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno" formControlName="apellidoMaterno">
-                                <mat-error *ngIf="myError('apellidoMaterno', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.apellidoMaterno.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
                                 <mat-label>Nombres :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="nombres" id="nombres" formControlName="nombres">
-                                <mat-error *ngIf="myError('nombres', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.nombres.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
+<<<<<<< HEAD
                         <div class="mr-4">
                             <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
+=======
+                        <div class="mr-4">  
+                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>              
+>>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Razón social</mat-label>
                                 <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
-                                <mat-error *ngIf="myError('razonSocial', 'required')">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="isSubmited && f.razonSocial.errors" class="text-sm">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
+                    <div>
+                        <mat-error *ngIf="isSubmited && f.tipoFiltro.errors" class="text-sm">Seleccione el tipo de filtro</mat-error>
+                    </div>
                 </div>
                 <div class="flex items-center justify-end border-t -mx-8 mt-2 px-4 py-2 bg-gray-50 dark:bg-gray-700">
-                    <button mat-button [color]="'accent'" >
+                    <button mat-button [color]="'accent'" (click)="onReset()">
                         <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active"></mat-icon>
                         Cancelar
                     </button>
@@ -115,10 +130,10 @@
                     <mat-tab label="Detalle">
                         <div class="flex justify-end">
                             <div class="inline-flex pb-3" role="group" aria-label="Button group" class="absolute left-0 px-8">
-                                <button mat-raised-button color="default" (click)="descargarReporteExcel()" class="px-4">
+                                <button mat-raised-button color="default" (click)="descargarReporteExcel()" class="px-4" matTooltip="Descargar">
                                     <mat-icon [svgIcon]="'heroicons_outline:download'"></mat-icon>
                                 </button>
-                                <button mat-raised-button color="default" (click)="printResult()" class="px-4">
+                                <button mat-raised-button color="default" (click)="printResult()" class="px-4" matTooltip="Imprimir" >
                                     <mat-icon [svgIcon]="'heroicons_outline:printer'"></mat-icon>
                                 </button>
                             </div>
@@ -169,16 +184,25 @@
 
                                         <ng-container matColumnDef="acciones">
                                             <th mat-header-cell *matHeaderCellDef>  Acciones </th>
+<<<<<<< HEAD
                                             <td mat-cell *matCellDef="let element">
                                                 <button mat-icon-button color="primary" title="Ver detalle"
                                                 [routerLink]="['../contribuyente-ver/']">
                                                     <mat-icon>search</mat-icon>
                                                 </button>
                                                 <button mat-icon-button color="primary" title="Editar"
+=======
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <button mat-icon-button color="primary" matTooltip="Ver detalle" 
+                                                [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
+                                                    <mat-icon>search</mat-icon>
+                                                </button>
+                                                <button mat-icon-button color="primary" matTooltip="Editar" 
+>>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                                                 [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero]">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
-                                                <button mat-icon-button color="primary" title="Eliminar" (click)="eliminar(element)">
+                                                <button mat-icon-button color="primary" matTooltip="Eliminar" (click)="eliminar(element)">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             </td>

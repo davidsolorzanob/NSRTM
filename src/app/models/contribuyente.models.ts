@@ -34,7 +34,9 @@ export class Contribuyente {
     genero!: string;
     fallecido!: number;
     fechaFallecimiento!: Date;
-
+    //Adicional
+    desEstadoDj!: string;
+    descDocIdentidad!: string;
 }
 
 

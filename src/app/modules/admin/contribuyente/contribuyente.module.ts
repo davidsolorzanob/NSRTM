@@ -30,6 +30,8 @@ import { ContribuyenteVerComponent } from './contribuyente-ver.component';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DatePipe } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -61,9 +63,12 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatStepperModule,
     MatTableModule,
     HttpClientModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
+    
   ],
   providers: [
+    DatePipe,
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
