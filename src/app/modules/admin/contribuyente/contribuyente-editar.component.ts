@@ -7,7 +7,7 @@ import { Domicilio } from 'app/models/domicilio.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { CondicionService } from 'app/services/condicion.service';
 import { DomicilioService } from 'app/services/domicilio.service';
-import { ContribuyenteModule } from './contribuyente.module';
+import { ContactoService } from 'app/services/contacto.service';
 import { MaestroService } from 'app/services/maestro.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { via } from 'app/models/via.models';
@@ -19,12 +19,33 @@ import { UbigeoDepartamento } from 'app/models/UbigeoDepartamento.models';
 import { ubigeoProvincia } from 'app/models/ubigeoProvincia.models';
 import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
 import { Relacionado } from 'app/models/relacionado.models';
+import { Contacto} from 'app/models/contacto.models'
 import Swal from 'sweetalert2';
 import { first } from 'rxjs';
 import { relativeTimeThreshold } from 'moment';
+
 @Component({
     selector: 'app-contribuyente-editar',
-    templateUrl: './contribuyente-editar.component.html'
+    templateUrl: './contribuyente-editar.component.html',
+    styles: [
+        /* language=SCSS */
+        `
+            .inventory-grid {
+                grid-template-columns: 90px 90px 90px;
+
+                @screen sm {
+                    grid-template-columns: 84px 48px 40px;
+                }
+
+                @screen md {
+                    grid-template-columns: 84px 84px 112px;
+                }
+
+                @screen lg {
+                    grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
+                }
+            }
+        `]
 })
 export class ContribuyenteEditarComponent implements OnInit {
     public verticalStepperForm!: FormGroup;
@@ -59,7 +80,10 @@ export class ContribuyenteEditarComponent implements OnInit {
     maestroTipoDomicilio: Maestro[] = [];
     maestroTipoRelacion: Maestro[] = [];
     maestroDocumentoTipo: Maestro[] = [];
+    maestrosTipoContacto: Maestro[] = [];
+    maestrosTipoMedioContacto: Maestro[] = [];
 
+    //classContacto: Contacto[] = [];
 
 
     ubigeo: UbigeoDepartamento[] = [];
@@ -78,6 +102,9 @@ export class ContribuyenteEditarComponent implements OnInit {
     valorTipoZonaUrbana: number;
     valorTipoSubZonaUrbana: number;
     valorTipoEdificacion: number;
+    //Contacto
+
+    listaContacto: Contacto[]=[];
 
     error: any;
     idGeneral: number;
@@ -92,7 +119,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         private DomicilioService: DomicilioService,
         private serviceUbigeo: UbigeoService,
         private serviceVia: ViaService,
-        private serviceRelacionado: RelacionadoService
+        private serviceRelacionado: RelacionadoService,
+        private serviceContacto: ContactoService
     ) { }
 
     ngOnInit(): void {
@@ -121,6 +149,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.maestroGenerico(13, 'maestroTipoPredio', 0);
         this.maestroGenerico(10, 'maestroTipoRelacion', 0);
         this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
+        this.maestroGenerico(15, 'maestrosTipoContacto', 0);
+        this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
         this.maestroDepartamento();
         //console.log(this.verticalStepperForm.get('step3').get('departamentoId').value);
 
@@ -294,7 +324,25 @@ export class ContribuyenteEditarComponent implements OnInit {
                 "conContribuyenteId": null,
 
 
+            }),
+            step5: this.formBuilder.group({
+                contribuyenteNumero: null,
+                contactoContribuyenteId: null,
+                tipoMedioContactoId: ['1'],
+                claseMedioContactoId: ['1'],
+                //desMedioContacto: ['', [Validators.required]],
+                principal: "1",
+                nombres: null,
+                estadoId: "1",
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+                municipalidadId: ['1'],
+                desTipoMedioContacto: ['', [Validators.required]],
+                desClaseMedioContacto: ['', [Validators.required]],
+                desMedioContacto: ['', [Validators.required]],
+
             })
+
 
 
 
@@ -309,6 +357,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.cargarContribuyenteCondicion(this.idGeneral);
         this.cargarContribuyenteDomicilio(this.idGeneral);
         this.cargarContribuyenteRelacionado(this.idGeneral);
+        this.cargarContactoContribuyente(this.idGeneral);
+
         // this.maestroGenerico(3, 'maestrosMedio', 0);
         // this.maestroGenerico(2, 'maestrosTipoMedio', 0);
         // this.maestroGenerico(4, 'maestrosMotivo', 0);
@@ -427,6 +477,14 @@ export class ContribuyenteEditarComponent implements OnInit {
                         console.log(matriz);
                         this.maestroDocumentoTipo = res;
                     }
+                    if (matriz == 'maestrosTipoContacto') {
+                        console.log(matriz);
+                        this.maestrosTipoContacto = res;
+                    }
+                    if (matriz == 'maestrosTipoMedioContacto') {
+                        console.log(matriz);
+                        this.maestrosTipoMedioContacto = res;
+                    }
 
 
                 },
@@ -536,6 +594,23 @@ export class ContribuyenteEditarComponent implements OnInit {
                 },
                 complete: () => {
                     console.log('completo la recuperación deL relacionado del Contribuyente');
+                }
+            });
+    }
+
+
+    cargarContactoContribuyente(id: any) {
+        this.serviceContacto.listar(1, id)
+            .subscribe({
+                next: (res: Contacto[]) => {
+                    console.log('DATOS DEL CONTACTO DEL CONTRIBUYENTE', res);
+                    this.listaContacto = res;
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación deL contacto del Contribuyente');
                 }
             });
     }
@@ -843,9 +918,9 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     updateContribuyente(): void {
-        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.verticalStepperForm.get('step5').value).subscribe({
+        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.listaContacto).subscribe({
             next: (contribuyente) => {
-                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value,this.verticalStepperForm.get('step5').value);
+                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value,this.listaContacto);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
                 Swal.fire('Edición:', `Contribuyente actualizado con éxito`, 'success');
                 this.router.navigate(['../contribuyente/list']);
@@ -879,6 +954,66 @@ export class ContribuyenteEditarComponent implements OnInit {
     //         }
     //     });
     // }
+
+
+    eliminarContacto(lessonIndex: number) {
+        console.log(lessonIndex);
+        this.listaContacto.splice(lessonIndex, 1);
+    }
+
+
+
+    addContacto() {
+        //    const nuevoContacto = [{
+
+        //     'municipalidadId': '1',
+        //     'contribuyenteNumero': null,
+        //     'contactoContribuyenteId': null,
+        //     'tipoMedioContactoId': '',
+        //     'desTipoMedioContacto': '',
+        //     'claseMedioContactoId': '',
+        //     'desClaseMedioContacto': '',
+        //     'desMedioContacto': '',
+        //     'principal': '1',
+        //     'estadoId': '1',
+        //     'usuarioCreacion': '2025',
+        //     'fechaCreacion': '',
+        //     'terminalCreacion': '192.168.1.1',
+        //     'usuarioModificacion': '',
+        //     'fechaModificacion': '',
+        //     'terminalModificacion': ''
+
+        //    }];
+        //this.verticalStepperForm.get('step5').value
+        //  const contactForm = Contac
+
+        //classContacto: Contacto[]=[];
+        //contacto = Contacto;
+
+        //const Con = this.contacto;
+        //this.Con =
+
+        console.log(this.verticalStepperForm.get('step5').value);
+        //({
+        //     contribuyenteNumero: null,
+        //     contactoContribuyenteId: null,
+        //     tipoMedioContactoId: "1", //['', [Validators.required]],
+        //     claseMedioContactoId: "1", //['', [Validators.required]],
+        //     desMedioContacto: "456152787", //['', [Validators.required]],
+        //     principal: "1",
+        //     nombres: null,
+        //     estadoId: "1",
+        //     usuarioCreacion: ['2025'],
+        //     terminalCreacion: ['192.168.1.1'],
+        //     municipalidadId: ['1'],
+
+        // })
+
+        this.listaContacto.push(this.verticalStepperForm.get('step5').value);
+
+        this.verticalStepperForm.get('step5').reset();
+        console.log(this.listaContacto);
+    }
 
 
 }
