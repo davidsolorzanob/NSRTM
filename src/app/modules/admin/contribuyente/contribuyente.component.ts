@@ -6,12 +6,13 @@ import { Relacionado } from 'app/models/relacionado.models';
 import { Condicion } from 'app/models/condicion.models';
 import { Maestro } from 'app/models/maestro.models';
 import { UbigeoDepartamento } from 'app/models/UbigeoDepartamento.models';
+import { Contacto } from 'app/models/contacto.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { CondicionService } from 'app/services/condicion.service';
 import { MaestroService } from 'app/services/maestro.service';
 import { UbigeoService } from 'app/services/ubigeo.service';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
@@ -29,7 +30,25 @@ const moment = _moment;
 @Component({
     selector: 'app-contribuyente',
     templateUrl: './contribuyente.component.html',
-    styleUrls: ['./contribuyente.component.css']
+    styles: [
+        /* language=SCSS */
+        `
+            .inventory-grid {
+                grid-template-columns: 90px 90px 90px;
+
+                @screen sm {
+                    grid-template-columns: 84px 48px 40px;
+                }
+
+                @screen md {
+                    grid-template-columns: 84px 84px 112px;
+                }
+
+                @screen lg {
+                    grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
+                }
+            }
+        `]
     //encapsulation: ViewEncapsulation.None
 })
 
@@ -78,6 +97,8 @@ export class ContribuyenteComponent implements OnInit {
     maestrosTipoContacto: Maestro[] = [];
     maestrosTipoMedioContacto: Maestro[] = [];
 
+    classContacto: Contacto[] = [];
+    //contacto = Contacto;
 
     ubigeo: UbigeoDepartamento[] = [];
     ubigeoProvincia: ubigeoProvincia[] = [];
@@ -129,6 +150,43 @@ export class ContribuyenteComponent implements OnInit {
 
     horizontalStepperForm: FormGroup;
     verticalStepperForm: FormGroup;
+
+    //lessonData: Contacto[] = [];
+    //  lessonData = [{ 'title': 'First Title', 'level': 'advanced' },
+    //  { 'title': 'Second Title', 'level': 'intermediate' }];
+
+
+    //  classContacto = [
+    //     {
+    //         'municipalidadId': '1',
+    //         'contribuyenteNumero': null,
+    //         'contactoContribuyenteId': null,
+    //         'tipoMedioContactoId': '',
+    //         'desTipoMedioContacto': '',
+    //         'claseMedioContactoId': '',
+    //         'desClaseMedioContacto': '',
+    //         'desMedioContacto': '',
+    //         'principal': '1',
+    //         'estadoId': '1',
+    //         'usuarioCreacion': '2025',
+    //         'fechaCreacion': '',
+    //         'terminalCreacion': '192.168.1.1',
+    //         'usuarioModificacion': '',
+    //         'fechaModificacion': '',
+    //         'terminalModificacion': ''
+    //     }
+    // ];
+
+
+
+    form = this.formBuilder.group({
+        // title: new FormControl('My Title'),
+        // level: new FormControl('Level 1'),
+        tipoMedioContactoId: new FormControl('tipoMedioContactoId'),
+        claseMedioContactoId: new FormControl('claseMedioContactoId'),
+        desMedioContacto: new FormControl('desMedioContacto'),
+        lessons: this.formBuilder.array([])
+    });
 
     constructor(private service: ContribuyenteService,
         private router: Router,
@@ -313,18 +371,29 @@ export class ContribuyenteComponent implements OnInit {
 
             }),
 
+            // step5: this.lessonData.forEach(ld => {
+            //     const lform = this.formBuilder.group({
+            //         tipoMedioContactoId: new FormControl(ld.title),
+            //         claseMedioContactoId: new FormControl(ld.level),
+            //         desMedioContacto: new FormControl(ld.title),
+            //     });
+            //     this.lessons.push(lform);
+
             step5: this.formBuilder.group({
                 contribuyenteNumero: null,
                 contactoContribuyenteId: null,
-                tipoMedioContactoId:  "1", //['', [Validators.required]],
-                claseMedioContactoId:  "1", //['', [Validators.required]],
-                desMedioContacto:  "1", //['', [Validators.required]],
-                principal:  "1",
-               // nombres: null,
+                tipoMedioContactoId: ['1'],
+                claseMedioContactoId: ['1'],
+                //desMedioContacto: ['', [Validators.required]],
+                principal: "1",
+                nombres: null,
                 estadoId: "1",
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
+                desTipoMedioContacto: ['', [Validators.required]],
+                desClaseMedioContacto: ['', [Validators.required]],
+                desMedioContacto: ['', [Validators.required]],
 
             })
 
@@ -346,7 +415,13 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
-
+        // this.lessonData.forEach(ld => {
+        //     const lform = this.formBuilder.group({
+        //       title: new FormControl(ld.title),
+        //       level : new FormControl(ld.level),
+        //     });
+        //     this.lessons.push(lform);
+        //   });
 
 
         // this.registerFormContribuyente = this.formBuilder.group({
@@ -539,6 +614,85 @@ export class ContribuyenteComponent implements OnInit {
         // }
         // )
     }
+
+    // get lessons() {
+    //     return this.form.controls["lessons"] as FormArray;
+    // }
+
+    // addLesson() {
+    //     const lessonForm = this.formBuilder.group({
+    //         tipoMedioContactoId: ['', Validators.required],
+    //         claseMedioContactoId: ['', Validators.required],
+    //         desMedioContacto: ['', Validators.required]
+    //     });
+    //     this.lessons.push(lessonForm);
+
+    // }
+
+    // deleteLesson(lessonIndex: number) {
+    //     this.lessons.removeAt(lessonIndex);
+    // }
+
+    eliminarContacto(lessonIndex: number) {
+        console.log(lessonIndex);
+        this.classContacto.splice(lessonIndex, 1);
+    }
+
+
+
+    addContacto() {
+        //    const nuevoContacto = [{
+
+        //     'municipalidadId': '1',
+        //     'contribuyenteNumero': null,
+        //     'contactoContribuyenteId': null,
+        //     'tipoMedioContactoId': '',
+        //     'desTipoMedioContacto': '',
+        //     'claseMedioContactoId': '',
+        //     'desClaseMedioContacto': '',
+        //     'desMedioContacto': '',
+        //     'principal': '1',
+        //     'estadoId': '1',
+        //     'usuarioCreacion': '2025',
+        //     'fechaCreacion': '',
+        //     'terminalCreacion': '192.168.1.1',
+        //     'usuarioModificacion': '',
+        //     'fechaModificacion': '',
+        //     'terminalModificacion': ''
+
+        //    }];
+        //this.verticalStepperForm.get('step5').value
+        //  const contactForm = Contac
+
+        //classContacto: Contacto[]=[];
+        //contacto = Contacto;
+
+        //const Con = this.contacto;
+        //this.Con =
+
+        console.log(this.verticalStepperForm.get('step5').value);
+        //({
+        //     contribuyenteNumero: null,
+        //     contactoContribuyenteId: null,
+        //     tipoMedioContactoId: "1", //['', [Validators.required]],
+        //     claseMedioContactoId: "1", //['', [Validators.required]],
+        //     desMedioContacto: "456152787", //['', [Validators.required]],
+        //     principal: "1",
+        //     nombres: null,
+        //     estadoId: "1",
+        //     usuarioCreacion: ['2025'],
+        //     terminalCreacion: ['192.168.1.1'],
+        //     municipalidadId: ['1'],
+
+        // })
+
+        this.classContacto.push(this.verticalStepperForm.get('step5').value);
+
+        this.verticalStepperForm.get('step5').reset();
+        console.log(this.classContacto);
+    }
+
+
     ngAfterViewInit() {
         this.maestroGenerico(3, 'maestrosMedio', 0);
         this.maestroGenerico(2, 'maestrosTipoMedio', 0);
@@ -863,11 +1017,6 @@ export class ContribuyenteComponent implements OnInit {
                 }
             });
     }
-
-
-
-
-
     onSubmit() {
         console.log('envio');
     }
@@ -879,12 +1028,10 @@ export class ContribuyenteComponent implements OnInit {
         });
     }
 
-
-
     public contribuyenteCrear(): void {
 
 
-        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.verticalStepperForm.get('step5').value).subscribe({
+        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.classContacto).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -1072,6 +1219,7 @@ export class ContribuyenteComponent implements OnInit {
 
         console.log('ok llego todo');
     }
+
 
 
 

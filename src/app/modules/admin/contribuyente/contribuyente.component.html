@@ -11,13 +11,12 @@
         </div>
 
 
-        <!-- Vertical stepper -->
+        <!-- Vertical stepper  [stepControl]="verticalStepperForm.get('step1')" -->
         <div class="mt-16 mb-8 text-12xl font-bold">Mantenimiento de Contribuyente</div>
 
         <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="verticalStepperForm">
-            <mat-vertical-stepper [linear]="true" #verticalStepper >
-                <mat-step [formGroupName]="'step1'" [stepControl]="verticalStepperForm.get('step1')"
-                    #verticalStepperStep1 class="background-color: coral;">
+            <mat-vertical-stepper [linear]="true" #verticalStepper>
+                <mat-step [formGroupName]="'step1'" #verticalStepperStep1 class="background-color: coral;">
                     <ng-template matStepLabel>Información del Contribuyente</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la información básica del contribuyente
@@ -309,19 +308,17 @@
 
                     </div>
                     <div class="flex justify-end">
-                        <button class="px-8" mat-flat-button [color]="'primary'"
-                            [disabled]="verticalStepperStep1.stepControl.pristine || verticalStepperStep1.stepControl.invalid"
-                            type="button" matStepperNext>
+                        <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                             Siguiente
+                            <!--   [disabled]="verticalStepperStep1.stepControl.pristine  || verticalStepperStep1.stepControl.invalid "-->
                         </button>
                     </div>
                 </mat-step>
 
 
+                <!-- [stepControl]="verticalStepperForm.get('step2')" -->
 
-
-                <mat-step [formGroupName]="'step2'" [stepControl]="verticalStepperForm.get('step2')"
-                    #verticalStepperStep2>
+                <mat-step [formGroupName]="'step2'" #verticalStepperStep2>
                     <ng-template matStepLabel>Condición del Contribuyente</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la condición del contribuyente
@@ -362,8 +359,7 @@
                                     <mat-select id="tipoDocumentoId" name="tipoDocumentoId"
                                         formControlName="tipoDocumentoId">
                                         <mat-option>-- Seleccionar Tipo de Documento --</mat-option>
-                                        <mat-option *ngFor="let mae of maestroDocumentoTipo"
-                                            [value]="mae.maestroId">
+                                        <mat-option *ngFor="let mae of maestroDocumentoTipo" [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
@@ -482,23 +478,20 @@
                                 matStepperPrevious>
                                 Atrás
                             </button>
-                            <button class="px-8" mat-flat-button [color]="'primary'"
-                                [disabled]="verticalStepperStep2.stepControl.pristine || verticalStepperStep2.stepControl.invalid"
-                                type="button" matStepperNext>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
                         </div>
                     </div>
 
-
-
+                    <!--
+                    [disabled]="verticalStepperStep2.stepControl.pristine || verticalStepperStep2.stepControl.invalid" -->
 
                 </mat-step>
 
 
-
-                <mat-step [formGroupName]="'step3'" [stepControl]="verticalStepperForm.get('step3')"
-                    #verticalStepperStep3>
+                <!-- [stepControl]="verticalStepperForm.get('step3')" -->
+                <mat-step [formGroupName]="'step3'" #verticalStepperStep3>
                     <ng-template matStepLabel>Domicilio del Contribuyente</ng-template>
                     <p class="my-6 font-medium">
                         Registro del Domicilio del contribuyente
@@ -837,22 +830,23 @@
                                 matStepperPrevious>
                                 Atrás
                             </button>
-                            <button class="px-8" mat-flat-button [color]="'primary'"
-                                [disabled]="verticalStepperStep3.stepControl.pristine || verticalStepperStep3.stepControl.invalid"
-                                type="button" matStepperNext>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
 
                         </div>
                     </div>
 
+                    <!-- [disabled]="verticalStepperStep3.stepControl.pristine || verticalStepperStep3.stepControl.invalid" -->
 
 
 
                 </mat-step>
 
-                <mat-step [formGroupName]="'step4'" [stepControl]="verticalStepperForm.get('step4')"
-                    #verticalStepperStep4>
+
+
+                <!-- [stepControl]="verticalStepperForm.get('step4')" -->
+                <mat-step [formGroupName]="'step4'" #verticalStepperStep4>
                     <ng-template matStepLabel>Registro del Relacionado</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la información del relacionado y su domicilio
@@ -1330,104 +1324,251 @@
                                 matStepperPrevious>
                                 Atrás
                             </button>
-                            <button class="px-8" mat-flat-button [color]="'primary'"
-                                [disabled]="verticalStepperStep4.stepControl.pristine || verticalStepperStep4.stepControl.invalid"
-                                type="button" matStepperNext>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
-
+                            <!-- [disabled]="verticalStepperStep4.stepControl.pristine || verticalStepperStep4.stepControl.invalid" -->
                         </div>
                     </div>
                 </mat-step>
 
+                <!-- [stepControl]="verticalStepperForm.get('step5')" -->
 
-                <mat-step [formGroupName]="'step5'" [stepControl]="verticalStepperForm.get('step5')"
-                #verticalStepperStep5 class="background-color: coral;">
-                <ng-template matStepLabel>Información del Contacto</ng-template>
-                <p class="my-6 font-medium">
-                    Registro de la información del Contacto
-                </p>
-
-                <div class="flex flex-col gt-xs:flex-row">
+                <mat-step [formGroupName]="'step5'" #verticalStepperStep5 class="background-color: coral;">
+                    <ng-template matStepLabel>Información del Contacto</ng-template>
+                    <p class="my-6 font-medium">
+                        Registro de la información del Contacto
+                    </p>
 
 
-                    <!-- Form -->
-                    <!-- <form [formGroup]="registerFormContribuyente" (ngSubmit)="createContribuyente()"
-                class="flex flex-col w-full form-container"> -->
 
 
-                    <!-- Section -->
-                    <div class="w-full">
+                    <div class="flex flex-col gt-xs:flex-row">
+
+                        <!-- Section -->
+                        <div class="w-full">
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-10 w-full mt-10">
+
+
+                            <!-- Tipo de Contacto -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Tipo de Contacto</mat-label>
+                                    <mat-select id="desTipoMedioContacto" name="desTipoMedioContacto"
+                                        formControlName="desTipoMedioContacto">
+                                        <mat-option>-- Seleccionar Tipo de Contacto --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosTipoMedioContacto "
+                                            [value]="mae.descripcion">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+
+
+
+                            <!-- Medio de Contacto -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Medio de Contacto</mat-label>
+                                    <mat-select name="desClaseMedioContacto" id="desClaseMedioContacto"
+                                        formControlName="desClaseMedioContacto">
+                                        <mat-option> -- Seleccionar Medio de Contacto --</mat-option>
+                                        <mat-option *ngFor="let mae of maestrosTipoContacto " [value]="mae.descripcion">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Detalle</mat-label>
+                                    <input matInput name="desMedioContacto" id="desMedioContacto"
+                                        formControlName="desMedioContacto">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-2">
+
+                                <br>
+                                <br>
+                                <mat-checkbox name="principal" id="principal" value="checked"
+                                    formControlName="principal">
+                                    Principal</mat-checkbox>
+
+
+
+                                <!-- <ng-container formArrayName="lessons">
+                                    <ng-container *ngFor="let lessonForm of lessons.controls; let i = index">
+                                        <div class="lesson-form-row" [formGroupName]="i">
+
+                                            <mat-form-field appearance="fill">
+
+                                                <ng-container *ngIf="lessonData[i] && lessonData[i].tipoMedioContactoId">
+                                                    <mat-select formControlName="tipoMedioContactoId" name="tipoMedioContactoId" id="tipoMedioContactoId" placeholder="Tipo Medio Contacto"
+                                                        [(value)]="lessonData[i].tipoMedioContactoId">
+
+                                                        <mat-option value="1">A</mat-option>
+                                                        <mat-option value="2">B</mat-option>
+                                                        <mat-option value="3">C</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!lessonData[i]">
+                                                    <mat-select formControlName="tipoMedioContactoId" name="tipoMedioContactoId" id="tipoMedioContactoId" placeholder="Tipo Medio Contacto">
+                                                        <mat-option value="1">A</mat-option>
+                                                        <mat-option value="2">B</mat-option>
+                                                        <mat-option value="3">C</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="fill">
+
+                                                <ng-container *ngIf="lessonData[i] && lessonData[i].claseMedioContactoId">
+                                                    <mat-select formControlName="claseMedioContactoId" name="claseMedioContactoId" id="claseMedioContactoId" placeholder="Clase Medio de contacto"
+                                                        [(value)]="lessonData[i].claseMedioContactoId">
+
+                                                        <mat-option value="1">A</mat-option>
+                                                        <mat-option value="2">B</mat-option>
+                                                        <mat-option value="3">C</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!lessonData[i]">
+                                                    <mat-select formControlName="claseMedioContactoId" name="claseMedioContactoId" id="claseMedioContactoId"  placeholder="Clase Medio de contacto">
+                                                        <mat-option value="1">A</mat-option>
+                                                        <mat-option value="2">B</mat-option>
+                                                        <mat-option value="3">C</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                            </mat-form-field>
+
+
+
+
+
+                                            <mat-form-field appearance="fill">
+                                                <input matInput formControlName="desMedioContacto" id="desMedioContacto" name="desMedioContacto" placeholder="Lesson title" />
+
+                                            </mat-form-field>
+                                            <mat-icon class="delete-btn" (click)="deleteLesson(i)">
+                                                delete_forever</mat-icon>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+
+                                <button mat-mini-fab (click)="addLesson()">
+                                    <mat-icon class="add-course-btn">add</mat-icon>
+                                </button> -->
+
+
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-2">
+
+                                <br>
+                                <br>
+                                <button class="float-left" mat-flat-button [color]="'primary'" (click)="addContacto()">
+                                    <mat-icon [svgIcon]="'heroicons_outline:plus'">Agregar</mat-icon>
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <div class="alert alert-info" *ngIf="classContacto?.length==0">
+                                No hay contactos en el sistema.
+                            </div>
+
+                            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                                <ng-container *ngIf="classContacto?.length>0">
+                                    <div class="grid">
+                                        <!-- Header -->
+                                        <div
+                                            class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                                            <div></div>
+                                            <div class="hidden md:block">
+                                                Id
+                                            </div>
+                                            <div>Tipo de Medio</div>
+                                            <div>
+                                                Clase de medio
+                                            </div>
+                                            <div class="hidden lg:block">
+                                                Descripcion
+                                            </div>
+
+                                            <div class="hidden sm:block">Detalles</div>
+                                        </div>
+                                        <!-- Rows -->
+
+                                        <ng-container *ngFor="let contacto of classContacto; let i = index">
+                                            <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+
+
+                                                <!-- Descripcion -->
+                                                <div class="truncate">
+
+                                                </div>
+                                                <!-- ID -->
+                                                <div class="hidden md:block truncate">
+                                                    {{i+1}}
+                                                </div>
+                                                <!-- Tipo de Medio -->
+                                                <div class="hidden md:block truncate">
+                                                    {{contacto.desTipoMedioContacto}}
+                                                </div>
+
+                                                <!--   Clase de medio -->
+                                                <div class="truncate">
+                                                    {{contacto.desClaseMedioContacto}}
+                                                </div>
+
+                                                <!--   Clase de medio -->
+                                                <div class="hidden sm:block">
+                                                    {{contacto.desMedioContacto}}
+                                                </div>
+
+                                                <!-- Details button -->
+                                                <div>
+                                                    <button class="btn btn-danger btn-sm"
+                                                        (click)="eliminarContacto(contacto)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
+                                Siguiente
+                            </button>
+                        </div>
+                        <!-- [disabled]="verticalStepperStep5.stepControl.pristine || verticalStepperStep5.stepControl.invalid" -->
 
                     </div>
-
-                    <div class="grid grid-cols-12 gap-10 w-full mt-10">
-
-
-                        <!-- Tipo de Contacto -->
-                        <div class="col-span-2 sm:col-span-2">
-                            <mat-form-field class="fuse-mat-no-subscript w-full">
-                                <mat-label>Tipo de Contacto</mat-label>
-                                <mat-select id="tipoMedioContactoId" name="tipoMedioContactoId"
-                                    formControlName="tipoMedioContactoId">
-                                    <mat-option>-- Seleccionar Tipo de Contacto --</mat-option>
-                                    <mat-option *ngFor="let mae of maestrosTipoMedioContacto " [value]="mae.maestroId">
-                                        {{mae.descripcion}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-
-                        <!-- Medio de Contacto -->
-                        <div class="col-span-2 sm:col-span-2">
-                            <mat-form-field class="fuse-mat-no-subscript w-full">
-                                <mat-label>Medio de Contacto</mat-label>
-                                <mat-select name="claseMedioContactoId" id="claseMedioContactoId"
-                                    formControlName="claseMedioContactoId">
-                                    <mat-option> -- Seleccionar Medio de Contacto --</mat-option>
-                                    <mat-option *ngFor="let mae of maestrosTipoContacto " [value]="mae.maestroId">
-                                        {{mae.descripcion}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-
-                        <div class="col-span-2 sm:col-span-2">
-                            <mat-form-field class="fuse-mat-no-subscript w-full">
-                                <mat-label>Detalle</mat-label>
-                                <input matInput name="desMedioContacto" id="desMedioContacto" formControlName="desMedioContacto">
-                            </mat-form-field>
-                        </div>
-
-                        <div class="col-span-2 sm:col-span-2">
-
-                              <br>
-                              <br>
-                              <mat-checkbox name="principal" id="principal" value="checked" formControlName="principal">Principal</mat-checkbox>
-
-                        </div>
-
-                    </div>
-
-
-
-
-
-
-                </div>
-                <div class="flex justify-end">
-                    <button class="px-8" mat-flat-button [color]="'primary'"
-                        [disabled]="verticalStepperStep5.stepControl.pristine || verticalStepperStep5.stepControl.invalid"
-                        type="button" matStepperNext>
-                        Siguiente
-                    </button>
-                </div>
-
-
-
-            </mat-step>
+                </mat-step>
 
 
 
@@ -1437,19 +1578,10 @@
                         La información ha sido registrada correctamente! Puede enviar el regitro a Grabar o a resetear.
                     </p>
                     <div class="flex justify-end mt-8">
-                        <button
-                            class="px-8 mr-2"
-                            mat-flat-button
-                            [color]="'accent'"
-                            type="button"
-                            matStepperPrevious>
+                        <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" matStepperPrevious>
                             Atrás
                         </button>
-                        <button
-                            class="px-8"
-                            mat-flat-button
-                            [color]="'primary'"
-                            type="reset"
+                        <button class="px-8" mat-flat-button [color]="'primary'" type="reset"
                             (click)="contribuyenteCrear();">
                             Enviar
                         </button>
