@@ -57,15 +57,9 @@
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Número documento :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
-<<<<<<< HEAD
                                 <mat-error *ngIf="myError('numDocIdentidad', 'required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
-=======
-                                <mat-error *ngIf="isSubmited && f.numDocIdentidad.errors" class="text-sm">Campo obligatorio</mat-error>
-                            </mat-form-field>                
-                        </div>                
->>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
                         <div class=" mr-4">
@@ -92,13 +86,8 @@
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4  col-span-4">
-<<<<<<< HEAD
                         <div class="mr-4">
                             <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)" required></mat-radio-button>
-=======
-                        <div class="mr-4">  
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>              
->>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
                                 <mat-label>Razón social</mat-label>
                                 <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
@@ -184,21 +173,12 @@
 
                                         <ng-container matColumnDef="acciones">
                                             <th mat-header-cell *matHeaderCellDef>  Acciones </th>
-<<<<<<< HEAD
                                             <td mat-cell *matCellDef="let element">
                                                 <button mat-icon-button color="primary" title="Ver detalle"
                                                 [routerLink]="['../contribuyente-ver/']">
                                                     <mat-icon>search</mat-icon>
                                                 </button>
                                                 <button mat-icon-button color="primary" title="Editar"
-=======
-                                            <td mat-cell *matCellDef="let element"> 
-                                                <button mat-icon-button color="primary" matTooltip="Ver detalle" 
-                                                [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
-                                                    <mat-icon>search</mat-icon>
-                                                </button>
-                                                <button mat-icon-button color="primary" matTooltip="Editar" 
->>>>>>> 5aed7ae8d1bc196f209154b5814ff2190eecf014
                                                 [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero]">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
