@@ -45,7 +45,7 @@ const moment = _moment;
                 }
 
                 @screen lg {
-                    grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
+                    grid-template-columns: 94px 94px 84px 94px 94px 94px 94px 84px 84px 84px;
                 }
             }
         `]
@@ -98,6 +98,7 @@ export class ContribuyenteComponent implements OnInit {
     maestrosTipoMedioContacto: Maestro[] = [];
 
     classContacto: Contacto[] = [];
+    classDomicilio: Domicilio[] = [];
     //contacto = Contacto;
 
     ubigeo: UbigeoDepartamento[] = [];
@@ -305,9 +306,51 @@ export class ContribuyenteComponent implements OnInit {
                 // fechaEdicion: [''],
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
-            })
-            ,
+            }), //otros domicilios
             step4: this.formBuilder.group({
+                municipalidadId: ['1'],
+                contribuyenteNumero: "5",
+                domContribuyenteDomicilioNumero: null,
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                viaDistritoId: ['121'],
+                // viaDepartamentoId: ['', [Validators.required]],
+                fechaRegistro2: ['', [Validators.required]],
+                tipoViaId: ['', [Validators.required]],
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: ['', [Validators.required]],
+                letra2: ['', [Validators.required]],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                nombreZonaUrbana: ['', [Validators.required]],
+                subZonaUrbanaId: ['', [Validators.required]],
+                nombreSubZonaUrbana: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                nombreEdificacion: ['', [Validators.required]],
+                tipoInteriorId: ['', [Validators.required]],
+                ingreso: ['', [Validators.required]],
+                piso: ['', [Validators.required]],
+                kilometro: ['', [Validators.required]],
+                referencia: ['', [Validators.required]],
+                latitud: ['', [Validators.required]],
+                longitud: ['', [Validators.required]],
+                // usuarioRegistro: [''],
+                // fechaRegistro: [''],
+                // usuarioEdicion: [''],
+                // fechaEdicion: [''],
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+            }) //Relacionado
+            ,
+            step5: this.formBuilder.group({
                 relContribuyenteNumero: null,
                 personaId: null,
                 docIdentidadId: ['', [Validators.required]],
@@ -371,7 +414,7 @@ export class ContribuyenteComponent implements OnInit {
 
             }),
 
-            // step5: this.lessonData.forEach(ld => {
+            // step6: this.lessonData.forEach(ld => {
             //     const lform = this.formBuilder.group({
             //         tipoMedioContactoId: new FormControl(ld.title),
             //         claseMedioContactoId: new FormControl(ld.level),
@@ -379,7 +422,7 @@ export class ContribuyenteComponent implements OnInit {
             //     });
             //     this.lessons.push(lform);
 
-            step5: this.formBuilder.group({
+            step6: this.formBuilder.group({
                 contribuyenteNumero: null,
                 contactoContribuyenteId: null,
                 tipoMedioContactoId: ['1'],
@@ -638,6 +681,21 @@ export class ContribuyenteComponent implements OnInit {
         this.classContacto.splice(lessonIndex, 1);
     }
 
+    eliminarDomicilio(lessonIndex: number) {
+        console.log(lessonIndex);
+        this.classDomicilio.splice(lessonIndex, 1);
+    }
+
+
+
+    addDomicilio(){
+
+        console.log(this.verticalStepperForm.get('step4').value);
+        this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
+        this.verticalStepperForm.get('step4').reset();
+        console.log(this.classDomicilio);
+
+    }
 
 
     addContacto() {
@@ -661,7 +719,7 @@ export class ContribuyenteComponent implements OnInit {
         //     'terminalModificacion': ''
 
         //    }];
-        //this.verticalStepperForm.get('step5').value
+        //this.verticalStepperForm.get('step6').value
         //  const contactForm = Contac
 
         //classContacto: Contacto[]=[];
@@ -670,7 +728,7 @@ export class ContribuyenteComponent implements OnInit {
         //const Con = this.contacto;
         //this.Con =
 
-        console.log(this.verticalStepperForm.get('step5').value);
+        console.log(this.verticalStepperForm.get('step6').value);
         //({
         //     contribuyenteNumero: null,
         //     contactoContribuyenteId: null,
@@ -686,9 +744,9 @@ export class ContribuyenteComponent implements OnInit {
 
         // })
 
-        this.classContacto.push(this.verticalStepperForm.get('step5').value);
+        this.classContacto.push(this.verticalStepperForm.get('step6').value);
 
-        this.verticalStepperForm.get('step5').reset();
+        this.verticalStepperForm.get('step6').reset();
         console.log(this.classContacto);
     }
 
@@ -746,7 +804,7 @@ export class ContribuyenteComponent implements OnInit {
 
     maestroProvincia(departamentoId: any) {
         console.log(departamentoId + 'depa llego');
-        this.serviceUbigeo.verProvincia(departamentoId)
+        this.serviceUbigeo.verProvincia(15)
             .subscribe({
                 next: (res: any) => {
                     console.log('Provincia limpio', res);
@@ -770,7 +828,7 @@ export class ContribuyenteComponent implements OnInit {
         console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
-        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, 135)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
@@ -796,7 +854,7 @@ export class ContribuyenteComponent implements OnInit {
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
 
-        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, 135)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
@@ -1031,7 +1089,7 @@ export class ContribuyenteComponent implements OnInit {
     public contribuyenteCrear(): void {
 
 
-        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.classContacto).subscribe({
+        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.classContacto).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
