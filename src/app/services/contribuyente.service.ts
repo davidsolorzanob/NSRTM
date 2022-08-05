@@ -6,6 +6,7 @@ import { Relacionado } from 'app/models/relacionado.models';
 import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
 import { map, Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
+import { ContribuyenteReporte } from '../models/contribuyenteReporte.models';
 import { contribuyenteCrear } from 'app/models/contribuyenteCrear';
 import { Contacto } from 'app/models/contacto.models';
 

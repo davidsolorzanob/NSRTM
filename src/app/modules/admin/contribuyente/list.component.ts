@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { ContribuyenteService } from 'app/services/contribuyente.service';
+import { ContribuyenteReporte } from 'app/models/contribuyenteReporte.models';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -34,17 +35,26 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 })
 export class ListComponent implements OnInit {
   titulo = 'Relación de contribuyentes';
-  contribuyentes: Contribuyente[] = [];
-  contribuyentesAny: any[] = [] ;
-  contribuyente: Contribuyente;
   isLoadingBusqueda = false;
+  tipoPersonaJuridica = 2;
   isSubmited = false;
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
-  displayedColumns: string[] = ['contribuyenteNumero', 'fechaDJ', 'desEstadoDj', 'apellidoPaterno', 'descDocIdentidad', 'numDocIdentidad', 'acciones' ];
-  dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
+  displayedColumns: string[] = [
+    'contribuyenteNumero', 
+    'fechaDJ', 
+    'desEstadoDj', 
+    'apellidoPaterno', 
+    'descDocIdentidad', 
+    'numDocIdentidad', 
+    'area',
+    'usuarioCreacion',
+    'fechaInscripcion',
+    'terminalCreacion',
+    'acciones' ];
+  dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
   public formBusquedaContribuyente!: FormGroup;
   public formControl: FormControl;
@@ -68,7 +78,6 @@ export class ListComponent implements OnInit {
 
     this.removeValidators();
     this.buscarContribuyentes();
-
     this.dataSource.paginator = this.paginator;
   }
 
@@ -117,20 +126,20 @@ export class ListComponent implements OnInit {
     this.removeValidators();    
     this.limpiar();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
-
+    this.isSubmited = false;
     switch(e.value){
-      case "1":
+      case "2":
         console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
         this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
         //this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
         break;
-      case "2":
+      case "3":
         this.formBusquedaContribuyente.get('docIdentidadId').enable();
         this.formBusquedaContribuyente.get('numDocIdentidad').enable();
         //this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
         //this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
         break;
-      case "3":
+      case "4":
         this.formBusquedaContribuyente.get('apellidoPaterno').enable();
         this.formBusquedaContribuyente.get('apellidoMaterno').enable();
         this.formBusquedaContribuyente.get('nombres').enable();
@@ -138,7 +147,7 @@ export class ListComponent implements OnInit {
         //this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
         //this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
         break;
-      case "4":
+      case "5":
         this.formBusquedaContribuyente.get('razonSocial').enable();
         //this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
         break;
@@ -154,6 +163,7 @@ export class ListComponent implements OnInit {
   }
 
   public limpiar(){
+    this.formBusquedaContribuyente.get('tipoFiltro').setValue('');
     this.formBusquedaContribuyente.get('contribuyenteNumero').setValue('');
     this.formBusquedaContribuyente.get('docIdentidadId').setValue('');
     this.formBusquedaContribuyente.get('numDocIdentidad').setValue('');
@@ -167,7 +177,7 @@ export class ListComponent implements OnInit {
       this.isLoadingBusqueda = true;
       this.service.listarPaginas(this.formBusquedaContribuyente.value, this.pageSize.toString(), (this.currentPage +1).toString()).subscribe(p => {
 
-        this.dataSource.data = p.data as Contribuyente[];
+        this.dataSource.data = p.data as ContribuyenteReporte[];
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = p.totalRows;
@@ -179,8 +189,6 @@ export class ListComponent implements OnInit {
   public descargarReporteExcel() {
     var formValue = this.formBusquedaContribuyente.value;
     var data = formValue == "" || formValue == null ? {municipalidadId:"1"}:(formValue.tipoFiltro =="" ? {municipalidadId:"1"}:this.formBusquedaContribuyente.value);
-    console.log(this.formBusquedaContribuyente);
-    console.log(data);
       this.service.getReporteBusquedaExcel(JSON.stringify(data)).subscribe(p => {
         let file = new Blob([p], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         var fileURL = URL.createObjectURL(file);
@@ -188,7 +196,7 @@ export class ListComponent implements OnInit {
       });
   }
 
-  public eliminar(contribuyente: Contribuyente): void {
+  public eliminar(contribuyente: ContribuyenteReporte): void {
 
     Swal.fire({
       title: 'Confirmación',
@@ -201,7 +209,6 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.eliminar(1,contribuyente.contribuyenteNumero).subscribe(() => {
-          this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
           this.buscarContribuyentes();
         })
         Swal.fire(
@@ -211,12 +218,6 @@ export class ListComponent implements OnInit {
         )
       }
     })
-  }
-
-  public filtrar(nombres: string): void {
-    this.contribuyente = new Contribuyente();
-    this.contribuyente.nombres = nombres
-    this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
   }
 
   public printResult(): void {  
@@ -248,7 +249,7 @@ export class ListComponent implements OnInit {
           <th>Código</th>
           <th>Fecha de Registro</th>
           <th>Estado</th>
-          <th>Apellidos y Nombres</th>
+          <th>Apellidos y Nombres/Razón Social</th>
           <th>Tipo Documento</th>
           <th>N° Documento</th>
         </tr>
