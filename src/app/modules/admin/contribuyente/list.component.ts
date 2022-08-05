@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { ContribuyenteService } from 'app/services/contribuyente.service';
+import { ContribuyenteReporte } from 'app/models/contribuyenteReporte.models';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -34,17 +35,26 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 })
 export class ListComponent implements OnInit {
   titulo = 'Relación de contribuyentes';
-  contribuyentes: Contribuyente[] = [];
-  contribuyentesAny: any[] = [] ;
-  contribuyente: Contribuyente;
   isLoadingBusqueda = false;
+  tipoPersonaJuridica = 2;
   isSubmited = false;
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
-  displayedColumns: string[] = ['contribuyenteNumero', 'fechaDJ', 'desEstadoDj', 'apellidoPaterno', 'descDocIdentidad', 'numDocIdentidad', 'acciones' ];
-  dataSource: MatTableDataSource<Contribuyente> = new MatTableDataSource();
+  displayedColumns: string[] = [
+    'contribuyenteNumero', 
+    'fechaDJ', 
+    'desEstadoDj', 
+    'apellidoPaterno', 
+    'descDocIdentidad', 
+    'numDocIdentidad', 
+    'area',
+    'usuarioCreacion',
+    'fechaInscripcion',
+    'terminalCreacion',
+    'acciones' ];
+  dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
   public formBusquedaContribuyente!: FormGroup;
   public formControl: FormControl;
@@ -167,7 +177,7 @@ export class ListComponent implements OnInit {
       this.isLoadingBusqueda = true;
       this.service.listarPaginas(this.formBusquedaContribuyente.value, this.pageSize.toString(), (this.currentPage +1).toString()).subscribe(p => {
 
-        this.dataSource.data = p.data as Contribuyente[];
+        this.dataSource.data = p.data as ContribuyenteReporte[];
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = p.totalRows;
@@ -186,7 +196,7 @@ export class ListComponent implements OnInit {
       });
   }
 
-  public eliminar(contribuyente: Contribuyente): void {
+  public eliminar(contribuyente: ContribuyenteReporte): void {
 
     Swal.fire({
       title: 'Confirmación',
@@ -199,7 +209,6 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.eliminar(1,contribuyente.contribuyenteNumero).subscribe(() => {
-          this.contribuyentes = this.contribuyentes.filter(a => a !== contribuyente)
           this.buscarContribuyentes();
         })
         Swal.fire(
@@ -209,12 +218,6 @@ export class ListComponent implements OnInit {
         )
       }
     })
-  }
-
-  public filtrar(nombres: string): void {
-    this.contribuyente = new Contribuyente();
-    this.contribuyente.nombres = nombres
-    this.service.filtrarPorNombre(this.contribuyente).subscribe(n => this.contribuyentes = n);
   }
 
   public printResult(): void {  
