@@ -876,7 +876,7 @@
                                     <mat-select name="departamentoId" id="departamentoId"
                                         formControlName="departamentoId" (valueChange)="maestroProvincia($event)">
                                         <mat-option>--Seleccione el departamento--</mat-option>
-                                        <mat-option *ngFor="let mae of ubigeo" [value]="mae.descripcion">
+                                        <mat-option *ngFor="let mae of ubigeo" [value]="mae.departamentoId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
@@ -892,7 +892,7 @@
                                     </mat-icon>
                                     <mat-select name="provinciaId" id="provinciaId" formControlName="provinciaId"
                                         (valueChange)="maestroDistrito($event)">
-                                        <mat-option *ngFor="let pro of ubigeoProvincia" [value]="pro.descripcion">
+                                        <mat-option *ngFor="let pro of ubigeoProvincia" [value]="pro.provinciaId">
                                             {{pro.descripcion}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -905,12 +905,25 @@
                                         matPrefix>
                                     </mat-icon>
                                     <mat-select name="distritoId" id="distritoId" formControlName="distritoId">
-                                        <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.descripcion">
+                                        <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.distritoId">
                                             {{dis.descripcion}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+
+
+
+                            <!--  ingresar region, provincia y distritro  -->
+
+                            <input hidden="true" value="LIMA" name="descripcionDepartamentoId"
+                                id="descripcionDepartamentoId" formControlName="descripcionDepartamentoId">
+                            <input hidden="true" value="HUAURA" name="descripcionProvinciaId"
+                                id="descripcionProvinciaId" formControlName="descripcionProvinciaId">
+                            <input hidden="true" value="HUACHO" name="descripcionDistritoId" id="descripcionDistritoId"
+                                formControlName="descripcionDistritoId">
+
+                            <!-- Fin de ingresar region, provincia y distritro  -->
 
                             <div class="col-span-4 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -920,12 +933,15 @@
                                     </mat-icon>
                                     <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId">
                                         <mat-option *ngFor="let tipopredio of maestroTipoPredio"
-                                            [value]="tipopredio.descripcion">
+                                            [value]="tipopredio.maestroId">
                                             {{tipopredio.descripcion}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+
+
+
 
 
                             <div class="col-span-2 sm:col-span-2">
@@ -1232,8 +1248,9 @@
                                                 Lote
                                             </div>
 
+                                            <div class="hidden sm:block">Editar</div>
 
-                                            <div class="hidden sm:block">Detalles</div>
+                                            <div class="hidden sm:block">Eliminar</div>
                                         </div>
                                         <!-- Rows -->
 
@@ -1287,8 +1304,15 @@
                                                 </div>
 
 
+                                                <!-- Editar button -->
+                                                <div>
+                                                    <button class="btn btn-danger btn-sm"
+                                                        (click)="editDomicilio(i,domicilio)">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                </div>
 
-                                                <!-- Details button -->
+                                                <!-- Eliminar button -->
                                                 <div>
                                                     <button class="btn btn-danger btn-sm"
                                                         (click)="eliminarDomicilio(domicilio)">
@@ -1336,9 +1360,8 @@
                 <mat-step [formGroupName]="'step5'" #verticalStepperStep5>
                     <ng-template matStepLabel>Registro del Relacionado</ng-template>
                     <p class="my-6 font-medium">
-                        Registro de la información adicional
+                        Registro de la información del Relacionado
                     </p>
-
 
 
                     <div class="flex flex-col gt-xs:flex-row">
@@ -1839,33 +1862,32 @@
                         <div class="grid grid-cols-12 gap-10 w-full mt-10">
 
 
+
+
+
                             <!-- Tipo de Contacto -->
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Tipo de Contacto</mat-label>
-                                    <mat-select id="desTipoMedioContacto" name="desTipoMedioContacto"
-                                        formControlName="desTipoMedioContacto">
+                                    <mat-select id="tipoMedioContactoId" name="tipoMedioContactoId"
+                                        formControlName="tipoMedioContactoId">
                                         <mat-option>-- Seleccionar Tipo de Contacto --</mat-option>
-                                        <mat-option *ngFor="let mae of maestrosTipoMedioContacto "
-                                            [value]="mae.descripcion">
+                                        <mat-option *ngFor="let mae of maestrosTipoMedioContacto"
+                                            [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
 
-
-
-
-
                             <!-- Medio de Contacto -->
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Medio de Contacto</mat-label>
-                                    <mat-select name="desClaseMedioContacto" id="desClaseMedioContacto"
-                                        formControlName="desClaseMedioContacto">
+                                    <mat-select name="claseMedioContactoId" id="claseMedioContactoId"
+                                        formControlName="claseMedioContactoId">
                                         <mat-option> -- Seleccionar Medio de Contacto --</mat-option>
-                                        <mat-option *ngFor="let mae of maestrosTipoContacto " [value]="mae.descripcion">
+                                        <mat-option *ngFor="let mae of maestrosTipoContacto " [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
@@ -1880,6 +1902,12 @@
                                         formControlName="desMedioContacto">
                                 </mat-form-field>
                             </div>
+
+                            <input matInput name="desTipoMedioContacto" id="desTipoMedioContacto"
+                                formControlName="desTipoMedioContacto" value="Personal">
+
+                            <input matInput name="desClaseMedioContacto" id="desClaseMedioContacto"
+                                formControlName="desClaseMedioContacto" value="Teléfono fijo">
 
                             <div class="col-span-2 sm:col-span-2">
 
@@ -1998,8 +2026,9 @@
                                             <div class="hidden lg:block">
                                                 Descripcion
                                             </div>
-
+                                            <div class="hidden sm:block">Editar</div>
                                             <div class="hidden sm:block">Eliminar</div>
+
                                         </div>
                                         <!-- Rows -->
 
@@ -2032,6 +2061,13 @@
                                                 </div>
 
                                                 <!-- Details button -->
+
+                                                <div>
+                                                    <button class="btn btn-danger btn-sm"
+                                                        (click)="editContacto(i, contacto)">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                </div>
                                                 <div>
                                                     <button class="btn btn-danger btn-sm"
                                                         (click)="eliminarContacto(contacto)">

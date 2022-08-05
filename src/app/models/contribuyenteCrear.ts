@@ -10,4 +10,5 @@ condicion: Condicion;
 domicilio: Domicilio;
 relacionado: Relacionado;
 contactos: Contacto;
+domicilios: Domicilio;
 }

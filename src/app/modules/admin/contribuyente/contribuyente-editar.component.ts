@@ -105,6 +105,7 @@ export class ContribuyenteEditarComponent implements OnInit {
     //Contacto
 
     listaContacto: Contacto[]=[];
+    listaDomicilios: Domicilio[]=[];
 
     error: any;
     idGeneral: number;
@@ -915,10 +916,8 @@ export class ContribuyenteEditarComponent implements OnInit {
             });
     }
 
-
-
     updateContribuyente(): void {
-        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.listaContacto).subscribe({
+        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.listaContacto, this.listaDomicilios).subscribe({
             next: (contribuyente) => {
                 console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value,this.listaContacto);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -934,10 +933,7 @@ export class ContribuyenteEditarComponent implements OnInit {
         });
     }
 
-
-
     // public contribuyenteCrear(): void {
-
 
     //     this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value,this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value).subscribe({
     //         next: (contribuyente) => {
@@ -954,15 +950,10 @@ export class ContribuyenteEditarComponent implements OnInit {
     //         }
     //     });
     // }
-
-
     eliminarContacto(lessonIndex: number) {
         console.log(lessonIndex);
         this.listaContacto.splice(lessonIndex, 1);
     }
-
-
-
     addContacto() {
         //    const nuevoContacto = [{
 
