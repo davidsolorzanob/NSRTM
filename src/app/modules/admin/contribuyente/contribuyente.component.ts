@@ -255,6 +255,7 @@ export class ContribuyenteComponent implements OnInit {
                 descripcionDepartamentoId: ['LIMA'],
                 descripcionProvinciaId: ['HUAURA'],
                 descripcionDistritoId: ['HUACHO'],
+
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
@@ -300,6 +301,9 @@ export class ContribuyenteComponent implements OnInit {
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
+                descripcionDepartamentoId: ['LIMA'],
+                descripcionProvinciaId: ['HUAURA'],
+                descripcionDistritoId: ['HUACHO'],
                 // viaDepartamentoId: ['', [Validators.required]],
                 fechaRegistro2: ['', [Validators.required]],
                 tipoViaId: ['', [Validators.required]],
@@ -403,14 +407,19 @@ export class ContribuyenteComponent implements OnInit {
                 tipoMedioContactoId: ['', [Validators.required]],
                 claseMedioContactoId: ['', [Validators.required]],
                 //desMedioContacto: ['', [Validators.required]],
+
+                desTipoMedioContacto: ['Personal', [Validators.required]],
+                desClaseMedioContacto: ['Teléfono fijo', [Validators.required]],
+
+
                 principal: "1",
-                nombres: null,
+              //  nombres: null,
                 estadoId: "1",
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
-                desTipoMedioContacto: ['', [Validators.required]],
-                desClaseMedioContacto: ['', [Validators.required]],
+               // desTipoMedioContacto: ['', [Validators.required]],
+                //desClaseMedioContacto: ['', [Validators.required]],
                 desMedioContacto: ['', [Validators.required]],
 
             })
