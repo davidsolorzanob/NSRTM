@@ -4,6 +4,9 @@ export class Domicilio{
     departamento: string;
     provincia: string;
     distrito: string;
+    departamentoId: number;
+    provinciaId: number;
+    distritoId: number;
     tipoDomicilio: string;
     tipoHabilitacion: string;
     nombreHabilitacion: string;

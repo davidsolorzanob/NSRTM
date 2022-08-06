@@ -43,7 +43,7 @@ export class ContribuyenteService {
     }
 
     public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio,
-        contactos: Contacto[]): Observable<contribuyenteCrear> {
+        contactos: Contacto[], domicilios: Domicilio[]): Observable<contribuyenteCrear> {
 console.log('llego todoooooooo');
        console.log(contribuyente,condicioncontribuyente,domicilioContribuyente,relacionado,contactos);
             var params = {
@@ -51,7 +51,8 @@ console.log('llego todoooooooo');
             "condicionContribuyente": condicioncontribuyente,
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado,
-            "contactos":contactos
+            "contactos":contactos,
+            "domicilios": domicilios
         };
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }

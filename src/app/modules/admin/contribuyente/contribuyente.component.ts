@@ -45,7 +45,7 @@ const moment = _moment;
                 }
 
                 @screen lg {
-                    grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
+                    grid-template-columns: 94px 94px 84px 94px 94px 94px 94px 84px 84px 84px;
                 }
             }
         `]
@@ -64,6 +64,15 @@ export class ContribuyenteComponent implements OnInit {
 
 
     error: any;
+
+    //contadores de listas temporales
+
+    countClassContacto: number = 0;
+    indexClassContacto: number = -1;
+    indexClassDomicilio:number = -1;
+
+    ModoEdicionContacto = 0;
+    ModoEdicionDomicilio = 0;
 
     contribuyentes: Contribuyente[];
     maestrosTipoMedio: Maestro[] = [];
@@ -98,6 +107,7 @@ export class ContribuyenteComponent implements OnInit {
     maestrosTipoMedioContacto: Maestro[] = [];
 
     classContacto: Contacto[] = [];
+    classDomicilio: Domicilio[] = [];
     //contacto = Contacto;
 
     ubigeo: UbigeoDepartamento[] = [];
@@ -109,9 +119,6 @@ export class ContribuyenteComponent implements OnInit {
     listaNombreEdificacion: Ubicacion[] = [];
     listarZonaUrbana: Ubicacion[] = [];
 
-
-    // this.maestroGenerico(15, 'maestrosTipoContacto', 0);
-    // this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
     //Condición
     valorDepartamento: number;
     valorProvincia: number;
@@ -150,34 +157,6 @@ export class ContribuyenteComponent implements OnInit {
 
     horizontalStepperForm: FormGroup;
     verticalStepperForm: FormGroup;
-
-    //lessonData: Contacto[] = [];
-    //  lessonData = [{ 'title': 'First Title', 'level': 'advanced' },
-    //  { 'title': 'Second Title', 'level': 'intermediate' }];
-
-
-    //  classContacto = [
-    //     {
-    //         'municipalidadId': '1',
-    //         'contribuyenteNumero': null,
-    //         'contactoContribuyenteId': null,
-    //         'tipoMedioContactoId': '',
-    //         'desTipoMedioContacto': '',
-    //         'claseMedioContactoId': '',
-    //         'desClaseMedioContacto': '',
-    //         'desMedioContacto': '',
-    //         'principal': '1',
-    //         'estadoId': '1',
-    //         'usuarioCreacion': '2025',
-    //         'fechaCreacion': '',
-    //         'terminalCreacion': '192.168.1.1',
-    //         'usuarioModificacion': '',
-    //         'fechaModificacion': '',
-    //         'terminalModificacion': ''
-    //     }
-    // ];
-
-
 
     form = this.formBuilder.group({
         // title: new FormControl('My Title'),
@@ -241,6 +220,7 @@ export class ContribuyenteComponent implements OnInit {
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
+               // "contribuyenteNumero": "5",
             }),
             step2: this.formBuilder.group({
                 //tipoCondicionInafectacionId para contribuyente y tipoCondicionInafectacion null o cer tomaria el otro campo
@@ -261,17 +241,20 @@ export class ContribuyenteComponent implements OnInit {
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
-                "contribuyenteNumero": "5",
+               // "contribuyenteNumero": "5",
                 "conContribuyenteId": null,
             }),
             step3: this.formBuilder.group({
                 municipalidadId: ['1'],
-                contribuyenteNumero: "5",
+               //contribuyenteNumero: "5",
                 domContribuyenteDomicilioNumero: null,
                 departamentoId: ['', [Validators.required]],
                 provinciaId: ['', [Validators.required]],
                 distritoId: ['', [Validators.required]],
                 tipoPredioId: ['', [Validators.required]],
+                descripcionDepartamentoId: ['LIMA'],
+                descripcionProvinciaId: ['HUAURA'],
+                descripcionDistritoId: ['HUACHO'],
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
@@ -305,9 +288,51 @@ export class ContribuyenteComponent implements OnInit {
                 // fechaEdicion: [''],
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
-            })
-            ,
+            }), //otros domicilios
             step4: this.formBuilder.group({
+                municipalidadId: ['1'],
+            //  contribuyenteNumero: "5",
+                domContribuyenteDomicilioNumero: null,
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                viaDistritoId: ['121'],
+                // viaDepartamentoId: ['', [Validators.required]],
+                fechaRegistro2: ['', [Validators.required]],
+                tipoViaId: ['', [Validators.required]],
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: ['', [Validators.required]],
+                letra2: ['', [Validators.required]],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                nombreZonaUrbana: ['', [Validators.required]],
+                subZonaUrbanaId: ['', [Validators.required]],
+                nombreSubZonaUrbana: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                nombreEdificacion: ['', [Validators.required]],
+                tipoInteriorId: ['', [Validators.required]],
+                ingreso: ['', [Validators.required]],
+                piso: ['', [Validators.required]],
+                kilometro: ['', [Validators.required]],
+                referencia: ['', [Validators.required]],
+                latitud: ['', [Validators.required]],
+                longitud: ['', [Validators.required]],
+                // usuarioRegistro: [''],
+                // fechaRegistro: [''],
+                // usuarioEdicion: [''],
+                // fechaEdicion: [''],
+                usuarioCreacion: ['2025'],
+                terminalCreacion: ['192.168.1.1'],
+            }) //Relacionado
+            ,
+            step5: this.formBuilder.group({
                 relContribuyenteNumero: null,
                 personaId: null,
                 docIdentidadId: ['', [Validators.required]],
@@ -365,25 +390,18 @@ export class ContribuyenteComponent implements OnInit {
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
                 municipalidadId: ['1'],
-                "contribuyenteNumero": "5",
+                //"contribuyenteNumero": "5",
                 "conContribuyenteId": null,
 
 
             }),
 
-            // step5: this.lessonData.forEach(ld => {
-            //     const lform = this.formBuilder.group({
-            //         tipoMedioContactoId: new FormControl(ld.title),
-            //         claseMedioContactoId: new FormControl(ld.level),
-            //         desMedioContacto: new FormControl(ld.title),
-            //     });
-            //     this.lessons.push(lform);
 
-            step5: this.formBuilder.group({
-                contribuyenteNumero: null,
+            step6: this.formBuilder.group({
+                //contribuyenteNumero: null,
                 contactoContribuyenteId: null,
-                tipoMedioContactoId: ['1'],
-                claseMedioContactoId: ['1'],
+                tipoMedioContactoId: ['', [Validators.required]],
+                claseMedioContactoId: ['', [Validators.required]],
                 //desMedioContacto: ['', [Validators.required]],
                 principal: "1",
                 nombres: null,
@@ -397,301 +415,63 @@ export class ContribuyenteComponent implements OnInit {
 
             })
 
-
-
-            //   municipalidadId: number;
-            //   contribuyenteNumero: number;
-            //   contactoContribuyenteId: number;
-            //   desTipoMedioContacto: string;
-            //   claseMedioContactoId: number;
-            //   desClaseMedioContacto: string;
-            //   desMedioContacto: string;
-            //   principal: number;
-            //   estadoId: number;
-
-
         });
 
-
-
-
-        // this.lessonData.forEach(ld => {
-        //     const lform = this.formBuilder.group({
-        //       title: new FormControl(ld.title),
-        //       level : new FormControl(ld.level),
-        //     });
-        //     this.lessons.push(lform);
-        //   });
-
-
-        // this.registerFormContribuyente = this.formBuilder.group({
-        //     codContribuyente: [{ value: '', disabled: true }],
-        //     nroDeclaracion: [{ value: '', disabled: true }],
-        //     fechaDJ: [''],
-        //     tipoMedioDeterminacionId: ['', [Validators.required]],
-        //     medioDeterminacionId: ['', [Validators.required]],
-        //     motivoDjId: ['', [Validators.required]],
-        //     modalidadOficio: [''],
-        //     tipoPersonaId: ['', [Validators.required]],
-        //     docIdentidadId: ['', [Validators.required]],
-        //     numDocIdentidad: ['', [Validators.required, Validators.pattern('[0-9]{8}')]],
-        //     fechaInscripcion: [''],
-        //     fechaNacimiento: [''],
-        //     estadoDjId: [''],
-        //     apellidoPaterno: this.formBuilder.control('', Validators.required),
-        //     apellidoMaterno: ['', [Validators.required]],
-        //     nombres: ['', [Validators.required]],
-        //     estadoCivil: [''],
-        //     fallecido: [{ value: '', disabled: true }, [Validators.required]],
-        //     fechaFallecimiento: [{ value: '', disabled: true }],
-        //     razonSocial: [''],
-        //     segContribuyenteId: [{ value: '', disabled: true }],
-        //     usuarioCreacion: ['2025'],
-        //     terminalCreacion: ['192.168.1.1'],
-        //     municipalidadId: ['1'],
-        // });
-
-        // this.registerFormContribuyenteCondicion = this.formBuilder.group({
-
-        //     //tipoCondicionInafectacionId para contribuyente y tipoCondicionInafectacion null o cer tomaria el otro campo
-        //     tipoCondicionInafectacionId: ['', [Validators.required]],
-        //     tipoCondicionConcursalId: [{ value: '0' }, [Validators.required]],
-        //     tipoDocumentoId: ['', [Validators.required]],
-        //     // nombreDocumento: ['', [Validators.required]],
-        //     desDocumento: ['', [Validators.required]],
-        //     numeroDocumento: ['', [Validators.required]],
-        //     fechaDocumento: ['', [Validators.required]],
-        //     fechaVigenciaInicial: ['', [Validators.required]],
-        //     fechaVigenciaFinal: ['', [Validators.required]],
-        //     importePension: ['', [Validators.required]],
-        //     estadoId: ['', [Validators.required]],
-        //     numeroLicencia: ['', [Validators.required]],
-        //     numeroExpediente: ['', [Validators.required]],
-        //     fechaExpediente: ['', [Validators.required]],
-        //     usuarioCreacion: ['2025'],
-        //     terminalCreacion: ['192.168.1.1'],
-        //     municipalidadId: ['1'],
-        //     "contribuyenteNumero": "5",
-        //     "conContribuyenteId": null,
-
-        // });
-
-        // this.registerFormContribuyenteDomicilio = this.formBuilder.group({
-        //     municipalidadId: ['1'],
-        //     contribuyenteNumero: "5",
-        //     domContribuyenteDomicilioNumero: ['', [Validators.required]],
-        //     departamentoId: ['', [Validators.required]],
-        //     provinciaId: ['', [Validators.required]],
-        //     distritoId: ['', [Validators.required]],
-        //     tipoPredioId: ['', [Validators.required]],
-        //     viaDepartamentoId: ['', [Validators.required]],
-        //     fechaDeclaracion: ['', [Validators.required]],
-        //     tipoViaId: ['', [Validators.required]],
-        //     viaId: ['', [Validators.required]],
-        //     numero1: ['', [Validators.required]],
-        //     letra1: ['', [Validators.required]],
-        //     numero2: ['', [Validators.required]],
-        //     letra2: ['', [Validators.required]],
-        //     manzana: ['', [Validators.required]],
-        //     lote: ['', [Validators.required]],
-        //     subLote: ['', [Validators.required]],
-        //     zonaUrbanaId: ['', [Validators.required]],
-        //     nombreZonaUrbana: ['', [Validators.required]],
-        //     subZonaUrbanaId: ['', [Validators.required]],
-        //     nombreSubZonaUrbana: ['', [Validators.required]],
-        //     edificacionId: ['', [Validators.required]],
-        //     nombreEdificacion: ['', [Validators.required]],
-        //     tipoInteriorId: ['', [Validators.required]],
-        //     ingreso: ['', [Validators.required]],
-        //     piso: ['', [Validators.required]],
-        //     kilometro: ['', [Validators.required]],
-        //     referencia: ['', [Validators.required]],
-        //     latitud: ['', [Validators.required]],
-        //     longitud: ['', [Validators.required]],
-        //     usuarioRegistro: ['', [Validators.required]],
-        //     fechaRegistro: ['', [Validators.required]],
-        //     usuarioEdicion: ['', [Validators.required]],
-        //     fechaEdicion: ['', [Validators.required]],
-        //     usuarioCreacion: ['2025'],
-        //     terminalCreacion: ['192.168.1.1'],
-
-        // });
-
-        // this.registerFormContribuyenteRelacionado = this.formBuilder.group({
-
-
-        //     relContribuyenteNumero: ['', [Validators.required]],
-        //     personaId: null,
-        //     docIdentidadId: ['', [Validators.required]],
-        //     numDocIdentidad: ['', [Validators.required]],
-        //     apellidoPaterno: ['', [Validators.required]],
-        //     apellidoMaterno: ['', [Validators.required]],
-        //     nombres: ['', [Validators.required]],
-        //     razonSocial: ['', [Validators.required]],
-        //     fechaVigenciaInicial: [''],
-        //     fechaVigenciaFinal: [''],
-        //     fechaVigenciaInicialRela: ['', [Validators.required]],
-        //     fechaVigenciaFinalRela: ['', [Validators.required]],
-        //     fechaDeclaracionRela: ['', [Validators.required]],
-
-        //     tipoRelacionadoId: ['', [Validators.required]],
-        //     fechaInscripcion: null,
-        //     estadoId: "1",
-        //     estadoCivil: "1",
-        //     numeroMunicipal: ['', [Validators.required]],
-
-
-        //     domicilioRelacionadoNumero: null,
-        //     departamentoId: ['', [Validators.required]],
-        //     provinciaId: ['', [Validators.required]],
-        //     distritoId: ['', [Validators.required]],
-        //     tipoPredioId: ['', [Validators.required]],
-        //     viaDepartamentoId: ['15'],
-        //     viaProvinciaId: ['135'],
-        //     tipoViaId: ['', [Validators.required]],
-        //     viaDistritoId: ['121'],
-        //     viaId: ['', [Validators.required]],
-        //     numero1: ['', [Validators.required]],
-        //     letra1: ['', [Validators.required]],
-        //     numero2: ['', [Validators.required]],
-        //     letra2: ['', [Validators.required]],
-        //     manzana: ['', [Validators.required]],
-        //     lote: ['', [Validators.required]],
-        //     subLote: ['', [Validators.required]],
-        //     zonaUrbanaId: ['', [Validators.required]],
-        //     subZonaUrbanaId: ['', [Validators.required]],
-        //     edificacionId: ['', [Validators.required]],
-        //     tipoInteriorId: ['', [Validators.required]],
-        //     descripcionInterior: null,
-        //     ingreso: ['', [Validators.required]],
-        //     piso: ['', [Validators.required]],
-        //     kilometro: ['', [Validators.required]],
-        //     referencia: ['', [Validators.required]],
-        //     //latitud: ['', [Validators.required]],
-        //     //longitud: ['', [Validators.required]],
-        //     descripcionDomicilio: null,
-        //     estructurado: null,
-        //     fuenteInformacionId: null,
-        //     usuarioCreacion: ['2025'],
-        //     terminalCreacion: ['192.168.1.1'],
-        //     municipalidadId: ['1'],
-        //     "contribuyenteNumero": "5",
-        //     "conContribuyenteId": null,
-
-
-        // }
-        // );
-
-
-
-        // this.registerFormContacto = this.formBuilder.group({
-
-        //     contribuyenteId: ['', [Validators.required]],
-        //     contribuyenteDomicilioId: ['', [Validators.required]],
-        //     departamento: ['', [Validators.required]],
-        //     provincia: ['', [Validators.required]],
-        //     distrito: ['', [Validators.required]],
-        //     tipoDomicilio: ['', [Validators.required]],
-        //     tipoHabilitacion: ['', [Validators.required]],
-        //     nombreHabilitacion: ['', [Validators.required]],
-        //     tipoVia: ['', [Validators.required]],
-        //     nombreVia: ['', [Validators.required]],
-        //     numeroMunicipal: ['', [Validators.required]],
-        //     loteUrbano: ['', [Validators.required]],
-        //     numeroAlterno: ['', [Validators.required]],
-        //     manzanaUrbana: ['', [Validators.required]],
-        //     block: ['', [Validators.required]],
-        //     numeroDpto: ['', [Validators.required]],
-        //     interior: ['', [Validators.required]],
-        //     cuadra: ['', [Validators.required]],
-        //     kilometro: ['', [Validators.required]],
-        //     referencia: ['', [Validators.required]],
-        //     telefono: ['', [Validators.required]],
-        //     usuarioRegistro: ['', [Validators.required]],
-        //     fechaRegistro: ['', [Validators.required]],
-        //     usuarioEdicion: ['', [Validators.required]],
-        //     fechaEdicion: ['', [Validators.required]],
-        // }
-        // )
     }
 
-    // get lessons() {
-    //     return this.form.controls["lessons"] as FormArray;
-    // }
-
-    // addLesson() {
-    //     const lessonForm = this.formBuilder.group({
-    //         tipoMedioContactoId: ['', Validators.required],
-    //         claseMedioContactoId: ['', Validators.required],
-    //         desMedioContacto: ['', Validators.required]
-    //     });
-    //     this.lessons.push(lessonForm);
-
-    // }
-
-    // deleteLesson(lessonIndex: number) {
-    //     this.lessons.removeAt(lessonIndex);
-    // }
-
+    // Adicionar Contacto
+    addContacto() {
+        if (this.ModoEdicionContacto == 0) {
+            this.classContacto.push(this.verticalStepperForm.get('step6').value);
+            this.verticalStepperForm.get('step6').reset();
+            console.log(this.classContacto);
+        }
+        else {
+            this.classContacto.splice(this.indexClassContacto, 1);
+            this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
+            this.indexClassContacto = -1;
+            this.ModoEdicionContacto = 0;
+        }
+    }
+    //Eliminar Contacto
     eliminarContacto(lessonIndex: number) {
+
         console.log(lessonIndex);
         this.classContacto.splice(lessonIndex, 1);
     }
-
-
-
-    addContacto() {
-        //    const nuevoContacto = [{
-
-        //     'municipalidadId': '1',
-        //     'contribuyenteNumero': null,
-        //     'contactoContribuyenteId': null,
-        //     'tipoMedioContactoId': '',
-        //     'desTipoMedioContacto': '',
-        //     'claseMedioContactoId': '',
-        //     'desClaseMedioContacto': '',
-        //     'desMedioContacto': '',
-        //     'principal': '1',
-        //     'estadoId': '1',
-        //     'usuarioCreacion': '2025',
-        //     'fechaCreacion': '',
-        //     'terminalCreacion': '192.168.1.1',
-        //     'usuarioModificacion': '',
-        //     'fechaModificacion': '',
-        //     'terminalModificacion': ''
-
-        //    }];
-        //this.verticalStepperForm.get('step5').value
-        //  const contactForm = Contac
-
-        //classContacto: Contacto[]=[];
-        //contacto = Contacto;
-
-        //const Con = this.contacto;
-        //this.Con =
-
-        console.log(this.verticalStepperForm.get('step5').value);
-        //({
-        //     contribuyenteNumero: null,
-        //     contactoContribuyenteId: null,
-        //     tipoMedioContactoId: "1", //['', [Validators.required]],
-        //     claseMedioContactoId: "1", //['', [Validators.required]],
-        //     desMedioContacto: "456152787", //['', [Validators.required]],
-        //     principal: "1",
-        //     nombres: null,
-        //     estadoId: "1",
-        //     usuarioCreacion: ['2025'],
-        //     terminalCreacion: ['192.168.1.1'],
-        //     municipalidadId: ['1'],
-
-        // })
-
-        this.classContacto.push(this.verticalStepperForm.get('step5').value);
-
-        this.verticalStepperForm.get('step5').reset();
-        console.log(this.classContacto);
+    // Editar Contacto
+    editContacto(lessonIndex: number, contacto: Contacto) {
+        this.ModoEdicionContacto = 1
+        this.verticalStepperForm.get('step6').patchValue(contacto);
+        this.indexClassContacto = lessonIndex;
+        console.log(contacto);
     }
-
+    //Adicionar Domicilio
+    addDomicilio() {
+        if (this.ModoEdicionDomicilio == 0) {
+            this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
+            this.verticalStepperForm.get('step4').reset();
+            console.log(this.classDomicilio);
+        }
+        else {
+            this.classDomicilio.splice(this.indexClassDomicilio, 1);
+            this.classDomicilio.splice(this.indexClassDomicilio, 0, this.verticalStepperForm.get('step4').value);
+            this.indexClassDomicilio = -1;
+            this.ModoEdicionDomicilio = 0;
+        }
+    }
+    //Eliminar Domicilio
+    eliminarDomicilio(lessonIndex: number) {
+        console.log(lessonIndex);
+        this.classDomicilio.splice(lessonIndex, 1);
+    }
+    // Editar Domicilio
+    editDomicilio(lessonIndex: number, domicilio: Domicilio) {
+        this.ModoEdicionDomicilio = 1
+        this.verticalStepperForm.get('step4').patchValue(domicilio);
+        this.indexClassContacto = lessonIndex;
+        console.log(domicilio);
+    }
 
     ngAfterViewInit() {
         this.maestroGenerico(3, 'maestrosMedio', 0);
@@ -746,7 +526,7 @@ export class ContribuyenteComponent implements OnInit {
 
     maestroProvincia(departamentoId: any) {
         console.log(departamentoId + 'depa llego');
-        this.serviceUbigeo.verProvincia(departamentoId)
+        this.serviceUbigeo.verProvincia(15)
             .subscribe({
                 next: (res: any) => {
                     console.log('Provincia limpio', res);
@@ -770,7 +550,7 @@ export class ContribuyenteComponent implements OnInit {
         console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
-        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, 135)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
@@ -796,7 +576,7 @@ export class ContribuyenteComponent implements OnInit {
         console.log(provinciaId + 'DEPARTAMENTO(2)');
 
 
-        this.serviceUbigeo.verDistrito(this.valorDepartamento, provinciaId)
+        this.serviceUbigeo.verDistrito(this.valorDepartamento, 135)
             .subscribe({
                 next: (res: any) => {
                     console.log('Motivo', res);
@@ -1027,11 +807,9 @@ export class ContribuyenteComponent implements OnInit {
 
         });
     }
-
     public contribuyenteCrear(): void {
-
-
-        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.classContacto).subscribe({
+        this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
+        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.classContacto, this.classDomicilio).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -1046,7 +824,6 @@ export class ContribuyenteComponent implements OnInit {
             }
         });
     }
-
 
     // private createContribuyente() {
     //     this.service.guardar(this.registerForm.value)
