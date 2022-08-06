@@ -224,16 +224,33 @@ export class ListComponent implements OnInit {
     var divToPrint = document.getElementById("tblContribuyentes").innerHTML;  
     var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');  
     var gridHtml = '';
-
+    var index = 0;
     this.dataSource.data.map(data =>{
+      index +=1;
       gridHtml += `<tr>
+                     <td>${index}</td>
                      <td>${data.contribuyenteNumero}</td>
                      <td>${this.datepipe.transform(data.fechaDJ, 'dd/MM/yyyy')}</td> 
-                     <td>${data.desEstadoDj}</td>
-                     <td>${data.apellidoPaterno + ' ' + data.apellidoMaterno + ' ' +
-                     data.nombres}</td>
-                     <td>${data.descDocIdentidad}</td>
+                     <td>${data.tipoPersonaId == this.tipoPersonaJuridica ? data.razonSocial: data.nombreCompleto}</td>
+                     <td>${data.desDocIdentidad}</td>
                      <td>${data.numDocIdentidad}</td>
+                     <td>${data.desTipoMedioDeterminacion}</td>
+                     <td>${data.desMedioDeterminacion}</td>
+                     <td>${data.desMotivoDj}</td>
+                     <td>${data.desTipoPersona}</td>
+                     <td>${data.desCondicion}</td>
+                     <td>${data.departamento}</td>
+                     <td>${data.provincia}</td>
+                     <td>${data.distrito}</td>
+                     <td>${data.desDomicilio}</td>
+                     <td>${data.desEstadoDj}</td>
+                     <td>${data.area}</td>
+                     <td>${data.usuarioCreacion}</td>
+                     <td>${this.datepipe.transform(data.fechaCreacion, 'dd/MM/yyyy')}</td>
+                     <td>${data.terminalCreacion}</td>
+                     <td>${data.usuarioModificacion}</td>
+                     <td>${this.datepipe.transform(data.fechaModificacion, 'dd/MM/yyyy')}</td>
+                     <td>${data.terminalModificacion}</td>
                    </tr>`;
     });
     newWin.document.open();
@@ -241,17 +258,37 @@ export class ListComponent implements OnInit {
         <head>
           <title>Imprimir</title>
            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+           <style type="text/css" media="print">
+              @page { size: landscape; }
+            </style>
         </head>
     <body onload="window.print();window.close()">
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Nro Correlativo</th>
           <th>Código</th>
-          <th>Fecha de Registro</th>
+          <th>Fecha de Declaración (Modificación/Registro)</th>
+          <th>Nombres/Razón Social</th>
+          <th>Documento de Identidad</th>
+          <th>Nro documento de Identidad</th>
+          <th>Tipo de medio</th>
+          <th>Medio</th>
+          <th>Motivo</th>
+          <th>Tipo de contribuyente</th>
+          <th>Condición del contribuyente</th>
+          <th>Departamento</th>
+          <th>Provincia</th>
+          <th>Distrito</th>
+          <th>Dirección Fiscal</th>
           <th>Estado</th>
-          <th>Apellidos y Nombres/Razón Social</th>
-          <th>Tipo Documento</th>
-          <th>N° Documento</th>
+          <th>Área usuaria</th>
+          <th>Usuario de creación</th>
+          <th>Fecha de creación</th>
+          <th>Terminal de creación</th>
+          <th>Usuario de modificación</th>
+          <th>Fecha de modificación</th>
+          <th>Terminal de modificación</th>
         </tr>
       </thead>
       <tbody>

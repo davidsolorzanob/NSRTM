@@ -6,13 +6,14 @@ export class ContribuyenteReporte {
     fechaDJ!: Date;
     numeroDJ!: number;
     docIdentidadId!: number;
+    tipoPersonaId!: number;
     desTipoPersona!: string;
     desMotivoDj!: string;
     desEstadoDj!: string;
     desTipoMedioDeterminacion!: string;
     desMedioDeterminacion!: string;
     desDomicilio!: string;
-    descDocIdentidad!: string;
+    desDocIdentidad!: string;
     numDocIdentidad!: string;
     apellidoPaterno!: string;
     apellidoMaterno!: string;
