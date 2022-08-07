@@ -1870,9 +1870,9 @@
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Tipo de Contacto</mat-label>
                                     <mat-select id="tipoMedioContactoId" name="tipoMedioContactoId"
-                                        formControlName="tipoMedioContactoId">
+                                        formControlName="tipoMedioContactoId" (valueChange)="getTipoMedioContactoId($event)">
                                         <mat-option>-- Seleccionar Tipo de Contacto --</mat-option>
-                                        <mat-option *ngFor="let mae of maestrosTipoMedioContacto"
+                                        <mat-option *ngFor="let mae of maestrosTipoContacto "
                                             [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
@@ -1885,9 +1885,9 @@
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Medio de Contacto</mat-label>
                                     <mat-select name="claseMedioContactoId" id="claseMedioContactoId"
-                                        formControlName="claseMedioContactoId">
+                                        formControlName="claseMedioContactoId" (valueChange)="getClaseMedioContactoId($event)">
                                         <mat-option> -- Seleccionar Medio de Contacto --</mat-option>
-                                        <mat-option *ngFor="let mae of maestrosTipoContacto " [value]="mae.maestroId">
+                                        <mat-option *ngFor="let mae of  maestrosTipoMedioContacto" [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
@@ -1910,6 +1910,11 @@
                                 <mat-checkbox name="principal" id="principal" value="checked"
                                     formControlName="principal">
                                     Principal</mat-checkbox>
+
+                                    <input hidden="true" value="" name="desTipoMedioContacto" id="desTipoMedioContacto"
+                                    formControlName="desTipoMedioContacto">
+                                <input hidden="true" value="" name="desClaseMedioContacto" id="desClaseMedioContacto"
+                                    formControlName="desClaseMedioContacto">
 
 
 
@@ -2045,7 +2050,7 @@
                                                 </div>
 
                                                 <!--   Clase de medio -->
-                                                <div class="truncate">
+                                                <div class="hidden md:block truncate">
                                                     {{contacto.desClaseMedioContacto}}
                                                 </div>
 

@@ -408,8 +408,8 @@ export class ContribuyenteComponent implements OnInit {
                 claseMedioContactoId: ['', [Validators.required]],
                 //desMedioContacto: ['', [Validators.required]],
 
-                desTipoMedioContacto: ['Personal', [Validators.required]],
-                desClaseMedioContacto: ['Teléfono fijo', [Validators.required]],
+                desTipoMedioContacto: ['', [Validators.required]],
+                desClaseMedioContacto: ['' , [Validators.required]],
 
 
                 principal: "1",
@@ -442,6 +442,34 @@ export class ContribuyenteComponent implements OnInit {
             this.ModoEdicionContacto = 0;
         }
     }
+
+    getTipoMedioContactoId(tipoMedioContactoId: number){
+
+
+      console.log(tipoMedioContactoId);
+      let indice = tipoMedioContactoId-1;
+      console.log(indice);
+      console.log(this.maestrosTipoContacto[indice].descripcion);
+      console.log('llego oj');
+     // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+
+      this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(this.maestrosTipoContacto[indice].descripcion);
+
+    }
+
+
+    getClaseMedioContactoId(tipoClaseMedioContactoId: number){
+        console.log(tipoClaseMedioContactoId);
+        let indice = tipoClaseMedioContactoId-1;
+        console.log(indice);
+        console.log(this.maestrosTipoMedioContacto[indice].descripcion);
+        console.log('llego oj');
+       // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+
+        this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue(this.maestrosTipoMedioContacto[indice].descripcion);
+
+    }
+
     //Eliminar Contacto
     eliminarContacto(lessonIndex: number) {
 
