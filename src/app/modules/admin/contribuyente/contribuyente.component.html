@@ -16,7 +16,7 @@
 
         <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="verticalStepperForm">
             <mat-vertical-stepper [linear]="true" #verticalStepper>
-                <mat-step [formGroupName]="'step1'" #verticalStepperStep1 class="background-color: coral;">
+                <mat-step [formGroupName]="'step1'" #verticalStepperStep1 class="background-color: coral;" [stepControl]="verticalStepperForm.get('step1')" >
                     <ng-template matStepLabel>Información del Contribuyente</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la información básica del contribuyente
@@ -175,6 +175,11 @@
                                     <input matInput id="numDocIdentidad" formControlName="numDocIdentidad"
                                         name="numDocIdentidad">
                                     <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
+                                    <mat-error *ngIf="verticalStepperForm.get('step1').get('numDocIdentidad').hasError('myCustomError')">
+
+
+                                        Required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
 

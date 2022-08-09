@@ -183,6 +183,10 @@ export class ContribuyenteComponent implements OnInit {
         private serviceRelacionado: RelacionadoService) {
     }
 
+
+
+
+
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
             const id: number = +params.get('id');
@@ -404,6 +408,8 @@ export class ContribuyenteComponent implements OnInit {
         });
 
     }
+
+
 
     // Adicionar Contacto
     addContacto() {
