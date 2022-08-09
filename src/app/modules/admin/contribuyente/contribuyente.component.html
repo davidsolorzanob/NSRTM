@@ -819,11 +819,13 @@
                             </div>
 
 
-
-
+                            <input hidden="true" value="2025"  name="usuarioCreacion" id="usuarioCreacion"
+                            formControlName="usuarioCreacion">
+                            <input hidden="true" value="192.168.1.1"  name="terminalCreacion" id="terminalCreacion"
+                            formControlName="terminalCreacion">
+                            <input hidden="true" value="1"  name="municipalidadId" id="municipalidadId"
+                            formControlName="municipalidadId">
                         </div>
-
-
 
                         <div class="flex justify-end">
                             <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
@@ -833,13 +835,10 @@
                             <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
-
                         </div>
                     </div>
 
                     <!-- [disabled]="verticalStepperStep3.stepControl.pristine || verticalStepperStep3.stepControl.invalid" -->
-
-
 
                 </mat-step>
 
@@ -904,7 +903,7 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="distritoId" id="distritoId" formControlName="distritoId">
+                                    <mat-select name="distritoId" id="distritoId" formControlName="distritoId" (valueChange)="getUbigeo($event)">
                                         <mat-option *ngFor="let dis of ubigeoDistrito" [value]="dis.distritoId">
                                             {{dis.descripcion}}
                                         </mat-option>
@@ -916,12 +915,20 @@
 
                             <!--  ingresar region, provincia y distritro  -->
 
-                            <input hidden="true"   value="LIMA" name="descripcionDepartamentoId"
+                            <input hidden="true"   name="descripcionDepartamentoId"
                                 id="descripcionDepartamentoId" formControlName="descripcionDepartamentoId">
-                            <input hidden="true"  value="HUAURA" name="descripcionProvinciaId"
+                            <input hidden="true"  name="descripcionProvinciaId"
                                 id="descripcionProvinciaId" formControlName="descripcionProvinciaId">
-                            <input  hidden="true" value="HUACHO" name="descripcionDistritoId" id="descripcionDistritoId"
+                            <input hidden="true"  name="descripcionDistritoId" id="descripcionDistritoId"
                                 formControlName="descripcionDistritoId">
+                                <input hidden="true"  name="desTipoPredioId" id="desTipoPredioId"
+                                formControlName="desTipoPredioId">
+
+                                <input hidden="true" value="2025"  name="usuarioCreacion" id="usuarioCreacion"
+                                formControlName="usuarioCreacion">
+                                <input hidden="true" value="192.168.1.1"  name="terminalCreacion" id="terminalCreacion"
+                                formControlName="terminalCreacion">
+
 
                             <!-- Fin de ingresar region, provincia y distritro  -->
 
@@ -931,7 +938,7 @@
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:identification'"
                                         matPrefix>
                                     </mat-icon>
-                                    <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId">
+                                    <mat-select name="tipoPredioId" id="tipoPredioId" formControlName="tipoPredioId" (valueChange)="getTipoPredioId($event)">
                                         <mat-option *ngFor="let tipopredio of maestroTipoPredio"
                                             [value]="tipopredio.maestroId">
                                             {{tipopredio.descripcion}}
@@ -947,10 +954,10 @@
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field appearance="fill">
                                     <mat-label>Fecha de declaración</mat-label>
-                                    <input matInput [matDatepicker]="fechaRegistro2" formControlName="fechaRegistro2">
+                                    <input matInput [matDatepicker]="fechaRegistro" formControlName="fechaRegistro2">
                                     <mat-hint>DD/MM/YYYY</mat-hint>
-                                    <mat-datepicker-toggle matSuffix [for]="fechaRegistro2"></mat-datepicker-toggle>
-                                    <mat-datepicker #fechaRegistro2></mat-datepicker>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaRegistro"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaRegistro></mat-datepicker>
                                 </mat-form-field>
                             </div>
 
@@ -1270,26 +1277,24 @@
 
                                                 <!-- Departamento -->
                                                 <div class="hidden md:block truncate">
-                                                    {{domicilio.departamentoId}}
+                                                    {{domicilio.descripcionDepartamentoId}}
                                                 </div>
 
 
                                                 <!-- Provincia -->
                                                 <div class="hidden md:block truncate">
-                                                    {{domicilio.provinciaId}}
+                                                    {{domicilio.descripcionProvinciaId}}
                                                 </div>
-
-
 
                                                 <!-- Distrito -->
                                                 <div class="hidden md:block truncate">
-                                                    {{domicilio.distritoId}}
+                                                    {{domicilio.descripcionDistritoId}}
                                                 </div>
 
 
                                                 <!-- Tipo Predio -->
                                                 <div class="hidden md:block truncate">
-                                                    {{domicilio.tipoPredioId}}
+                                                    {{domicilio.desTipoPredioId}}
                                                 </div>
 
 
@@ -1534,6 +1539,13 @@
                                 formControlName="viaProvinciaId">
                             <input hidden="true" value="121" name="viaDistritoId" id="viaDistritoId"
                                 formControlName="viaDistritoId">
+                                <input hidden="true" value="2025"  name="usuarioCreacion" id="usuarioCreacion"
+                                formControlName="usuarioCreacion">
+                                <input hidden="true" value="192.168.1.1"  name="terminalCreacion" id="terminalCreacion"
+                                formControlName="terminalCreacion">
+                                <input hidden="true" value="1"  name="municipalidadId" id="municipalidadId"
+                                formControlName="municipalidadId">
+
 
                         </div>
 
@@ -1915,6 +1927,12 @@
                                     formControlName="desTipoMedioContacto">
                                 <input hidden="true" value="" name="desClaseMedioContacto" id="desClaseMedioContacto"
                                     formControlName="desClaseMedioContacto">
+                                    <input hidden="true" value="2025"  name="usuarioCreacion" id="usuarioCreacion"
+                                    formControlName="usuarioCreacion">
+                                    <input hidden="true" value="192.168.1.1"  name="terminalCreacion" id="terminalCreacion"
+                                    formControlName="terminalCreacion">
+                                    <input hidden="true" value="1"  name="municipalidadId" id="municipalidadId"
+                                    formControlName="municipalidadId">
 
 
 

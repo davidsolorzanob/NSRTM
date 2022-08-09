@@ -32,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+//import { MAT_DATE_LOCALE } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -65,10 +66,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     HttpClientModule,
     MatTabsModule,
     MatTooltipModule
-    
+
   ],
   providers: [
     DatePipe,
+    //{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })

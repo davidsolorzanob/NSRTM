@@ -11,12 +11,12 @@ export class Contacto {
     estadoId: number;
 
     // Auditoria
-    usuarioCreacion!: number;
-    fechaCreacion!: Date;
-    terminalCreacion!: string;
-    usuarioModificacion!: number;
-    fechaModificacion!: Date;
-    terminalModificacion!: string;
+    usuarioCreacion: number;
+    fechaCreacion: Date;
+    terminalCreacion: string;
+    usuarioModificacion: number;
+    fechaModificacion: Date;
+    terminalModificacion: string;
 
 }
 
