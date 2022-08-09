@@ -17,6 +17,7 @@ export class ContribuyenteService {
 
     private baseEndpoint = 'http://localhost:8082/api/contribuyente';
     private baseEndpointCondicion = 'http://localhost:8082/api/condicioncontribuyente'
+    private baseEndpointReporte = 'http://localhost:8085/api/reportes';
     private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
     constructor(private http: HttpClient) { }
 
@@ -36,6 +37,10 @@ export class ContribuyenteService {
 
     public getReporteBusquedaExcel(busqueda: string ) {
         return this.http.get(this.baseEndpoint + '/exportarExcel?data='+ encodeURIComponent(busqueda), { responseType: 'arraybuffer' }).pipe(map((res: ArrayBuffer) => { return res; }));
+    }
+
+    public getReporteDjContribuyente(busqueda: string ) {
+        return this.baseEndpointReporte + '/djcontribuyente?data='+ encodeURIComponent(busqueda);
     }
 
     public ver(contribuyenteId: number): Observable<Contribuyente> {
