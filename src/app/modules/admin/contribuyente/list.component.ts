@@ -202,11 +202,7 @@ export class ListComponent implements OnInit {
   public reporteDJ(contribuyente: ContribuyenteReporte) {    
     var data = { municipalidadId: contribuyente.municipalidadId, contribuyenteNumero: contribuyente.contribuyenteNumero};
     var url = this.service.getReporteDjContribuyente(JSON.stringify(data));
-    var link=document.getElementById('linkReporte');
-    link.setAttribute("href", url);
-    //document.getElementById('linkReporte').click();
-    console.log(link);
-    //link.click();
+
     window.open(url, '_blank').focus();
   }
 

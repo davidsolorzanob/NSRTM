@@ -146,8 +146,7 @@
                         <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                             <div class="flex flex-col flex-auto overflow-hidden">
                                 <div class="mat-elevation-z8">
-                                    <mat-progress-bar mode="indeterminate" *ngIf="isLoadingBusqueda"></mat-progress-bar>
-                                    <a id="linkReporte" style="display:none;"></a>
+                                    <mat-progress-bar mode="indeterminate" *ngIf="isLoadingBusqueda"></mat-progress-bar>                                    
                                     <table mat-table [dataSource]="dataSource" class="w-full overflow-y-visible" id="tblContribuyentes">
                                         <ng-container matColumnDef="contribuyenteNumero">
                                             <th mat-header-cell *matHeaderCellDef> Código </th>
