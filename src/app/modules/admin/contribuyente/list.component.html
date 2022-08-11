@@ -24,77 +24,79 @@
 
         <div class="max-w-12xl">
 
-            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden" [formGroup]="formBusquedaContribuyente" (ngSubmit)="submit()">
+            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden" [formGroup]="formBusquedaContribuyente" #supportNgForm="ngForm" (ngSubmit)="submit()">
                 <p class="text-lg font-medium pb-3">Búsqueda de Contribuyentes</p>
                 <mat-divider class="mb-2"></mat-divider>
-                <div class="flex flex-col gt-xs:flex-row mt-4">
-                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
-                        <!-- Search -->
-                        <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
-                                <mat-label>Código Contribuyente :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
-                                <mat-error *ngIf="isSubmited && f.contribuyenteNumero.errors" class="text-sm">Campo obligatorio</mat-error>
-                            </mat-form-field>
-                        </div>
 
+                <div class="flex flex-col gt-xs:flex-row mt-4">
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-3">
+                        <!-- Search -->
+                        <mat-radio-button [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <div class="mr-4">  
+                            
+                                <mat-form-field class="fuse-mat-dense min-w-64">                                
+                                    <mat-label>Código Contribuyente :</mat-label>
+                                    <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
+                                    <mat-error>Campo obligatorio</mat-error>
+                                </mat-form-field>               
+                        </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
+                        <mat-radio-button [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
-                                <mat-label>Tipo de documento :</mat-label>
-                                <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
-                                    <mat-option value="">Seleccionar</mat-option>
-                                    <mat-option [value]="'1'">DNI</mat-option>
-                                    <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
-                                    <mat-option [value]="'3'">Pasaporte</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="isSubmited && f.docIdentidadId.errors" class="text-sm">Campo obligatorio</mat-error>
-                            </mat-form-field>
+                                <mat-form-field class="fuse-mat-dense min-w-64">
+                                    <mat-label>Tipo de documento :</mat-label>
+                                    <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
+                                        <mat-option value="">Seleccionar</mat-option>
+                                        <mat-option [value]="'1'">DNI</mat-option>
+                                        <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
+                                        <mat-option [value]="'3'">Pasaporte</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="f.docIdentidadId.hasError('required')" >Campo obligatorio</mat-error>
+                                </mat-form-field>
                         </div>
                         <div class="mr-4">
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                            <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label>Número documento :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
-                                <mat-error *ngIf="isSubmited && f.numDocIdentidad.errors" class="text-sm">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="f.numDocIdentidad.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-                        <div class=" mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
-                                <mat-label>Apellido Paterno :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
-                                <mat-error *ngIf="isSubmited && f.apellidoPaterno.errors" class="text-sm">Campo obligatorio</mat-error>
-                            </mat-form-field>
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-6">
+                        <mat-radio-button [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <div class="mr-4">
+                                <mat-form-field class="fuse-mat-dense min-w-64">
+                                    <mat-label>Apellido Paterno :</mat-label>
+                                    <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
+                                    <mat-error *ngIf="f.apellidoPaterno.hasError('required')">Campo obligatorio</mat-error>
+                                </mat-form-field>
                         </div>
                         <div class="mr-4">
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
+                            <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno" formControlName="apellidoMaterno">
-                                <mat-error *ngIf="isSubmited && f.apellidoMaterno.errors" class="text-sm">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="f.apellidoMaterno.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-64">
+                            <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label>Nombres :</mat-label>
                                 <input matInput [autocomplete]="'off'" name="nombres" id="nombres" formControlName="nombres">
-                                <mat-error *ngIf="isSubmited && f.nombres.errors" class="text-sm">Campo obligatorio</mat-error>
+                                <mat-error *ngIf="f.nombres.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
 
-                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
+                    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
+                        <mat-radio-button class="mb-2" [color]="'primary'" [value]="'5'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
-                            <mat-radio-button class="mb-2" [color]="'primary'" [value]="'5'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  min-w-64">
-                                <mat-label>Razón social</mat-label>
-                                <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
-                                <mat-error *ngIf="isSubmited && f.razonSocial.errors" class="text-sm">Campo obligatorio</mat-error>
-                            </mat-form-field>
+                                <mat-form-field class="fuse-mat-dense min-w-64">
+                                    <mat-label>Razón social</mat-label>
+                                    <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
+                                    <mat-error *ngIf="f.razonSocial.hasError('required')">Campo obligatorio</mat-error>
+                                
+                                </mat-form-field>
                         </div>
                     </div>
                     <div>

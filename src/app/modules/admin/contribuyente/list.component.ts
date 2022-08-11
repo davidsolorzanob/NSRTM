@@ -7,7 +7,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -56,6 +56,7 @@ export class ListComponent implements OnInit {
     'acciones' ];
   dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
+  @ViewChild('supportNgForm') supportNgForm: NgForm;
   public formBusquedaContribuyente!: FormGroup;
   public formControl: FormControl;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -92,7 +93,9 @@ export class ListComponent implements OnInit {
 
   onReset(): void {
     this.isSubmited = false;
-    this.formBusquedaContribuyente.reset();
+    this.removeValidators();
+    this.formBusquedaContribuyente.get('tipoFiltro').setValue("");
+    this.supportNgForm.reset();
   }
 
   get f(): { [key: string]: AbstractControl } {
