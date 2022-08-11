@@ -19,10 +19,11 @@ import { UbigeoDepartamento } from 'app/models/UbigeoDepartamento.models';
 import { ubigeoProvincia } from 'app/models/ubigeoProvincia.models';
 import { ubigeoDistrito } from 'app/models/ubigeoDistrito.models';
 import { Relacionado } from 'app/models/relacionado.models';
-import { Contacto} from 'app/models/contacto.models'
+import { Contacto } from 'app/models/contacto.models'
 import Swal from 'sweetalert2';
 import { first } from 'rxjs';
 import { relativeTimeThreshold } from 'moment';
+import { items } from 'app/mock-api/apps/file-manager/data';
 
 @Component({
     selector: 'app-contribuyente-editar',
@@ -85,6 +86,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
     //classContacto: Contacto[] = [];
 
+    classDomicilio: Domicilio[] = [];
 
     ubigeo: UbigeoDepartamento[] = [];
     ubigeoProvincia: ubigeoProvincia[] = [];
@@ -104,11 +106,26 @@ export class ContribuyenteEditarComponent implements OnInit {
     valorTipoEdificacion: number;
     //Contacto
 
-    listaContacto: Contacto[]=[];
-    listaDomicilios: Domicilio[]=[];
+    listaContacto: Contacto[] = [];
+    listaDomicilios: Domicilio[] = [];
+    listaDomiciliosAdicional: Domicilio[] = [];
+    objectDomicilio: Object;
 
     error: any;
     idGeneral: number;
+
+      //contadores de listas temporales
+
+      countClassContacto: number = 0;
+      indexClassContacto: number = -1;
+      indexClassDomicilio: number = -1;
+
+      ModoEdicionContacto = 0;
+      ModoEdicionDomicilio = 0;
+
+    muniId = "1";
+    terminal = "192.138.120.142";
+    userEdicion = "2025";
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -155,18 +172,11 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.maestroDepartamento();
         //console.log(this.verticalStepperForm.get('step3').get('departamentoId').value);
 
-
-
-
-
-
-
-
         // Vertical stepper form
         this.verticalStepperForm = this.formBuilder.group({
             step1: this.formBuilder.group({
-                contribuyenteNumero: [{ value: '' }],
-                numeroDJ: [{ value: '' }],
+                contribuyenteNumero: [{ value: '', disabled: true }],
+                nroDeclaracion: [{ value: '', disabled: true }],
                 fechaDJ: [''],
                 tipoMedioDeterminacionId: [''],
                 medioDeterminacionId: [''],
@@ -186,9 +196,10 @@ export class ContribuyenteEditarComponent implements OnInit {
                 fechaFallecimiento: [{ value: '', disabled: true }],
                 razonSocial: [''],
                 segContribuyenteId: [{ value: '', disabled: true }],
-                usuarioCreacion: ['2025'],
-                terminalCreacion: ['192.168.1.1'],
-                municipalidadId: ['1'],
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                municipalidadId: this.muniId,
+                // "contribuyenteNumero": "5",
             }),
             step2: this.formBuilder.group({
                 //tipoCondicionInafectacionId para contribuyente y tipoCondicionInafectacion null o cer tomaria el otro campo
@@ -206,28 +217,28 @@ export class ContribuyenteEditarComponent implements OnInit {
                 numeroLicencia: ['', [Validators.required]],
                 numeroExpediente: ['', [Validators.required]],
                 fechaExpediente: ['', [Validators.required]],
-                usuarioCreacion: ['2025'],
-                terminalCreacion: ['192.168.1.1'],
-                municipalidadId: ['1'],
-                "contribuyenteNumero": "5",
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                municipalidadId: this.muniId,
+                // "contribuyenteNumero": "5",
                 "conContribuyenteId": null,
-                usuarioModificion: ['2025']
-
             }),
             step3: this.formBuilder.group({
-                municipalidadId: ['1'],
-                contribuyenteNumero: "5",
+                municipalidadId: this.muniId,
                 domContribuyenteDomicilioNumero: null,
                 departamentoId: ['', [Validators.required]],
                 provinciaId: ['', [Validators.required]],
                 distritoId: ['', [Validators.required]],
                 tipoPredioId: ['', [Validators.required]],
-                viaDepartamentoId: [''],
-                viaProvinciaId: [''],
-                viaDistritoId: [''],
-                // viaDepartamentoId: ['', [Validators.required]],
-                //fechaRegistro: ['', [Validators.required]],
+                descripcionDepartamentoId: [''],
+                descripcionProvinciaId: [''],
+                descripcionDistritoId: [''],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                viaDistritoId: ['121'],
+               // fechaRegistro: ['', [Validators.required]],
                 tipoViaId: ['', [Validators.required]],
+                desTipoPredioId: '',
                 viaId: ['', [Validators.required]],
                 numero1: ['', [Validators.required]],
                 letra1: ['', [Validators.required]],
@@ -237,59 +248,89 @@ export class ContribuyenteEditarComponent implements OnInit {
                 lote: ['', [Validators.required]],
                 subLote: ['', [Validators.required]],
                 zonaUrbanaId: ['', [Validators.required]],
-                desZonaUrbana:[''],
-                tipoZonaUrbanaId: ['', [Validators.required]],
-                tipoSubZonaUrbanaId: ['', [Validators.required]],
-                edificacionId: ['', [Validators.required]],
-
-
+                //nombreZonaUrbana: ['', [Validators.required]],
                 subZonaUrbanaId: ['', [Validators.required]],
-                //nombreSubZonaUrbana: [''],
-
-                //desEdificacion: ['', [Validators.required]],
+                //nombreSubZonaUrbana: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                //nombreEdificacion: ['', [Validators.required]],
                 tipoInteriorId: ['', [Validators.required]],
                 ingreso: ['', [Validators.required]],
                 piso: ['', [Validators.required]],
                 kilometro: ['', [Validators.required]],
                 referencia: [''],
-                latitud: ['', [Validators.required]],
-                longitud: ['', [Validators.required]],
-                // usuarioRegistro: [''],
-                // fechaRegistro: [''],
-                // usuarioEdicion: [''],
-                // fechaEdicion: [''],
-                usuarioCreacion: ['2025'],
-                terminalCreacion: ['192.168.1.1'],
-            }),
+                latitud: [''],
+                longitud: [''],
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                tipoZonaUrbanaId: ['', [Validators.required]],
+                //edificacionId: ['', [Validators.required]],
+                tipoEdificacionId:['', [Validators.required]],
+
+            }), //otros domicilios
             step4: this.formBuilder.group({
-                relContribuyenteNumero: ['', [Validators.required]],
-                personaId: null,
-                docIdentidadId: ['', [Validators.required]],
-                numDocIdentidad: ['', [Validators.required]],
-                apellidoPaterno: ['', [Validators.required]],
-                apellidoMaterno: ['', [Validators.required]],
-                nombres: ['', [Validators.required]],
-                razonSocial: ['', [Validators.required]],
-                //  fechaVigenciaInicial: [''],
-                //  fechaVigenciaFinal: [''],
-                fechaVigenciaInicialRela: ['', [Validators.required]],
-                fechaVigenciaFinalRela: ['', [Validators.required]],
-                //fechaDeclaracionRela: ['', [Validators.required]],
-                //telefonoFijo: ['', [Validators.required]],
-                // celular: ['', [Validators.required]],
-
-                //anexo: ['', [Validators.required]],
-                tipoRelacionadoId: ['', [Validators.required]],
-                //fechaInscripcion: null,
-                estadoId: "1",
-                //estadoCivil: "1",
-                //numeroMunicipal: ['', [Validators.required]],
-                domicilioRelacionadoNumero: null,
-
+                municipalidadId: this.muniId,
+                domContribuyenteDomicilioNumero: null,
                 departamentoId: ['', [Validators.required]],
                 provinciaId: ['', [Validators.required]],
                 distritoId: ['', [Validators.required]],
                 tipoPredioId: ['', [Validators.required]],
+                descripcionDepartamentoId: [''],
+                descripcionProvinciaId: [''],
+                descripcionDistritoId: [''],
+                viaDepartamentoId: ['15'],
+                viaProvinciaId: ['135'],
+                viaDistritoId: ['121'],
+                fechaRegistro: ['', [Validators.required]],
+                tipoViaId: ['', [Validators.required]],
+                desTipoPredioId: '',
+                viaId: ['', [Validators.required]],
+                numero1: ['', [Validators.required]],
+                letra1: ['', [Validators.required]],
+                numero2: [''],
+                letra2: [''],
+                manzana: ['', [Validators.required]],
+                lote: ['', [Validators.required]],
+                subLote: ['', [Validators.required]],
+                zonaUrbanaId: ['', [Validators.required]],
+                //nombreZonaUrbana: ['', [Validators.required]],
+                subZonaUrbanaId: ['', [Validators.required]],
+                //nombreSubZonaUrbana: ['', [Validators.required]],
+                edificacionId: ['', [Validators.required]],
+                //nombreEdificacion: ['', [Validators.required]],
+                tipoInteriorId: ['', [Validators.required]],
+                ingreso: ['', [Validators.required]],
+                piso: ['', [Validators.required]],
+                kilometro: ['', [Validators.required]],
+                referencia: [''],
+                latitud: [''],
+                longitud: [''],
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                tipoZonaUrbanaId: ['', [Validators.required]],
+                //edificacionId: ['', [Validators.required]],
+                tipoEdificacionId:['', [Validators.required]],
+
+            }) //Relacionado
+            ,
+            step5: this.formBuilder.group({
+                relContribuyenteNumero: null,
+                personaId: null,
+                docIdentidadId: ['', [Validators.required]],
+                numDocIdentidad: ['', [Validators.required, Validators.pattern('[0-9]{8}')]],
+                apellidoPaterno: ['', [Validators.required]],
+                apellidoMaterno: ['', [Validators.required]],
+                nombres: ['', [Validators.required]],
+                razonSocial: ['', [Validators.required]],
+                fechaVigenciaInicialRela: ['', [Validators.required]],
+                fechaVigenciaFinalRela: ['', [Validators.required]],
+                tipoRelacionadoId: ['', [Validators.required]],
+                estadoId: "1",
+                domicilioRelacionadoNumero: null,
+                departamentoId: ['', [Validators.required]],
+                provinciaId: ['', [Validators.required]],
+                distritoId: ['', [Validators.required]],
+                tipoPredioId: ['', [Validators.required]],
+                desTipoPredioId: '',
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 tipoViaId: ['', [Validators.required]],
@@ -297,68 +338,76 @@ export class ContribuyenteEditarComponent implements OnInit {
                 viaId: ['', [Validators.required]],
                 numero1: ['', [Validators.required]],
                 letra1: ['', [Validators.required]],
-                numero2: ['', [Validators.required]],
-                letra2: ['', [Validators.required]],
+                numero2: [''],
+                letra2: [''],
                 manzana: ['', [Validators.required]],
                 lote: ['', [Validators.required]],
                 subLote: ['', [Validators.required]],
                 zonaUrbanaId: ['', [Validators.required]],
                 subZonaUrbanaId: ['', [Validators.required]],
-                tipoSubZonaUrbanaId: ['', [Validators.required]],
-                tipoZonaUrbanaId: ['', [Validators.required]],
                 edificacionId: ['', [Validators.required]],
                 tipoInteriorId: ['', [Validators.required]],
                 descripcionInterior: null,
                 ingreso: ['', [Validators.required]],
                 piso: ['', [Validators.required]],
-                kilometro: ['', [Validators.required]],
+                kilometro: [''],
                 referencia: [''],
-                //latitud: ['', [Validators.required]],
-                //longitud: ['', [Validators.required]],
-                //descripcionDomicilio: null,
-                //estructurado: null,
-                //fuenteInformacionId: null,
-                usuarioCreacion: ['2025'],
-                terminalCreacion: ['192.168.1.1'],
-                municipalidadId: ['1'],
-                "contribuyenteNumero": "5",
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                municipalidadId: this.muniId,
                 "conContribuyenteId": null,
-
-
+                tipoZonaUrbanaId: ['', [Validators.required]],
             }),
-            step5: this.formBuilder.group({
-                contribuyenteNumero: null,
-                contactoContribuyenteId: null,
-                tipoMedioContactoId: ['1'],
-                claseMedioContactoId: ['1'],
-                //desMedioContacto: ['', [Validators.required]],
-                principal: "1",
-                nombres: null,
-                estadoId: "1",
-                usuarioCreacion: ['2025'],
-                terminalCreacion: ['192.168.1.1'],
-                municipalidadId: ['1'],
-                desTipoMedioContacto: ['', [Validators.required]],
-                desClaseMedioContacto: ['', [Validators.required]],
-                desMedioContacto: ['', [Validators.required]],
 
+
+            step6: this.formBuilder.group({
+                  //contribuyenteNumero: null,
+                  contactoContribuyenteId: null,
+                  tipoMedioContactoId: ['', [Validators.required]],
+                  claseMedioContactoId: ['', [Validators.required]],
+                  //desMedioContacto: ['', [Validators.required]],
+
+                  desTipoMedioContacto: ['', [Validators.required]],
+                  desClaseMedioContacto: ['', [Validators.required]],
+
+
+                  principal: "1",
+                  //  nombres: null,
+                  estadoId: "1",
+                  usuarioEdicion: this.userEdicion,
+                  terminalEdicion: this.terminal,
+                  municipalidadId: this.muniId,
+
+                  // desTipoMedioContacto: ['', [Validators.required]],
+                  //desClaseMedioContacto: ['', [Validators.required]],
+                  desMedioContacto: ['', [Validators.required]],
             })
-
-
-
 
         });
 
     }
 
+
+
     ngAfterViewInit() {
+
+
+
+
+
 
 
         this.cargarContribuyente(this.idGeneral);
         this.cargarContribuyenteCondicion(this.idGeneral);
         this.cargarContribuyenteDomicilio(this.idGeneral);
+        this.cargarContribuyenteDomicilioAdicional(this.idGeneral);
+
         this.cargarContribuyenteRelacionado(this.idGeneral);
         this.cargarContactoContribuyente(this.idGeneral);
+
+
+
+
 
         // this.maestroGenerico(3, 'maestrosMedio', 0);
         // this.maestroGenerico(2, 'maestrosTipoMedio', 0);
@@ -389,6 +438,107 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     }
+
+    getUbigeo(distritoId: number) {
+
+        let indiceDistrito = distritoId;
+        let indiceDepartamento = this.verticalStepperForm.get('step4').get('departamentoId').value;
+        let indiceProvincia = this.verticalStepperForm.get('step4').get('provinciaId').value;
+
+        const filterDepartamento = this.ubigeo.filter((item) => item.departamentoId == indiceDepartamento);
+        const filterProvincia = this.ubigeoProvincia.filter((item) => item.provinciaId == indiceProvincia);
+        const filterDistrito = this.ubigeoDistrito.filter((item) => item.distritoId == indiceDistrito);
+
+        console.log(indiceDepartamento);
+        console.log(indiceProvincia);
+        console.log(indiceDistrito);
+
+        // let indiceDistrito = this.verticalStepperForm.get('step4').get('distritoId').value;
+        // console.log(this.ubigeoDistrito[indiceDistrito].descripcion);
+
+        indiceDistrito = indiceDistrito;
+        indiceDepartamento = indiceDepartamento;
+        indiceProvincia = indiceProvincia - 1;
+
+
+        this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue(filterDepartamento[0].descripcion);
+        this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue(filterProvincia[0].descripcion);
+        this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue(filterDistrito[0].descripcion);
+    }
+
+
+    getTipoPredioId(tipoPredioId: number) {
+
+        let indice =  tipoPredioId -1;
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').setValue(this.maestroTipoPredio[indice].descripcion);
+
+    }
+    //Adicionar Domicilio
+    addDomicilio() {
+        if (this.ModoEdicionDomicilio == 0) {
+            this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
+            //this.verticalStepperForm.get('step4').reset();
+
+
+            this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
+            this.verticalStepperForm.get('step4').get('provinciaId').setValue("");
+            this.verticalStepperForm.get('step4').get('distritoId').setValue("");
+            this.verticalStepperForm.get('step4').get('tipoPredioId').setValue("");
+            this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue("");
+            this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue("");
+            this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue("");
+            //this.verticalStepperForm.get('step4').get('viaDepartamentoId').setValue("");
+            //this.verticalStepperForm.get('step4').get('viaProvinciaId').setValue("");
+            //this.verticalStepperForm.get('step4').get('viaDistritoId').setValue("");
+            this.verticalStepperForm.get('step4').get('fechaRegistro').setValue("");
+            this.verticalStepperForm.get('step4').get('tipoViaId').setValue("");
+            this.verticalStepperForm.get('step4').get('desTipoPredioId').setValue("");
+            this.verticalStepperForm.get('step4').get('viaId').setValue("");
+            this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
+            this.verticalStepperForm.get('step4').get('numero1').setValue("");
+            this.verticalStepperForm.get('step4').get('letra1').setValue("");
+            this.verticalStepperForm.get('step4').get('numero2').setValue("");
+            this.verticalStepperForm.get('step4').get('letra2').setValue("");
+            this.verticalStepperForm.get('step4').get('manzana').setValue("");
+            this.verticalStepperForm.get('step4').get('lote').setValue("");
+            this.verticalStepperForm.get('step4').get('zonaUrbanaId').setValue("");
+            this.verticalStepperForm.get('step4').get('nombreZonaUrbana').setValue("");
+            this.verticalStepperForm.get('step4').get('subZonaUrbanaId').setValue("");
+            this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').setValue("");
+            this.verticalStepperForm.get('step4').get('edificacionId').setValue("");
+            this.verticalStepperForm.get('step4').get('nombreEdificacion').setValue("");
+            this.verticalStepperForm.get('step4').get('subLote').setValue("");
+            this.verticalStepperForm.get('step4').get('ingreso').setValue("");
+            this.verticalStepperForm.get('step4').get('piso').setValue("");
+            this.verticalStepperForm.get('step4').get('kilometro').setValue("");
+            this.verticalStepperForm.get('step4').get('latitud').setValue("");
+            this.verticalStepperForm.get('step4').get('longitud').setValue("");
+            this.verticalStepperForm.get('step4').get('kilometro').setValue("");
+            // this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue("");
+            //this.verticalStepperForm.get('step4').get('terminalCreacion').setValue("");
+            console.log(this.classDomicilio);
+        }
+        else {
+            this.classDomicilio.splice(this.indexClassDomicilio, 1);
+            this.classDomicilio.splice(this.indexClassDomicilio, 0, this.verticalStepperForm.get('step4').value);
+            this.indexClassDomicilio = -1;
+            this.ModoEdicionDomicilio = 0;
+            this.verticalStepperForm.get('step4').reset();
+        }
+    }
+    //Eliminar Domicilio
+    eliminarDomicilio(lessonIndex: number) {
+        console.log(lessonIndex);
+        this.classDomicilio.splice(lessonIndex, 1);
+    }
+    // Editar Domicilio
+    editDomicilio(lessonIndex: number, domicilio: Domicilio) {
+        this.ModoEdicionDomicilio = 1
+        this.verticalStepperForm.get('step4').patchValue(domicilio);
+        this.indexClassContacto = lessonIndex;
+        console.log(domicilio);
+    }
+
 
 
     maestroGenerico(tipo: number, matriz: string, municipalidadId: number) {
@@ -542,7 +692,16 @@ export class ContribuyenteEditarComponent implements OnInit {
                     console.log('DATOS DOMICILIO DE CONTRIBUYENTE', res);
                     // this.verticalStepperForm.patchValue(res);
 
-                    this.verticalStepperForm.get('step3').patchValue(res);
+                  this.listaDomicilios = [];
+                 this.listaDomicilios.push(res);
+               console.log(res);
+                      this.listaDomicilios = this.listaDomicilios.filter((item=>item.tipoPredioId == 1));
+                //      console.log(this.listaDomicilios);
+                //      console.log('domiciliooooooooooooooooooooooooooooooo  fiscal');
+
+                //     console.log(res);
+                  console.log('domiciliooooooooooooooooooooooooooooooo  fiscal');
+                    this.verticalStepperForm.get('step3').patchValue(this.listaDomicilios[0]);
                     this.valorDepartamento = this.verticalStepperForm.get('step3').get('departamentoId').value;
                     console.log(this.valorDepartamento);
                     this.maestroProvincia(this.valorDepartamento);
@@ -555,10 +714,10 @@ export class ContribuyenteEditarComponent implements OnInit {
                     this.valorTipoZonaUrbana = this.verticalStepperForm.get('step3').get('tipoZonaUrbanaId').value;
                     this.listarNombreZonaUrbana(this.valorTipoZonaUrbana);
 
-                    this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step3').get('tipoSubZonaUrbanaId').value;
+                    this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step3').get('subZonaUrbanaId').value;
                     this.listarSubZonaUrbana(this.valorTipoSubZonaUrbana);
 
-                    this.valorTipoEdificacion = this.verticalStepperForm.get('step3').get('edificacionId').value;
+                    this.valorTipoEdificacion = this.verticalStepperForm.get('step3').get('tipoEdificacionId').value;
                     this.listarEdificaciones(this.valorTipoEdificacion);
 
                     //this.verticalStepperForm.patchValue(res);
@@ -575,17 +734,82 @@ export class ContribuyenteEditarComponent implements OnInit {
             });
     }
 
+
+
+    cargarContribuyenteDomicilioAdicional(id: any){
+
+
+        this.DomicilioService.obtener(1, id)
+        .subscribe({
+            next: (res: Domicilio) => {
+                console.log('DATOS DOMICILIO DE CONTRIBUYENTE', res);
+                // this.verticalStepperForm.patchValue(res);
+
+              this.listaDomiciliosAdicional = [];
+             this.listaDomiciliosAdicional.push(res);
+           console.log(res);
+                  this.listaDomiciliosAdicional = this.listaDomiciliosAdicional.filter((item=>item.tipoPredioId != 1));
+
+
+
+
+                  //      console.log(this.listaDomicilios);
+            //      console.log('domiciliooooooooooooooooooooooooooooooo  fiscal');
+
+            //     console.log(res);
+            //   console.log('domiciliooooooooooooooooooooooooooooooo  fiscal');
+            //     this.verticalStepperForm.get('step3').patchValue(this.listaDomicilios[0]);
+            //     this.valorDepartamento = this.verticalStepperForm.get('step3').get('departamentoId').value;
+            //     console.log(this.valorDepartamento);
+            //     this.maestroProvincia(this.valorDepartamento);
+            //     this.valorProvincia = this.verticalStepperForm.get('step3').get('provinciaId').value;
+            //     this.maestroDistrito(this.valorProvincia);
+
+            //     this.valorTipoVia = this.verticalStepperForm.get('step3').get('tipoViaId').value;
+            //     this.listarVias(this.valorTipoVia);
+
+            //     this.valorTipoZonaUrbana = this.verticalStepperForm.get('step3').get('tipoZonaUrbanaId').value;
+            //     this.listarNombreZonaUrbana(this.valorTipoZonaUrbana);
+
+            //     this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step3').get('subZonaUrbanaId').value;
+            //     this.listarSubZonaUrbana(this.valorTipoSubZonaUrbana);
+
+            //     this.valorTipoEdificacion = this.verticalStepperForm.get('step3').get('tipoEdificacionId').value;
+            //     this.listarEdificaciones(this.valorTipoEdificacion);
+
+                //this.verticalStepperForm.patchValue(res);
+                //this.listarNombreZonaUrbana(0);
+
+                //this.listarNombreZonaUrbana2(0);
+            },
+            error: (error) => {
+                console.error('Error: ' + error);
+            },
+            complete: () => {
+                console.log('completo la recuperación deL domicilio del Contribuyente');
+            }
+        });
+
+
+
+
+
+    }
+
+
+
+
     cargarContribuyenteRelacionado(id: any) {
         this.serviceRelacionado.obtener(1, id)
             .subscribe({
                 next: (res: Relacionado) => {
                     console.log('DATOS DEl  RELACIONADO DEL CONTRIBUYENTE', res);
                     // this.verticalStepperForm.patchValue(res);
-                    this.verticalStepperForm.get('step4').patchValue(res);
+                    this.verticalStepperForm.get('step5').patchValue(res);
 
-                    this.valorTipoZonaUrbana = this.verticalStepperForm.get('step4').get('tipoZonaUrbanaId').value;
+                    this.valorTipoZonaUrbana = this.verticalStepperForm.get('step5').get('tipoZonaUrbanaId').value;
                     this.listarNombreZonaUrbana2(this.valorTipoZonaUrbana);
-                    this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step4').get('tipoSubZonaUrbanaId').value;
+                    this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step5').get('tipoSubZonaUrbanaId').value;
                     this.listarSubZonaUrbana2(this.valorTipoSubZonaUrbana);
 
 
@@ -769,7 +993,7 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.valorDistrito = 121;//this.registerFormContribuyenteDomicilio.controls['distritoId'].value;
         this.valorTipoZonaUrbana = tipoZonaUrbana; //tipoZonaUrbana;
         console.log(this.valorDepartamento, 'depa', this.valorProvincia, 'provincia', this.valorDistrito, 'distrito', this.valorTipoZonaUrbana, 'tipozonaurbana');
-
+  console.log('carajooooooooooooooooooooooooooooo');
         this.serviceVia.listarZona(this.valorDepartamento, this.valorProvincia, this.valorDistrito, this.valorTipoZonaUrbana)
             .subscribe({
                 next: (res: any) => {
@@ -917,9 +1141,10 @@ export class ContribuyenteEditarComponent implements OnInit {
     }
 
     updateContribuyente(): void {
+        this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
         this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.listaContacto, this.listaDomicilios).subscribe({
             next: (contribuyente) => {
-                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value,this.listaContacto);
+                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step4').value, this.listaContacto);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
                 Swal.fire('Edición:', `Contribuyente actualizado con éxito`, 'success');
                 this.router.navigate(['../contribuyente/list']);

@@ -30,4 +30,8 @@ export class Domicilio{
     viaDepartamentoId: number;
     viaProvinciaId: number;
     viaDistritoId: number;
+    tipoPredioId:number;
+    tipoZonaUrbanaId:number;
+    edificacionId:number;
+    tipoEdificacionId:number;
 }

@@ -58,8 +58,7 @@ export class Relacionado{
     fuenteInformacionId: number;
     usuarioCreacion: number;
     terminalCreacion: string;
-
-
+    tipoZonaUrbanaId: number;
 }
 
 

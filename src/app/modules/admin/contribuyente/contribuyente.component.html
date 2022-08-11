@@ -43,8 +43,8 @@
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Cod. Contribuyente</mat-label>
-                                    <input matInput name="codContribuyente" id="codContribuyente"
-                                        formControlName="codContribuyente">
+                                    <input matInput name="contribuyenteNumero" id="contribuyenteNumero"
+                                        formControlName="contribuyenteNumero">
                                 </mat-form-field>
                             </div>
 
@@ -168,18 +168,18 @@
 
                             <!-- Numero de documento -->
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Número de Documento</mat-label>
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:credit-card'" matPrefix>
                                     </mat-icon>
                                     <input matInput id="numDocIdentidad" formControlName="numDocIdentidad"
                                         name="numDocIdentidad">
-                                    <!-- <div *ngIf="error && error.nombre"> {{error.nombre}}</div> -->
-                                    <mat-error *ngIf="verticalStepperForm.get('step1').get('numDocIdentidad').hasError('myCustomError')">
+                                    <mat-error>  Campo obligatorio </mat-error>
+                                  <!--  <mat-error *ngIf="verticalStepperForm.get('step1').get('numDocIdentidad').required">
 
 
                                         Required
-                                    </mat-error>
+                                    </mat-error>-->
                                 </mat-form-field>
                             </div>
 
@@ -221,29 +221,32 @@
 
                             <!-- Apellido  Paterno-->
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Apellido Paterno</mat-label>
                                     <input matInput name="apellidoPaterno" id="apellidoPaterno"
                                         formControlName="apellidoPaterno" placeholder="Apellido paterno">
+                                        <mat-error>  Campo obligatorio </mat-error>
                                 </mat-form-field>
                             </div>
 
 
                             <!-- Apellido  Materno-->
                             <div class="col-span-4 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Apellido Materno</mat-label>
                                     <input matInput name="apellidoMaterno" id="apellidoMaterno"
                                         formControlName="apellidoMaterno" placeholder="Apellido materno">
+                                        <mat-error>  Campo obligatorio </mat-error>
                                 </mat-form-field>
                             </div>
 
                             <!-- Nombres-->
                             <div class="col-span-6 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Nombres</mat-label>
                                     <input matInput name="nombres" id="nombres" formControlName="nombres"
                                         placeholder="nombres">
+                                        <mat-error>  Campo obligatorio </mat-error>
                                 </mat-form-field>
                             </div>
 

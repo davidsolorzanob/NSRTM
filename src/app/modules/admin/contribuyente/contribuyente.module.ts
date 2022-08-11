@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -21,7 +21,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
-import { MomentDateModule } from '@angular/material-moment-adapter';
+//import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../contribuyente/date-format';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -32,7 +32,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+//import  localeES  from '@angular/common/locales/es';
 //import { MAT_DATE_LOCALE } from '@angular/material';
+
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//registerLocaleData(localeES,'es');
 
 @NgModule({
   declarations: [
@@ -60,12 +65,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MomentDateModule,
+   // MatMomentDateModule,
     MatStepperModule,
     MatTableModule,
     HttpClientModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
+   // BrowserAnimationsModule
 
   ],
   providers: [

@@ -17,7 +17,7 @@ export class ContribuyenteService {
 
     private baseEndpoint = 'http://localhost:8082/api/contribuyente';
     private baseEndpointCondicion = 'http://localhost:8082/api/condicioncontribuyente'
-    private baseEndpointReporte = 'http://localhost:8085/api/reportes';
+    private baseEndpointReporte = 'http://localhost:8087/api/reportes';
     private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
     constructor(private http: HttpClient) { }
 

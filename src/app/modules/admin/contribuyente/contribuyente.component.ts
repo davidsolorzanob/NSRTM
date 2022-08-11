@@ -205,7 +205,7 @@ export class ContribuyenteComponent implements OnInit {
         // Vertical stepper form
         this.verticalStepperForm = this.formBuilder.group({
             step1: this.formBuilder.group({
-                codContribuyente: [{ value: '', disabled: true }],
+                contribuyenteNumero: [{ value: '', disabled: true }],
                 nroDeclaracion: [{ value: '', disabled: true }],
                 fechaDJ: [''],
                 tipoMedioDeterminacionId: [''],
@@ -395,7 +395,7 @@ export class ContribuyenteComponent implements OnInit {
                 principal: "1",
                 //  nombres: null,
                 estadoId: "1",
-                usuarioCreacion: this.muniId,
+                usuarioCreacion: this.userCreacion,
                 terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
 
