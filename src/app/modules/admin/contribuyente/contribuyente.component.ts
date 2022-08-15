@@ -12,7 +12,7 @@ import { CondicionService } from 'app/services/condicion.service';
 import { MaestroService } from 'app/services/maestro.service';
 import { UbigeoService } from 'app/services/ubigeo.service';
 import Swal from 'sweetalert2';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
@@ -159,7 +159,7 @@ export class ContribuyenteComponent implements OnInit {
     public registerFormDomicilioRelacionado!: FormGroup;
     public registerFormContribuyenteCondicion!: FormGroup;
     public registerFormContribuyenteContacto!: FormGroup;
-
+    public registerFormTemp!: FormGroup;
 
     isAddMode!: boolean;
     loading = false;
@@ -400,14 +400,18 @@ export class ContribuyenteComponent implements OnInit {
                 tipoMedioContactoId: ['', [Validators.required]],
                 claseMedioContactoId: ['', [Validators.required]],
                 //desMedioContacto: ['', [Validators.required]],
-                desTipoMedioContacto: [''],
-                desClaseMedioContacto: [''],
+
+                desTipoMedioContacto: ['', [Validators.required]],
+                desClaseMedioContacto: ['', [Validators.required]],
+
+
                 principal: "1",
                 //  nombres: null,
                 estadoId: "1",
                 usuarioCreacion: this.userCreacion,
                 terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
+
                 // desTipoMedioContacto: ['', [Validators.required]],
                 //desClaseMedioContacto: ['', [Validators.required]],
                 desMedioContacto: ['', [Validators.required]],
@@ -511,7 +515,14 @@ export class ContribuyenteComponent implements OnInit {
     //   <input  hidden="true" name="descripcionDistritoId" id="descripcionDistritoId"
     //       formControlName="descripcionDistritoId">
 
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
 
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsPristine();
+    }
 
     getUbigeo(distritoId: number) {
 
@@ -545,31 +556,37 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
-    getTipoMedioContactoId(tipoMedioContactoId: number) {
-
-
+    getTipoMedioContactoId(e) {
+        let tipoMedioContactoId = e;//e.value =="" ? 0 : e.value;
         console.log(tipoMedioContactoId);
-        let indice = tipoMedioContactoId - 1;
-        console.log(indice);
-        console.log(this.maestrosTipoContacto[indice].descripcion);
-        console.log('llego oj');
-        // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+        if(tipoMedioContactoId>0 || tipoMedioContactoId!=null){
+            let data = this.maestrosTipoContacto.find(o => o.maestroId === tipoMedioContactoId);
+                console.log(tipoMedioContactoId);
+                let indice = tipoMedioContactoId - 1;
+                console.log(indice);
+                console.log(data);
+                console.log('llego oj');
+                // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
 
-        this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(this.maestrosTipoContacto[indice].descripcion);
-
+                this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(data.descripcion);
+                this.setValidatorDetalleStep6(tipoMedioContactoId);
+        }
     }
 
 
-    getClaseMedioContactoId(tipoClaseMedioContactoId: number) {
-        console.log(tipoClaseMedioContactoId);
-        let indice = tipoClaseMedioContactoId - 1;
-        console.log(indice);
-        console.log(this.maestrosTipoMedioContacto[indice].descripcion);
-        console.log('llego oj');
-        // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+    getClaseMedioContactoId(e) {
+        let tipoClaseMedioContactoId = e.value =="" ? 0 : e.value;
+        if(tipoClaseMedioContactoId>0 || tipoClaseMedioContactoId!=null){
+            let data = this.maestrosTipoMedioContacto.find(o => o.maestroId === tipoClaseMedioContactoId);
+            console.log(tipoClaseMedioContactoId);
+            let indice = tipoClaseMedioContactoId - 1;
+            console.log(indice);
+            console.log(data);
+            console.log('llego oj');
+            // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
 
-        this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue(this.maestrosTipoMedioContacto[indice].descripcion);
-
+            this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue(data.descripcion);
+        }
     }
 
     getTipoPredioId(tipoPredioId: number) {
@@ -581,8 +598,6 @@ export class ContribuyenteComponent implements OnInit {
 
     //Eliminar Contacto
     eliminarContacto(lessonIndex: number) {
-
-        console.log(lessonIndex);
         this.classContacto.splice(lessonIndex, 1);
     }
     // Editar Contacto
@@ -590,7 +605,7 @@ export class ContribuyenteComponent implements OnInit {
         this.ModoEdicionContacto = 1
         this.verticalStepperForm.get('step6').patchValue(contacto);
         this.indexClassContacto = lessonIndex;
-        console.log(contacto);
+        this.setValidatorDetalleStep6(contacto.tipoMedioContactoId);
     }
     //Adicionar Domicilio
     addDomicilio() {
