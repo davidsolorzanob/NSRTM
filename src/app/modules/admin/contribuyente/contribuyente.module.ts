@@ -32,6 +32,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DateAdapter } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+
 //import  localeES  from '@angular/common/locales/es';
 //import { MAT_DATE_LOCALE } from '@angular/material';
 
@@ -77,7 +80,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   providers: [
     DatePipe,
     //{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]},
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+
   ]
 })
 export class ContribuyenteModule { }

@@ -62,6 +62,24 @@ console.log('llego todoooooooo');
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
+
+
+
+    public actualizar(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio,
+        contactos: Contacto[], domicilios: Domicilio[]): Observable<contribuyenteCrear> {
+console.log('llego todoooooooo');
+       console.log(contribuyente,condicioncontribuyente,domicilioContribuyente,relacionado,contactos);
+            var params = {
+            "contribuyente": contribuyente,
+            "condicionContribuyente": condicioncontribuyente,
+            "domicilioContribuyente": domicilioContribuyente,
+            "relacionado": relacionado,
+            "contactos":contactos,
+            "domicilios": domicilios
+        };
+        return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/actualizar', params, { headers: this.cabeceras });
+    }
+
     public guardar(contribuyente: Contribuyente): Observable<Contribuyente> {
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }

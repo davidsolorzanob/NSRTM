@@ -26,6 +26,10 @@ export class DomicilioService {
 
         return this.http.get<Domicilio>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
+    public listar(municipalidadId: number ,contribuyenteId: number): Observable<Domicilio[]> {
+
+        return this.http.get<Domicilio[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    }
 
 
 }

@@ -34,4 +34,12 @@ export class Domicilio{
     tipoZonaUrbanaId:number;
     edificacionId:number;
     tipoEdificacionId:number;
+
+        // Auditoria
+        usuarioCreacion: number;
+        fechaCreacion: Date;
+        terminalCreacion: string;
+        usuarioModificacion: number;
+        fechaModificacion: Date;
+        terminalModificacion: string;
 }
