@@ -12,7 +12,7 @@ import { CondicionService } from 'app/services/condicion.service';
 import { MaestroService } from 'app/services/maestro.service';
 import { UbigeoService } from 'app/services/ubigeo.service';
 import Swal from 'sweetalert2';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
@@ -152,7 +152,7 @@ export class ContribuyenteComponent implements OnInit {
     public registerFormDomicilioRelacionado!: FormGroup;
     public registerFormContribuyenteCondicion!: FormGroup;
     public registerFormContribuyenteContacto!: FormGroup;
-
+    public registerFormTemp!: FormGroup;
 
     isAddMode!: boolean;
     loading = false;
@@ -385,24 +385,15 @@ export class ContribuyenteComponent implements OnInit {
                 //contribuyenteNumero: null,
                 contactoContribuyenteId: null,
                 tipoMedioContactoId: ['', [Validators.required]],
-                claseMedioContactoId: ['', [Validators.required]],
-                //desMedioContacto: ['', [Validators.required]],
-
-                desTipoMedioContacto: ['', [Validators.required]],
-                desClaseMedioContacto: ['', [Validators.required]],
-
-
-                principal: "1",
-                //  nombres: null,
+                claseMedioContactoId: ['', [Validators.required]],                
+                desMedioContacto: ['', [Validators.required]],
+                desTipoMedioContacto: [''],
+                desClaseMedioContacto: [''],
+                principal:  [''],
                 estadoId: "1",
                 usuarioCreacion: this.userCreacion,
                 terminalCreacion: this.terminal,
-                municipalidadId: this.muniId,
-
-                // desTipoMedioContacto: ['', [Validators.required]],
-                //desClaseMedioContacto: ['', [Validators.required]],
-                desMedioContacto: ['', [Validators.required]],
-
+                municipalidadId: this.muniId
             })
 
         });
@@ -413,29 +404,93 @@ export class ContribuyenteComponent implements OnInit {
 
     // Adicionar Contacto
     addContacto() {
-        if (this.ModoEdicionContacto == 0) {
-            this.classContacto.push(this.verticalStepperForm.get('step6').value);
-            //this.verticalStepperForm.get('step6').reset();
-            this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
-            console.log(this.classContacto);
-        }
-        else {
-            this.classContacto.splice(this.indexClassContacto, 1);
-            this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
-            this.indexClassContacto = -1;
-            this.ModoEdicionContacto = 0;
-        }
+        //this.verticalStepperForm.get('step6').updateValueAndValidity();
+        //this.touchedFormContacto();
+        if(this.verticalStepperForm.get("step6").valid){
+            if (this.ModoEdicionContacto == 0) {
+                this.classContacto.push(this.verticalStepperForm.get('step6').value);                
+                //this.verticalStepperForm.get('step6').reset();                
+            }
+            else {
+                this.classContacto.splice(this.indexClassContacto, 1);
+                this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
+                this.indexClassContacto = -1;
+                this.ModoEdicionContacto = 0;
+            }
+            this.resetFormContacto();
+        }        
     }
 
+    public resetFormContacto(){            
+        this.setValidatorDetalleStep6(0);
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setValue("");
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setValue("");
+        this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
 
-    //       <input hidden="true"  name="descripcionDepartamentoId"
-    //       id="descripcionDepartamentoId" formControlName="descripcionDepartamentoId">
-    //   <input hidden="true"  name="descripcionProvinciaId"
-    //       id="descripcionProvinciaId" formControlName="descripcionProvinciaId">
-    //   <input  hidden="true" name="descripcionDistritoId" id="descripcionDistritoId"
-    //       formControlName="descripcionDistritoId">
+        this.touchedFormContacto();
 
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').updateValueAndValidity({ emitEvent : false });
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').updateValueAndValidity({ emitEvent : false });
+        this.verticalStepperForm.get('step6').get('desMedioContacto').updateValueAndValidity({ emitEvent : false });
+        
+    }
 
+    public errorValidator = (step: string, controlName: string, errorName: string) =>{
+        return this.verticalStepperForm.get(step).get(controlName).hasError(errorName);
+    }
+
+    public valueControlStep = (step: string, controlName: string) =>{
+        return this.verticalStepperForm.get(step).get(controlName).value;
+    }
+
+    public setValidatorDetalleStep6 (id:number){
+        this.verticalStepperForm.get('step6').get('desMedioContacto').clearValidators();       
+        
+        switch(id){
+            case 3: 
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]);
+                break;
+            case 2:
+            case 1:
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
+                break;
+            default: 
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required]);
+                break;
+        }
+        this.verticalStepperForm.get('step6').get('desMedioContacto').updateValueAndValidity({ emitEvent : false });
+    }
+
+    public setFieldRequiredContacto(set:boolean){
+        this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'));
+        this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[0-9]+$'));
+        /*
+        if(set){
+            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('claseMedioContactoId').setValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators(Validators.required);            
+        }
+        else{
+            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').removeValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('claseMedioContactoId').removeValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.required);
+        }
+        */
+    }
+
+    public touchedFormContacto(){
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsUntouched();
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsUntouched();
+        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsUntouched();
+
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
+
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsPristine();
+    }
 
     getUbigeo(distritoId: number) {
 
@@ -469,31 +524,37 @@ export class ContribuyenteComponent implements OnInit {
 
 
 
-    getTipoMedioContactoId(tipoMedioContactoId: number) {
-
-
+    getTipoMedioContactoId(e) {
+        let tipoMedioContactoId = e;//e.value =="" ? 0 : e.value;
         console.log(tipoMedioContactoId);
-        let indice = tipoMedioContactoId - 1;
-        console.log(indice);
-        console.log(this.maestrosTipoContacto[indice].descripcion);
-        console.log('llego oj');
-        // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+        if(tipoMedioContactoId>0 || tipoMedioContactoId!=null){
+            let data = this.maestrosTipoContacto.find(o => o.maestroId === tipoMedioContactoId);
+                console.log(tipoMedioContactoId);
+                let indice = tipoMedioContactoId - 1;
+                console.log(indice);
+                console.log(data);
+                console.log('llego oj');
+                // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
 
-        this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(this.maestrosTipoContacto[indice].descripcion);
-
+                this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(data.descripcion);
+                this.setValidatorDetalleStep6(tipoMedioContactoId);
+        }
     }
 
 
-    getClaseMedioContactoId(tipoClaseMedioContactoId: number) {
-        console.log(tipoClaseMedioContactoId);
-        let indice = tipoClaseMedioContactoId - 1;
-        console.log(indice);
-        console.log(this.maestrosTipoMedioContacto[indice].descripcion);
-        console.log('llego oj');
-        // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+    getClaseMedioContactoId(e) {
+        let tipoClaseMedioContactoId = e.value =="" ? 0 : e.value;
+        if(tipoClaseMedioContactoId>0 || tipoClaseMedioContactoId!=null){
+            let data = this.maestrosTipoMedioContacto.find(o => o.maestroId === tipoClaseMedioContactoId);
+            console.log(tipoClaseMedioContactoId);
+            let indice = tipoClaseMedioContactoId - 1;
+            console.log(indice);
+            console.log(data);
+            console.log('llego oj');
+            // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
 
-        this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue(this.maestrosTipoMedioContacto[indice].descripcion);
-
+            this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue(data.descripcion);
+        }
     }
 
     getTipoPredioId(tipoPredioId: number) {
@@ -505,8 +566,6 @@ export class ContribuyenteComponent implements OnInit {
 
     //Eliminar Contacto
     eliminarContacto(lessonIndex: number) {
-
-        console.log(lessonIndex);
         this.classContacto.splice(lessonIndex, 1);
     }
     // Editar Contacto
@@ -514,7 +573,7 @@ export class ContribuyenteComponent implements OnInit {
         this.ModoEdicionContacto = 1
         this.verticalStepperForm.get('step6').patchValue(contacto);
         this.indexClassContacto = lessonIndex;
-        console.log(contacto);
+        this.setValidatorDetalleStep6(contacto.tipoMedioContactoId);
     }
     //Adicionar Domicilio
     addDomicilio() {

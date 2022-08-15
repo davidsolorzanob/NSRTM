@@ -16,7 +16,7 @@
 
         <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="verticalStepperForm">
             <mat-vertical-stepper [linear]="true" #verticalStepper>
-                <mat-step [formGroupName]="'step1'" #verticalStepperStep1 class="background-color: coral;" [stepControl]="verticalStepperForm.get('step1')" >
+                <mat-step [formGroupName]="'step1'" #verticalStepperStep1 class="background-color: coral;" >
                     <ng-template matStepLabel>Información del Contribuyente</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la información básica del contribuyente
@@ -1866,7 +1866,7 @@
 
                 <mat-step [formGroupName]="'step6'" #verticalStepperStep5 class="background-color: coral;">
                     <ng-template matStepLabel>Información del Contacto</ng-template>
-                    <p class="my-6 font-medium">
+                    <p class="font-medium">
                         Registro de la información del Contacto
                     </p>
 
@@ -1875,65 +1875,69 @@
 
                     <div class="flex flex-col gt-xs:flex-row">
 
-                        <!-- Section -->
-                        <div class="w-full">
-                        </div>
 
-                        <div class="grid grid-cols-12 gap-10 w-full mt-10">
-
-
-
-
+                        <div class="grid grid-cols-12 gap-10 w-full mt-2">
 
                             <!-- Tipo de Contacto -->
-                            <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <div class="col-span-3 sm:col-span-3">
+                                <mat-form-field class="w-full">
                                     <mat-label>Tipo de Contacto</mat-label>
                                     <mat-select id="tipoMedioContactoId" name="tipoMedioContactoId"
                                         formControlName="tipoMedioContactoId" (valueChange)="getTipoMedioContactoId($event)">
-                                        <mat-option>-- Seleccionar Tipo de Contacto --</mat-option>
+                                        <mat-option value="">-- Seleccionar --</mat-option>
                                         <mat-option *ngFor="let mae of maestrosTipoContacto "
                                             [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="errorValidator('step6','tipoMedioContactoId','required')">  Campo obligatorio </mat-error>
+                                    <!--  <mat-error *ngIf="verticalStepperForm.get('step1').get('numDocIdentidad').required">
+  
+  
+                                          Required
+                                      </mat-error>-->
                                 </mat-form-field>
                             </div>
 
                             <!-- Medio de Contacto -->
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Medio de Contacto</mat-label>
                                     <mat-select name="claseMedioContactoId" id="claseMedioContactoId"
-                                        formControlName="claseMedioContactoId" (valueChange)="getClaseMedioContactoId($event)">
-                                        <mat-option> -- Seleccionar Medio de Contacto --</mat-option>
+                                        formControlName="claseMedioContactoId" (selectionChange)="getClaseMedioContactoId($event)">
+                                        <mat-option value=""> -- Seleccionar --</mat-option>
                                         <mat-option *ngFor="let mae of  maestrosTipoMedioContacto" [value]="mae.maestroId">
                                             {{mae.descripcion}}
                                         </mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="errorValidator('step6','claseMedioContactoId','required')">  Campo obligatorio </mat-error>
                                 </mat-form-field>
                             </div>
 
 
-                            <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <div class="col-span-4 sm:col-span-4">
+                                <mat-form-field class="w-full">
                                     <mat-label>Detalle</mat-label>
                                     <input matInput name="desMedioContacto" id="desMedioContacto"
                                         formControlName="desMedioContacto">
+                                    <mat-error *ngIf="errorValidator('step6','desMedioContacto','required')">  Campo obligatorio </mat-error>
+                                    <mat-error *ngIf="valueControlStep('step6','tipoMedioContactoId') == 1 && errorValidator('step6','desMedioContacto','pattern')">  Formato inválido del teléfono fijo</mat-error>
+                                    <mat-error *ngIf="valueControlStep('step6','tipoMedioContactoId') == 2 && errorValidator('step6','desMedioContacto','pattern')">  Formato inválido del celular</mat-error>
+                                    <mat-error *ngIf="valueControlStep('step6','tipoMedioContactoId') == 3 && errorValidator('step6','desMedioContacto','pattern')">  Formato inválido del correo electrónico</mat-error>
                                 </mat-form-field>
                             </div>
 
                             <div class="col-span-2 sm:col-span-2">
-
                                 <br>
-                                <br>
-                                <mat-checkbox name="principal" id="principal" value="checked"
-                                    formControlName="principal">
-                                    Principal</mat-checkbox>
+                                <br>    
+                                <div class="mat-form-field">                           
+                                    <mat-checkbox name="principal" id="principal" formControlName="principal">
+                                            Principal</mat-checkbox>
+                                </div> 
 
                                     <input hidden="true" value="" name="desTipoMedioContacto" id="desTipoMedioContacto"
                                     formControlName="desTipoMedioContacto">
-                                <input hidden="true" value="" name="desClaseMedioContacto" id="desClaseMedioContacto"
+                                    <input hidden="true" value="" name="desClaseMedioContacto" id="desClaseMedioContacto"
                                     formControlName="desClaseMedioContacto">
                                     <input hidden="true" value="2025"  name="usuarioCreacion" id="usuarioCreacion"
                                     formControlName="usuarioCreacion">
@@ -1941,79 +1945,13 @@
                                     formControlName="terminalCreacion">
                                     <input hidden="true" value="1"  name="municipalidadId" id="municipalidadId"
                                     formControlName="municipalidadId">
-
-
-
-                                <!-- <ng-container formArrayName="lessons">
-                                    <ng-container *ngFor="let lessonForm of lessons.controls; let i = index">
-                                        <div class="lesson-form-row" [formGroupName]="i">
-
-                                            <mat-form-field appearance="fill">
-
-                                                <ng-container *ngIf="lessonData[i] && lessonData[i].tipoMedioContactoId">
-                                                    <mat-select formControlName="tipoMedioContactoId" name="tipoMedioContactoId" id="tipoMedioContactoId" placeholder="Tipo Medio Contacto"
-                                                        [(value)]="lessonData[i].tipoMedioContactoId">
-
-                                                        <mat-option value="1">A</mat-option>
-                                                        <mat-option value="2">B</mat-option>
-                                                        <mat-option value="3">C</mat-option>
-                                                    </mat-select>
-                                                </ng-container>
-
-                                                <ng-container *ngIf="!lessonData[i]">
-                                                    <mat-select formControlName="tipoMedioContactoId" name="tipoMedioContactoId" id="tipoMedioContactoId" placeholder="Tipo Medio Contacto">
-                                                        <mat-option value="1">A</mat-option>
-                                                        <mat-option value="2">B</mat-option>
-                                                        <mat-option value="3">C</mat-option>
-                                                    </mat-select>
-                                                </ng-container>
-
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="fill">
-
-                                                <ng-container *ngIf="lessonData[i] && lessonData[i].claseMedioContactoId">
-                                                    <mat-select formControlName="claseMedioContactoId" name="claseMedioContactoId" id="claseMedioContactoId" placeholder="Clase Medio de contacto"
-                                                        [(value)]="lessonData[i].claseMedioContactoId">
-
-                                                        <mat-option value="1">A</mat-option>
-                                                        <mat-option value="2">B</mat-option>
-                                                        <mat-option value="3">C</mat-option>
-                                                    </mat-select>
-                                                </ng-container>
-
-                                                <ng-container *ngIf="!lessonData[i]">
-                                                    <mat-select formControlName="claseMedioContactoId" name="claseMedioContactoId" id="claseMedioContactoId"  placeholder="Clase Medio de contacto">
-                                                        <mat-option value="1">A</mat-option>
-                                                        <mat-option value="2">B</mat-option>
-                                                        <mat-option value="3">C</mat-option>
-                                                    </mat-select>
-                                                </ng-container>
-
-                                            </mat-form-field>
-
-
-
-
-
-                                            <mat-form-field appearance="fill">
-                                                <input matInput formControlName="desMedioContacto" id="desMedioContacto" name="desMedioContacto" placeholder="Lesson title" />
-
-                                            </mat-form-field>
-                                            <mat-icon class="delete-btn" (click)="deleteLesson(i)">
-                                                delete_forever</mat-icon>
-                                        </div>
-                                    </ng-container>
-                                </ng-container>
-
-                                <button mat-mini-fab (click)="addLesson()">
-                                    <mat-icon class="add-course-btn">add</mat-icon>
-                                </button> -->
-
-
+                                    
+                                    <!--  <mat-error *ngIf="verticalStepperForm.get('step1').get('numDocIdentidad').required">
+                                          Required
+                                      </mat-error>-->
                             </div>
 
-                            <div class="col-span-2 sm:col-span-2">
+                            <div class="col-span-1 sm:col-span-1">
 
                                 <br>
                                 <br>
@@ -2029,92 +1967,44 @@
 
 
                         <div>
-
-                            <div class="alert alert-info" *ngIf="classContacto?.length==0">
-                                No hay contactos en el sistema.
-                            </div>
-
                             <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                                <ng-container *ngIf="classContacto?.length>0">
-                                    <div class="grid">
-                                        <!-- Header -->
-                                        <div
-                                            class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
-                                            <div></div>
-                                            <div class="hidden md:block">
-                                                Id
-                                            </div>
-                                            <div>Tipo de Medio</div>
-                                            <div>
-                                                Clase de medio
-                                            </div>
-                                            <div class="hidden lg:block">
-                                                Descripcion
-                                            </div>
-                                            <div class="hidden sm:block">Editar</div>
-                                            <div class="hidden sm:block">Eliminar</div>
-
-                                        </div>
-                                        <!-- Rows -->
-
-                                        <ng-container *ngFor="let contacto of classContacto; let i = index">
-                                            <div
-                                                class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
-
-
-                                                <!-- Descripcion -->
-                                                <div class="truncate">
-
-                                                </div>
-                                                <!-- ID -->
-                                                <div class="hidden md:block truncate">
-                                                    {{i+1}}
-                                                </div>
-                                                <!-- Tipo de Medio -->
-                                                <div class="hidden md:block truncate">
-                                                    {{contacto.desTipoMedioContacto}}
-                                                </div>
-
-                                                <!--   Clase de medio -->
-                                                <div class="hidden md:block truncate">
-                                                    {{contacto.desClaseMedioContacto}}
-                                                </div>
-
-                                                <!--   Clase de medio -->
-                                                <div class="hidden sm:block">
-                                                    {{contacto.desMedioContacto}}
-                                                </div>
-
-
-
-
-
-                                                <!-- Details button -->
-
-                                                <div>
-                                                    <button class="btn btn-danger btn-sm"
-                                                        (click)="editContacto(i, contacto)">
-                                                        <mat-icon>edit</mat-icon>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    <button class="btn btn-danger btn-sm"
-                                                        (click)="eliminarContacto(contacto)">
-                                                        <mat-icon>delete</mat-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </ng-container>
-                                    </div>
-                                </ng-container>
+                                <table class="mat-table">
+                                    <thead>
+                                        <th>Id</th>
+                                        <th>Tipo de Medio</th>
+                                        <th>Clase de Medio</th>
+                                        <th>Descripción</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="classContacto.length==0"><td colspan="6" class="text-center">No se registraron contactos</td></tr>                                  
+                                        <tr *ngFor="let contacto of classContacto; let i = index">
+                                            <td class="text-center">{{i+1}}</td>
+                                            <td class="text-center">{{contacto.desTipoMedioContacto}}</td>
+                                            <td class="text-center">{{contacto.desClaseMedioContacto}}</td>
+                                            <td class="text-center">{{contacto.desMedioContacto}}</td>
+                                            <td class="mat-cell text-center">
+                                                <button mat-icon-button color="primary" matTooltip="Editar" (click)="editContacto(i, contacto)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td class="mat-cell text-center">
+                                                <button mat-icon-button color="primary" matTooltip="Eliminar" (click)="eliminarContacto(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            
                             </div>
 
 
                         </div>
-
+                    
                         <div class="flex justify-end">
-                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext [disabled]="classContacto.length==0">
                                 Siguiente
                             </button>
                         </div>
