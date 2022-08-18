@@ -12,13 +12,8 @@ export class CondicionService {
     private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
     constructor(private http: HttpClient) { }
 
-
-
     public todos(): Observable<Condicion[]> {
-
-
         return this.http.get<Condicion[]>(this.baseEndpoint + '/todos');
-
     }
 
     public listarPaginas(size: string, page: string): Observable<any> {

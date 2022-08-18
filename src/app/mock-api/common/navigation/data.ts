@@ -16,6 +16,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:cog',
         link : '/settings'
+    },
+    {
+        id   : 'activities',
+        title: 'activities',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/activities'
     }
 
 ];
@@ -34,7 +41,15 @@ export const compactNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:cog',
         link : '/settings'
+    },
+    {
+        id   : 'activities',
+        title: 'activities',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/activities'
     }
+
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
 
@@ -51,7 +66,15 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:cog',
         link : '/settings'
+    },
+    {
+        id   : 'activities',
+        title: 'activities',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/activities'
     }
+
 
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -69,5 +92,13 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:cog',
         link : '/settings'
+    },
+    {
+        id   : 'activities',
+        title: 'activities',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/activities'
     }
+
 ];

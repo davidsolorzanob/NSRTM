@@ -4,6 +4,7 @@ import { Condicion } from 'app/models/condicion.models';
 import { Domicilio } from 'app/models/domicilio.models';
 import { Relacionado } from 'app/models/relacionado.models';
 import { RelacionadoDomicilio } from 'app/models/relacionadoDomicilio.models';
+import { DocSustento } from 'app/models/docSustento.models';
 import { map, Observable } from 'rxjs';
 import { Contribuyente } from '../models/contribuyente.models';
 import { ContribuyenteReporte } from '../models/contribuyenteReporte.models';
@@ -48,7 +49,7 @@ export class ContribuyenteService {
     }
 
     public crear(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio,
-        contactos: Contacto[], domicilios: Domicilio[]): Observable<contribuyenteCrear> {
+        contactos: Contacto[], domicilios: Domicilio[], docSustento: DocSustento[]): Observable<contribuyenteCrear> {
 console.log('llego todoooooooo');
        console.log(contribuyente,condicioncontribuyente,domicilioContribuyente,relacionado,contactos);
             var params = {
@@ -57,16 +58,14 @@ console.log('llego todoooooooo');
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado,
             "contactos":contactos,
-            "domicilios": domicilios
+            "domicilios": domicilios,
+            "sustentos":  docSustento
         };
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/guardar', params, { headers: this.cabeceras });
     }
 
-
-
-
     public actualizar(contribuyente: Contribuyente, condicioncontribuyente: Condicion, domicilioContribuyente: Domicilio, relacionado:RelacionadoDomicilio,
-        contactos: Contacto[], domicilios: Domicilio[]): Observable<contribuyenteCrear> {
+        contactos: Contacto[], domicilios: Domicilio[], docSustento: DocSustento[]): Observable<contribuyenteCrear> {
 console.log('llego todoooooooo');
        console.log(contribuyente,condicioncontribuyente,domicilioContribuyente,relacionado,contactos);
             var params = {
@@ -75,7 +74,8 @@ console.log('llego todoooooooo');
             "domicilioContribuyente": domicilioContribuyente,
             "relacionado": relacionado,
             "contactos":contactos,
-            "domicilios": domicilios
+            "domicilios": domicilios,
+            "sustentos":  docSustento
         };
         return this.http.post<contribuyenteCrear>(this.baseEndpoint + '/actualizar', params, { headers: this.cabeceras });
     }
