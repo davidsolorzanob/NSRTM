@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { ContribuyenteReporte } from 'app/models/contribuyenteReporte.models';
@@ -8,6 +8,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+
+import { Activity } from 'app/modules/admin/activities/activities.types';
+import { ActivitiesService } from 'app/modules/admin/activities/activities.service';
+import { Observable } from 'rxjs';
+import moment from 'moment';
 
 @Component({
   selector: 'app-list',
@@ -31,7 +36,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validator
             }
         }
     `
-  ]
+  ],
+  encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements OnInit {
   titulo = 'Relación de contribuyentes';
@@ -43,12 +50,12 @@ export class ListComponent implements OnInit {
   currentPage = 0;
   pageSizeOptions: number[] = [3, 5, 10, 25, 100];
   displayedColumns: string[] = [
-    'contribuyenteNumero', 
-    'fechaDJ', 
-    'desEstadoDj', 
-    'apellidoPaterno', 
-    'descDocIdentidad', 
-    'numDocIdentidad', 
+    'contribuyenteNumero',
+    'fechaDJ',
+    'desEstadoDj',
+    'apellidoPaterno',
+    'descDocIdentidad',
+    'numDocIdentidad',
     'area',
     'usuarioCreacion',
     'fechaInscripcion',
@@ -56,14 +63,18 @@ export class ListComponent implements OnInit {
     'acciones' ];
   dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
+  activities$: Observable<Activity[]>;
+
   @ViewChild('supportNgForm') supportNgForm: NgForm;
   public formBusquedaContribuyente!: FormGroup;
   public formControl: FormControl;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe) { }
+  constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe,public _activityService: ActivitiesService) { }
 
   ngOnInit() {
+
+    this.activities$ = this._activityService.activities;
 
     this.formBusquedaContribuyente = this.formBuilder.group({
         municipalidadId: ['1'],
@@ -82,7 +93,7 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public submit(){    
+  public submit(){
     this.isSubmited = true;
     if(this.formBusquedaContribuyente.valid){
       this.currentPage = 0;
@@ -126,7 +137,7 @@ export class ListComponent implements OnInit {
   }
 
   public changeFiltro (e){
-    this.removeValidators();    
+    this.removeValidators();
     this.limpiar();
     this.formBusquedaContribuyente.get('tipoFiltro').setValue(e.value);
     this.isSubmited = false;
@@ -199,7 +210,7 @@ export class ListComponent implements OnInit {
       });
   }
 
-  public reporteDJ(contribuyente: ContribuyenteReporte) {    
+  public reporteDJ(contribuyente: ContribuyenteReporte) {
     var data = { municipalidadId: contribuyente.municipalidadId, contribuyenteNumero: contribuyente.contribuyenteNumero};
     var url = this.service.getReporteDjContribuyente(JSON.stringify(data));
 
@@ -230,9 +241,9 @@ export class ListComponent implements OnInit {
     })
   }
 
-  public printResult(): void {  
-    var divToPrint = document.getElementById("tblContribuyentes").innerHTML;  
-    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');  
+  public printResult(): void {
+    var divToPrint = document.getElementById("tblContribuyentes").innerHTML;
+    var newWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     var gridHtml = '';
     var index = 0;
     this.dataSource.data.map(data =>{
@@ -240,7 +251,7 @@ export class ListComponent implements OnInit {
       gridHtml += `<tr>
                      <td>${index}</td>
                      <td>${data.contribuyenteNumero}</td>
-                     <td>${this.datepipe.transform(data.fechaDJ, 'dd/MM/yyyy')}</td> 
+                     <td>${this.datepipe.transform(data.fechaDJ, 'dd/MM/yyyy')}</td>
                      <td>${data.tipoPersonaId == this.tipoPersonaJuridica ? data.razonSocial: data.nombreCompleto}</td>
                      <td>${data.desDocIdentidad}</td>
                      <td>${data.numDocIdentidad}</td>
@@ -309,5 +320,58 @@ export class ListComponent implements OnInit {
       </html>`)
     newWin.document.close();
   }
+
+
+
+      // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Returns whether the given dates are different days
+     *
+     * @param current
+     * @param compare
+     */
+     isSameDay(current: string, compare: string): boolean
+     {
+         return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
+     }
+
+     /**
+      * Get the relative format of the given date
+      *
+      * @param date
+      */
+     getRelativeFormat(date: string): string
+     {
+         const today = moment().startOf('day');
+         const yesterday = moment().subtract(1, 'day').startOf('day');
+
+         // Is today?
+         if ( moment(date, moment.ISO_8601).isSame(today, 'day') )
+         {
+             return 'Today';
+         }
+
+         // Is yesterday?
+         if ( moment(date, moment.ISO_8601).isSame(yesterday, 'day') )
+         {
+             return 'Yesterday';
+         }
+
+         return moment(date, moment.ISO_8601).fromNow();
+     }
+
+     /**
+      * Track by function for ngFor loops
+      *
+      * @param index
+      * @param item
+      */
+     trackByFn(index: number, item: any): any
+     {
+         return item.id || index;
+     }
 
 }

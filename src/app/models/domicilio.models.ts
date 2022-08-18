@@ -1,5 +1,5 @@
-export class Domicilio{
-    contribuyenteId:number;
+export class Domicilio {
+    contribuyenteId: number;
     contribuyenteDomicilioId: number;
     departamento: string;
     provincia: string;
@@ -30,16 +30,16 @@ export class Domicilio{
     viaDepartamentoId: number;
     viaProvinciaId: number;
     viaDistritoId: number;
-    tipoPredioId:number;
-    tipoZonaUrbanaId:number;
-    edificacionId:number;
-    tipoEdificacionId:number;
+    tipoPredioId: number;
+    tipoZonaUrbanaId: number;
+    edificacionId: number;
+    tipoEdificacionId: number;
 
-        // Auditoria
-        usuarioCreacion: number;
-        fechaCreacion: Date;
-        terminalCreacion: string;
-        usuarioModificacion: number;
-        fechaModificacion: Date;
-        terminalModificacion: string;
+    // Auditoria
+    usuarioCreacion: number;
+    fechaCreacion: Date;
+    terminalCreacion: string;
+    usuarioModificacion: number;
+    fechaModificacion: Date;
+    terminalModificacion: string;
 }
