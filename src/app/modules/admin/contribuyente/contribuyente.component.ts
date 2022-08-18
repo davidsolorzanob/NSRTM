@@ -5,6 +5,7 @@ import { Domicilio } from 'app/models/domicilio.models';
 import { Relacionado } from 'app/models/relacionado.models';
 import { Condicion } from 'app/models/condicion.models';
 import { Maestro } from 'app/models/maestro.models';
+import { DocSustento } from 'app/models/docSustento.models';
 import { UbigeoDepartamento } from 'app/models/UbigeoDepartamento.models';
 import { Contacto } from 'app/models/contacto.models';
 import { ContribuyenteService } from 'app/services/contribuyente.service';
@@ -70,6 +71,7 @@ export class ContribuyenteComponent implements OnInit {
     countClassContacto: number = 0;
     indexClassContacto: number = -1;
     indexClassDomicilio: number = -1;
+    indexClassDocSustento: number = -1;
 
     ModoEdicionContacto = 0;
     ModoEdicionDomicilio = 0;
@@ -116,10 +118,15 @@ export class ContribuyenteComponent implements OnInit {
     maestroDocumentoTipo: Maestro[] = [];
     maestrosTipoContacto: Maestro[] = [];
     maestrosTipoMedioContacto: Maestro[] = [];
+    maestrosFormaPresentacion: Maestro[] = [];
+    maestrosTipoDocSustento: Maestro[] = [];
+
 
     classContacto: Contacto[] = [];
     classDomicilio: Domicilio[] = [];
     //contacto = Contacto;
+    //Documento de sustento
+    classDocSustento: DocSustento[] = [];
 
     ubigeo: UbigeoDepartamento[] = [];
     ubigeoProvincia: ubigeoProvincia[] = [];
@@ -203,6 +210,11 @@ export class ContribuyenteComponent implements OnInit {
 
         this.maestroDepartamento();
         this.maestroProvincia(this.sessionDepartamento);
+        // this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue(filterDepartamento[0].descripcion);
+        // this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue(filterProvincia[0].descripcion);
+        // this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue(filterDistrito[0].descripcion);
+
+
         this.maestroDistrito(this.sessionProvincia);
 
         console.log(this.ubigeo);
@@ -231,9 +243,9 @@ export class ContribuyenteComponent implements OnInit {
                 fechaInscripcion: [''],
                 fechaNacimiento: [''],
                 estadoDjId: [''],
-                apellidoPaterno: ['', [Validators.required]],
-                apellidoMaterno: ['', [Validators.required]],
-                nombres: ['', [Validators.required]],
+                apellidoPaterno: ['', [Validators.required, Validators.pattern("^[a-zA-Z ]*$")]],
+                apellidoMaterno: ['', [Validators.required, Validators.pattern("^[a-zA-Z ]*$")]],
+                nombres: ['', [Validators.required, Validators.pattern("^[a-zA-Z ]*$")]],
                 estadoCivil: ['', [Validators.required]],
                 fallecido: [{ value: '', disabled: true }, [Validators.required]],
                 fechaFallecimiento: [{ value: '', disabled: true }],
@@ -251,14 +263,14 @@ export class ContribuyenteComponent implements OnInit {
                 tipoDocumentoId: [''],
                 // nombreDocumento: ['', [Validators.required]],
                 desDocumento: [''],
-                numeroDocumento: [''],
+                numeroDocumento: ['', [Validators.maxLength(50)]],
                 fechaDocumento: [''],
                 fechaVigenciaInicial: [''],
                 fechaVigenciaFinal: [''],
                 importePension: [''],
                 estadoId: [''],
-                numeroLicencia: [''],
-                numeroExpediente: [''],
+                numeroLicencia: ['', [Validators.maxLength(100)]],
+                numeroExpediente: ['', [Validators.maxLength(100)]],
                 fechaExpediente: [''],
                 usuarioCreacion: ['2025'],
                 terminalCreacion: ['192.168.1.1'],
@@ -283,9 +295,11 @@ export class ContribuyenteComponent implements OnInit {
                 tipoViaId: ['', [Validators.required]],
                 desTipoPredioId: '',
                 viaId: ['', [Validators.required]],  // buscador SELECT 2
-                numero1: ['', [Validators.maxLength(5)]],
+                numero1: ['', [Validators.maxLength(5), Validators.pattern("^[0-9]*$")]],
+
+
                 letra1: ['', [Validators.maxLength(5)]],
-                numero2: ['', [Validators.maxLength(6)]],
+                numero2: ['', [Validators.maxLength(6), Validators.pattern("^[0-9]*$")]],
                 letra2: ['', [Validators.maxLength(6)]],
                 manzana: ['', [Validators.maxLength(6)]],
                 lote: ['', [Validators.maxLength(6)]],
@@ -309,23 +323,23 @@ export class ContribuyenteComponent implements OnInit {
             step4: this.formBuilder.group({
                 municipalidadId: this.muniId,
                 domContribuyenteDomicilioNumero: null,
-                departamentoId: ['', [Validators.required]],
-                provinciaId: ['', [Validators.required]],
-                distritoId: ['', [Validators.required]],
-                tipoPredioId: ['', [Validators.required]],
+                departamentoId: [''],
+                provinciaId: [''],
+                distritoId: [''],
+                tipoPredioId: [''],
                 descripcionDepartamentoId: [''],
                 descripcionProvinciaId: [''],
                 descripcionDistritoId: [''],
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
-                fechaRegistro: ['', [Validators.required]],
-                tipoViaId: ['', [Validators.required]],
+                //fechaRegistro: ['', [Validators.required]],
+                tipoViaId: [''],
                 desTipoPredioId: '',
-                viaId: ['', [Validators.required]],
-                numero1: [''],
+                viaId: [''],
+                numero1: ['', [Validators.maxLength(5), Validators.pattern("^[0-9]*$")]],
                 letra1: [''],
-                numero2: [''],
+                numero2: ['', [Validators.maxLength(5), Validators.pattern("^[0-9]*$")]],
                 letra2: [''],
                 manzana: [''],
                 lote: [''],
@@ -404,7 +418,6 @@ export class ContribuyenteComponent implements OnInit {
                 desTipoMedioContacto: ['', [Validators.required]],
                 desClaseMedioContacto: ['', [Validators.required]],
 
-
                 principal: "1",
                 //  nombres: null,
                 estadoId: "1",
@@ -414,12 +427,175 @@ export class ContribuyenteComponent implements OnInit {
 
                 // desTipoMedioContacto: ['', [Validators.required]],
                 //desClaseMedioContacto: ['', [Validators.required]],
-                desMedioContacto: ['', [Validators.required]],
+                desMedioContacto: ['', [Validators.required, Validators.maxLength(50)]],
 
+            }),
+
+            step7: this.formBuilder.group({
+                //contribuyenteNumero: null,
+                docSustentoId: null,
+                tipoDocSustentoId: ['', [Validators.required]],
+                nroDocSustento: ['', [Validators.required]],
+                tipoFormaPresentacionId: ['', [Validators.required]],
+                folios: ['', [Validators.required]],
+                desTipoDocSustento: [''],
+                desTipoFormaPresentacion: [''],
+                activo: 1,
+                usuarioCreacion: this.userCreacion,
+                terminalCreacion: this.terminal,
+                municipalidadId: this.muniId
             })
 
         });
 
+    }
+
+
+
+    // Adicionar Sustento
+    addDocSustento() {
+        //this.verticalStepperForm.get('step6').updateValueAndValidity();
+        //this.touchedFormContacto();
+        if (this.verticalStepperForm.get("step7").valid) {
+            let idTipoDoc = this.valueControlStep("step7", "tipoDocSustentoId");
+            let idForma = this.valueControlStep("step7", "tipoFormaPresentacionId");
+            let dataTipoDoc = this.maestrosTipoDocSustento.find(o => o.maestroId === idTipoDoc);
+            let dataForma = this.maestrosFormaPresentacion.find(o => o.maestroId === idForma);
+
+            this.verticalStepperForm.get('step7').get('desTipoDocSustento').setValue(dataTipoDoc.descripcion);
+            this.verticalStepperForm.get('step7').get('desTipoFormaPresentacion').setValue(dataForma.descripcion);
+
+            if (this.indexClassDocSustento == -1) {
+                this.classDocSustento.push(this.verticalStepperForm.get('step7').value);
+            }
+            else {
+                this.classDocSustento.splice(this.indexClassDocSustento, 1);
+                this.classDocSustento.splice(this.indexClassDocSustento, 0, this.verticalStepperForm.get('step7').value);
+                this.indexClassDocSustento = -1;
+            }
+            this.resetFormDocSustento();
+        }
+    }
+
+    // Editar Sustento
+    editarDocSustento(lessonIndex: number, sustento: DocSustento) {
+        this.verticalStepperForm.get('step7').patchValue(sustento);
+        this.indexClassDocSustento = lessonIndex;
+        //this.setValidatorDetalleStep6(sustento.tipoMedioContactoId);
+    }
+
+    eliminarDocSustento(lessonIndex: number) {
+        this.classDocSustento.splice(lessonIndex, 1);
+    }
+
+
+    public resetFormDocSustento() {
+        //this.setValidatorDetalleStep6(0);
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').setValue("");
+        this.verticalStepperForm.get('step7').get('nroDocSustento').setValue("");
+        this.verticalStepperForm.get('step7').get('tipoFormaPresentacionId').setValue("");
+        this.verticalStepperForm.get('step7').get('folios').setValue("");
+
+        //this.touchedFormContacto();
+
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('nroDocSustento').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('tipoFormaPresentacionId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('folios').updateValueAndValidity({ emitEvent: false });
+    }
+
+    public changeTipoDocSustento(e) {
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').setValue(e.value);
+    }
+
+    // Adicionar Contacto
+    addContacto() {
+        //this.verticalStepperForm.get('step6').updateValueAndValidity();
+        //this.touchedFormContacto();
+        if (this.verticalStepperForm.get("step6").valid) {
+            if (this.ModoEdicionContacto == 0) {
+                this.classContacto.push(this.verticalStepperForm.get('step6').value);
+                //this.verticalStepperForm.get('step6').reset();
+            }
+            else {
+                this.classContacto.splice(this.indexClassContacto, 1);
+                this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
+                this.indexClassContacto = -1;
+                this.ModoEdicionContacto = 0;
+            }
+
+        }
+    }
+
+    public resetFormContacto() {
+        this.setValidatorDetalleStep6(0);
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setValue("");
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setValue("");
+        this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
+
+        this.touchedFormContacto();
+
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step6').get('desMedioContacto').updateValueAndValidity({ emitEvent: false });
+
+    }
+
+    public errorValidator = (step: string, controlName: string, errorName: string) => {
+        return this.verticalStepperForm.get(step).get(controlName).hasError(errorName);
+    }
+
+    public valueControlStep = (step: string, controlName: string) => {
+        return this.verticalStepperForm.get(step).get(controlName).value;
+    }
+
+    public setValidatorDetalleStep6(id: number) {
+        this.verticalStepperForm.get('step6').get('desMedioContacto').clearValidators();
+
+        switch (id) {
+            case 3:
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]);
+                break;
+            case 2:
+            case 1:
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
+                break;
+            default:
+                this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators([Validators.required]);
+                break;
+        }
+        this.verticalStepperForm.get('step6').get('desMedioContacto').updateValueAndValidity({ emitEvent: false });
+    }
+
+    public setFieldRequiredContacto(set: boolean) {
+        this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'));
+        this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[0-9]+$'));
+        /*
+        if(set){
+            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('claseMedioContactoId').setValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators(Validators.required);
+        }
+        else{
+            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').removeValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('claseMedioContactoId').removeValidators(Validators.required);
+            this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.required);
+        }
+        */
+    }
+
+    public touchedFormContacto() {
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsUntouched();
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsUntouched();
+        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsUntouched();
+
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
+        this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
+
+        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsPristine();
+        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsPristine();
     }
 
     validacionTipoDocumento(evento: number) {
@@ -427,23 +603,27 @@ export class ContribuyenteComponent implements OnInit {
             console.log(evento);
             this.verticalStepperForm.get('step1').get('numDocIdentidad').setValidators(Validators.pattern('^[0-9]{8}$'));
             this.msgTipoDocumento = 'El DNI debe ser de 8 digitos y solo números';
+            this.verticalStepperForm.get('step1').get('razonSocial').disable();
         }
         if (evento == 2) {
             console.log(evento);
             this.verticalStepperForm.get('step1').get('numDocIdentidad').setValidators(Validators.pattern('^[0-9]{11}$'));
             this.msgTipoDocumento = 'El RUC debe ser de 11 digitos y solo números';
             this.verticalStepperForm.get('step1').get('razonSocial').setValidators(Validators.required);
+            this.verticalStepperForm.get('step1').get('razonSocial').enable();
 
         }
         if (evento == 3) {
             console.log(evento);
             this.verticalStepperForm.get('step1').get('numDocIdentidad').setValidators(Validators.pattern('^[a-zA-Z0-9]{20}'));
             this.msgTipoDocumento = 'El PASAPORTE debe ser de 20 digitos';
+            this.verticalStepperForm.get('step1').get('razonSocial').disable();
         }
         if (evento == 4) {
             console.log(evento);
             this.verticalStepperForm.get('step1').get('numDocIdentidad').setValidators(Validators.pattern('^[a-zA-Z0-9]{20}'));
             this.msgTipoDocumento = 'El Carnet de Extranjería debe ser de 20 digitos';
+            this.verticalStepperForm.get('step1').get('razonSocial').disable();
         }
 
     }
@@ -456,35 +636,37 @@ export class ContribuyenteComponent implements OnInit {
             // this.msgTipoDocumento = 'El DNI debe ser de 8 digitos y solo números';
             //  this.verticalStepperForm.get('step2').disabled;
             // this.verticalStepperForm.get('step2').get('tipoCondicionConcursalId').setValue({ value: '', disabled: true });
-            // this.verticalStepperForm.get('step2').get('tipoDocumentoId').disable;
-            // this.verticalStepperForm.get('step2').get('numeroDocumento').disable;
-            // this.verticalStepperForm.get('step2').get('fechaDocumento').disable;
-            // this.verticalStepperForm.get('step2').get('fechaVigenciaInicial').disable;
-            // this.verticalStepperForm.get('step2').get('fechaVigenciaFinal').disable;
-          // this.verticalStepperForm.get('step2').get('importePension').setValidators([{  disabled: true }]);
-            // this.verticalStepperForm.get('step2').get('estadoId').disable;
-            // this.verticalStepperForm.get('step2').get('numeroLicencia').disable;
-            // this.verticalStepperForm.get('step2').get('numeroExpediente').disable;
-            // this.verticalStepperForm.get('step2').get('fechaExpediente').disable;
-            // tipoCondicionConcursalId: ['0'],
-            // tipoDocumentoId: [''],
-            // // nombreDocumento: ['', [Validators.required]],
-            // desDocumento: [''],
-            // numeroDocumento:[''],
-            // fechaDocumento: [''],
-            // fechaVigenciaInicial:[''],
-            // fechaVigenciaFinal: [''],
-            // importePension: [''],
-            // estadoId: [''],
-            // numeroLicencia: [''],
-            // numeroExpediente: [''],
-            // fechaExpediente: [''],
+            this.verticalStepperForm.get('step2').get('tipoDocumentoId').disable();
+            this.verticalStepperForm.get('step2').get('numeroDocumento').disable();
+            this.verticalStepperForm.get('step2').get('fechaDocumento').disable();
+            this.verticalStepperForm.get('step2').get('fechaVigenciaInicial').disable();
+            this.verticalStepperForm.get('step2').get('fechaVigenciaFinal').disable();
+            this.verticalStepperForm.get('step2').get('importePension').disable();
+            this.verticalStepperForm.get('step2').get('estadoId').disable();
+            this.verticalStepperForm.get('step2').get('numeroLicencia').disable();
+            this.verticalStepperForm.get('step2').get('numeroExpediente').disable();
+            this.verticalStepperForm.get('step2').get('fechaExpediente').disable();
+            this.verticalStepperForm.get('step2').get('desDocumento').disable();
+
         }
         else {
             console.log(evento);
-            this.verticalStepperForm.get('step2').get('tipoCondicionConcursalId').setValidators(Validators.required);
-            this.verticalStepperForm.get('step2').get('tipoDocumentoId').setValidators(Validators.required);
-            this.verticalStepperForm.get('step2').get('numeroDocumento').setValidators(Validators.required);
+
+            this.verticalStepperForm.get('step2').get('tipoDocumentoId').enable();
+            this.verticalStepperForm.get('step2').get('numeroDocumento').enable();
+            this.verticalStepperForm.get('step2').get('fechaDocumento').enable();
+            this.verticalStepperForm.get('step2').get('fechaVigenciaInicial').enable();
+            this.verticalStepperForm.get('step2').get('fechaVigenciaFinal').enable();
+            this.verticalStepperForm.get('step2').get('importePension').enable();
+            this.verticalStepperForm.get('step2').get('estadoId').enable();
+            this.verticalStepperForm.get('step2').get('numeroLicencia').enable();
+            this.verticalStepperForm.get('step2').get('numeroExpediente').enable();
+            this.verticalStepperForm.get('step2').get('fechaExpediente').enable();
+            this.verticalStepperForm.get('step2').get('tipoCondicionConcursalId').enable();
+            this.verticalStepperForm.get('step2').get('tipoDocumentoId').enable();
+            this.verticalStepperForm.get('step2').get('desDocumento').enable();
+
+
 
         }
     }
@@ -492,20 +674,20 @@ export class ContribuyenteComponent implements OnInit {
 
 
     // Adicionar Contacto
-    addContacto() {
-        if (this.ModoEdicionContacto == 0) {
-            this.classContacto.push(this.verticalStepperForm.get('step6').value);
-            //this.verticalStepperForm.get('step6').reset();
-            this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
-            console.log(this.classContacto);
-        }
-        else {
-            this.classContacto.splice(this.indexClassContacto, 1);
-            this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
-            this.indexClassContacto = -1;
-            this.ModoEdicionContacto = 0;
-        }
-    }
+    // addContacto() {
+    //     if (this.ModoEdicionContacto == 0) {
+    //         this.classContacto.push(this.verticalStepperForm.get('step6').value);
+    //         //this.verticalStepperForm.get('step6').reset();
+    //         this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
+    //         console.log(this.classContacto);
+    //     }
+    //     else {
+    //         this.classContacto.splice(this.indexClassContacto, 1);
+    //         this.classContacto.splice(this.indexClassContacto, 0, this.verticalStepperForm.get('step6').value);
+    //         this.indexClassContacto = -1;
+    //         this.ModoEdicionContacto = 0;
+    //     }
+    // }
 
 
     //       <input hidden="true"  name="descripcionDepartamentoId"
@@ -515,14 +697,14 @@ export class ContribuyenteComponent implements OnInit {
     //   <input  hidden="true" name="descripcionDistritoId" id="descripcionDistritoId"
     //       formControlName="descripcionDistritoId">
 
-        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
-        this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
-        this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
+    // this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
+    // this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
+    // this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
 
-        this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
-        this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsPristine();
-        this.verticalStepperForm.get('step6').get('desMedioContacto').markAsPristine();
-    }
+    // this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
+    // this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsPristine();
+    // this.verticalStepperForm.get('step6').get('desMedioContacto').markAsPristine();
+    // }
 
     getUbigeo(distritoId: number) {
 
@@ -552,31 +734,27 @@ export class ContribuyenteComponent implements OnInit {
     }
 
 
-
-
-
-
     getTipoMedioContactoId(e) {
         let tipoMedioContactoId = e;//e.value =="" ? 0 : e.value;
         console.log(tipoMedioContactoId);
-        if(tipoMedioContactoId>0 || tipoMedioContactoId!=null){
+        if (tipoMedioContactoId > 0 || tipoMedioContactoId != null) {
             let data = this.maestrosTipoContacto.find(o => o.maestroId === tipoMedioContactoId);
-                console.log(tipoMedioContactoId);
-                let indice = tipoMedioContactoId - 1;
-                console.log(indice);
-                console.log(data);
-                console.log('llego oj');
-                // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
+            console.log(tipoMedioContactoId);
+            let indice = tipoMedioContactoId - 1;
+            console.log(indice);
+            console.log(data);
+            console.log('llego oj');
+            // this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue =  this.maestrosTipoMedioContacto[indice].descripcion;
 
-                this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(data.descripcion);
-                this.setValidatorDetalleStep6(tipoMedioContactoId);
+            this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(data.descripcion);
+            this.setValidatorDetalleStep6(tipoMedioContactoId);
         }
     }
 
 
     getClaseMedioContactoId(e) {
-        let tipoClaseMedioContactoId = e.value =="" ? 0 : e.value;
-        if(tipoClaseMedioContactoId>0 || tipoClaseMedioContactoId!=null){
+        let tipoClaseMedioContactoId = e.value == "" ? 0 : e.value;
+        if (tipoClaseMedioContactoId > 0 || tipoClaseMedioContactoId != null) {
             let data = this.maestrosTipoMedioContacto.find(o => o.maestroId === tipoClaseMedioContactoId);
             console.log(tipoClaseMedioContactoId);
             let indice = tipoClaseMedioContactoId - 1;
@@ -609,57 +787,222 @@ export class ContribuyenteComponent implements OnInit {
     }
     //Adicionar Domicilio
     addDomicilio() {
-        if (this.ModoEdicionDomicilio == 0) {
-            this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
-            //this.verticalStepperForm.get('step4').reset();
+        if (this.verticalStepperForm.get("step4").valid) {
+            if (this.ModoEdicionDomicilio == 0) {
+
+                let depa = this.verticalStepperForm.get('step4').get('departamentoId').value;
+                let pro = this.verticalStepperForm.get('step4').get('provinciaId').value;
+                let dis = this.verticalStepperForm.get('step4').get('distritoId').value;
+
+                let depaNombre = this.ubigeo.filter((filter => filter.departamentoId == depa));
+                let proNombre = this.ubigeoProvincia.filter((filter => filter.provinciaId == pro));
+                let disNombre = this.ubigeoDistrito.filter((item => item.distritoId == dis));
+                console.log(depa);
+                console.log(pro);
+                console.log(dis);
+
+                console.log(depaNombre);
+                console.log(proNombre);
+                console.log(disNombre);
 
 
-            this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
-            this.verticalStepperForm.get('step4').get('provinciaId').setValue("");
-            this.verticalStepperForm.get('step4').get('distritoId').setValue("");
-            this.verticalStepperForm.get('step4').get('tipoPredioId').setValue("");
-            this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue("");
-            this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue("");
-            this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue("");
-            //this.verticalStepperForm.get('step4').get('viaDepartamentoId').setValue("");
-            //this.verticalStepperForm.get('step4').get('viaProvinciaId').setValue("");
-            //this.verticalStepperForm.get('step4').get('viaDistritoId').setValue("");
-            this.verticalStepperForm.get('step4').get('fechaRegistro').setValue("");
-            this.verticalStepperForm.get('step4').get('tipoViaId').setValue("");
-            this.verticalStepperForm.get('step4').get('desTipoPredioId').setValue("");
-            this.verticalStepperForm.get('step4').get('viaId').setValue("");
-            this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
-            this.verticalStepperForm.get('step4').get('numero1').setValue("");
-            this.verticalStepperForm.get('step4').get('letra1').setValue("");
-            this.verticalStepperForm.get('step4').get('numero2').setValue("");
-            this.verticalStepperForm.get('step4').get('letra2').setValue("");
-            this.verticalStepperForm.get('step4').get('manzana').setValue("");
-            this.verticalStepperForm.get('step4').get('lote').setValue("");
-            this.verticalStepperForm.get('step4').get('zonaUrbanaId').setValue("");
-            this.verticalStepperForm.get('step4').get('nombreZonaUrbana').setValue("");
-            this.verticalStepperForm.get('step4').get('subZonaUrbanaId').setValue("");
-            this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').setValue("");
-            this.verticalStepperForm.get('step4').get('edificacionId').setValue("");
-            this.verticalStepperForm.get('step4').get('nombreEdificacion').setValue("");
-            this.verticalStepperForm.get('step4').get('subLote').setValue("");
-            this.verticalStepperForm.get('step4').get('ingreso').setValue("");
-            this.verticalStepperForm.get('step4').get('piso').setValue("");
-            this.verticalStepperForm.get('step4').get('kilometro').setValue("");
-            this.verticalStepperForm.get('step4').get('latitud').setValue("");
-            this.verticalStepperForm.get('step4').get('longitud').setValue("");
-            this.verticalStepperForm.get('step4').get('kilometro').setValue("");
-            // this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue("");
-            //this.verticalStepperForm.get('step4').get('terminalCreacion').setValue("");
-            console.log(this.classDomicilio);
+
+                this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue(depaNombre[0].descripcion);
+                this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue(proNombre[0].descripcion);
+                this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue(disNombre[0].descripcion);
+                this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
+
+                console.log(this.classDomicilio);
+            }
+            else {
+                this.classDomicilio.splice(this.indexClassDomicilio, 1);
+                this.classDomicilio.splice(this.indexClassDomicilio, 0, this.verticalStepperForm.get('step4').value);
+                this.indexClassDomicilio = -1;
+                this.ModoEdicionDomicilio = 0;
+                //this.verticalStepperForm.get('step4').reset();
+            }
+                  this.resetFormDomicilio();
         }
-        else {
-            this.classDomicilio.splice(this.indexClassDomicilio, 1);
-            this.classDomicilio.splice(this.indexClassDomicilio, 0, this.verticalStepperForm.get('step4').value);
-            this.indexClassDomicilio = -1;
-            this.ModoEdicionDomicilio = 0;
-            this.verticalStepperForm.get('step4').reset();
-        }
+
+
+
+
     }
+    resetFormDomicilio(){
+    //    this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
+    //     this.verticalStepperForm.get('step4').get('provinciaId').setValue("");
+    //     this.verticalStepperForm.get('step4').get('distritoId').setValue("");
+        this.verticalStepperForm.get('step4').get('tipoPredioId').setValue("");
+        this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue("");
+        this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue("");
+        this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue("");
+
+        this.verticalStepperForm.get('step4').get('tipoViaId').setValue("");
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').setValue("");
+        this.verticalStepperForm.get('step4').get('viaId').setValue("");
+        this.verticalStepperForm.get('step4').get('departamentoId').setValue("");
+        this.verticalStepperForm.get('step4').get('numero1').setValue("");
+        this.verticalStepperForm.get('step4').get('letra1').setValue("");
+        this.verticalStepperForm.get('step4').get('numero2').setValue("");
+        this.verticalStepperForm.get('step4').get('letra2').setValue("");
+        this.verticalStepperForm.get('step4').get('manzana').setValue("");
+        this.verticalStepperForm.get('step4').get('lote').setValue("");
+        this.verticalStepperForm.get('step4').get('zonaUrbanaId').setValue("");
+        this.verticalStepperForm.get('step4').get('nombreZonaUrbana').setValue("");
+        this.verticalStepperForm.get('step4').get('subZonaUrbanaId').setValue("");
+        this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').setValue("");
+        this.verticalStepperForm.get('step4').get('edificacionId').setValue("");
+        this.verticalStepperForm.get('step4').get('nombreEdificacion').setValue("");
+        this.verticalStepperForm.get('step4').get('subLote').setValue("");
+        this.verticalStepperForm.get('step4').get('ingreso').setValue("");
+        this.verticalStepperForm.get('step4').get('piso').setValue("");
+        this.verticalStepperForm.get('step4').get('kilometro').setValue("");
+        this.verticalStepperForm.get('step4').get('latitud').setValue("");
+        this.verticalStepperForm.get('step4').get('longitud').setValue("");
+        this.verticalStepperForm.get('step4').get('kilometro').setValue("");
+        this.verticalStepperForm.get('step4').get('referencia').setValue("");
+        this.verticalStepperForm.get('step4').get('edificacionId').setValue("");
+
+
+
+
+
+
+        // this.touchedFormDomicilioAdicional();
+
+
+        // this.verticalStepperForm.get('step4').get('departamentoId').updateValueAndValidity({ emitEvent: false });
+        // this.verticalStepperForm.get('step4').get('provinciaId').updateValueAndValidity({ emitEvent: false });
+        // this.verticalStepperForm.get('step4').get('distritoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('tipoPredioId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('descripcionProvinciaId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('descripcionDistritoId').updateValueAndValidity({ emitEvent: false });
+
+        this.verticalStepperForm.get('step4').get('tipoViaId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('viaId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('departamentoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('numero1').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('letra1').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('numero2').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('letra2').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('manzana').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('lote').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('zonaUrbanaId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('nombreZonaUrbana').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('subZonaUrbanaId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('edificacionId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('nombreEdificacion').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('subLote').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('ingreso').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('piso').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('kilometro').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('latitud').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('longitud').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('kilometro').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('referencia').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step4').get('edificacionId').updateValueAndValidity({ emitEvent: false });
+
+
+
+    }
+
+
+
+
+    touchedFormDomicilioAdicional() {
+        // this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsUntouched();
+        // this.verticalStepperForm.get('step6').get('claseMedioContactoId').markAsUntouched();
+        // this.verticalStepperForm.get('step6').get('desMedioContacto').markAsUntouched();
+
+        // this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setErrors(null);
+        // this.verticalStepperForm.get('step6').get('claseMedioContactoId').setErrors(null);
+        // this.verticalStepperForm.get('step6').get('desMedioContacto').setErrors(null);
+
+        // this.verticalStepperForm.get('step6').get('tipoMedioContactoId').markAsPristine();
+
+        this.verticalStepperForm.get('step4').get('tipoViaId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('viaId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('departamentoId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('numero1').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('letra1').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('numero2').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('letra2').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('manzana').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('lote').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('zonaUrbanaId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('nombreZonaUrbana').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('subZonaUrbanaId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('edificacionId').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('nombreEdificacion').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('subLote').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('ingreso').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('piso').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('kilometro').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('latitud').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('longitud').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('kilometro').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('referencia').markAsUntouched();
+        this.verticalStepperForm.get('step4').get('edificacionId').markAsUntouched();
+
+        this.verticalStepperForm.get('step4').get('tipoViaId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('viaId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('departamentoId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('numero1').setErrors(null);
+        this.verticalStepperForm.get('step4').get('letra1').setErrors(null);
+        this.verticalStepperForm.get('step4').get('numero2').setErrors(null);
+        this.verticalStepperForm.get('step4').get('letra2').setErrors(null);
+        this.verticalStepperForm.get('step4').get('manzana').setErrors(null);
+        this.verticalStepperForm.get('step4').get('lote').setErrors(null);
+        this.verticalStepperForm.get('step4').get('zonaUrbanaId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('nombreZonaUrbana').setErrors(null);
+        this.verticalStepperForm.get('step4').get('subZonaUrbanaId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').setErrors(null);
+        this.verticalStepperForm.get('step4').get('edificacionId').setErrors(null);
+        this.verticalStepperForm.get('step4').get('nombreEdificacion').setErrors(null);
+        this.verticalStepperForm.get('step4').get('subLote').setErrors(null);
+        this.verticalStepperForm.get('step4').get('ingreso').setErrors(null);
+        this.verticalStepperForm.get('step4').get('piso').setErrors(null);
+        this.verticalStepperForm.get('step4').get('kilometro').setErrors(null);
+        this.verticalStepperForm.get('step4').get('latitud').setErrors(null);
+        this.verticalStepperForm.get('step4').get('longitud').setErrors(null);
+        this.verticalStepperForm.get('step4').get('kilometro').setErrors(null);
+        this.verticalStepperForm.get('step4').get('referencia').setErrors(null);
+        this.verticalStepperForm.get('step4').get('edificacionId').setErrors(null);
+
+        this.verticalStepperForm.get('step4').get('tipoViaId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('desTipoPredioId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('viaId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('departamentoId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('numero1').markAsPristine();
+        this.verticalStepperForm.get('step4').get('letra1').markAsPristine();
+        this.verticalStepperForm.get('step4').get('numero2').markAsPristine();
+        this.verticalStepperForm.get('step4').get('letra2').markAsPristine();
+        this.verticalStepperForm.get('step4').get('manzana').markAsPristine();
+        this.verticalStepperForm.get('step4').get('lote').markAsPristine();
+        this.verticalStepperForm.get('step4').get('zonaUrbanaId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('nombreZonaUrbana').markAsPristine();
+        this.verticalStepperForm.get('step4').get('subZonaUrbanaId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('nombreSubZonaUrbana').markAsPristine();
+        this.verticalStepperForm.get('step4').get('edificacionId').markAsPristine();
+        this.verticalStepperForm.get('step4').get('nombreEdificacion').markAsPristine();
+        this.verticalStepperForm.get('step4').get('subLote').markAsPristine();
+        this.verticalStepperForm.get('step4').get('ingreso').markAsPristine();
+        this.verticalStepperForm.get('step4').get('piso').markAsPristine();
+        this.verticalStepperForm.get('step4').get('kilometro').markAsPristine();
+        this.verticalStepperForm.get('step4').get('latitud').markAsPristine();
+        this.verticalStepperForm.get('step4').get('longitud').markAsPristine();
+        this.verticalStepperForm.get('step4').get('kilometro').markAsPristine();
+        this.verticalStepperForm.get('step4').get('referencia').markAsPristine();
+        this.verticalStepperForm.get('step4').get('edificacionId').markAsPristine();
+
+    }
+
     //Eliminar Domicilio
     eliminarDomicilio(lessonIndex: number) {
         console.log(lessonIndex);
@@ -697,6 +1040,8 @@ export class ContribuyenteComponent implements OnInit {
         this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
         this.maestroGenerico(15, 'maestrosTipoContacto', 0);
         this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
+        this.maestroGenerico(24, 'maestrosTipoDocSustento', 0);
+        this.maestroGenerico(25, 'maestrosFormaPresentacion', 0);
 
     }
 
@@ -725,6 +1070,8 @@ export class ContribuyenteComponent implements OnInit {
 
                     this.ubigeo = res;
                     console.log(this.ubigeo);
+
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -749,6 +1096,7 @@ export class ContribuyenteComponent implements OnInit {
 
                     this.ubigeoProvincia = res;
                     console.log(this.ubigeoProvincia);
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -760,9 +1108,6 @@ export class ContribuyenteComponent implements OnInit {
     }
 
     maestroDistrito(provinciaId: any) {
-
-
-
 
         this.valorDepartamento = 15; //this.step1.get('step1')  //this.verticalStepperForm.get('step1').['departamentoId'].value;
         console.log(this.valorDepartamento + 'DEPARTAMENTO(1)');
@@ -811,7 +1156,6 @@ export class ContribuyenteComponent implements OnInit {
                 }
             });
     }
-
 
 
     listarVias(tipoViaId: any) {
@@ -1027,7 +1371,7 @@ export class ContribuyenteComponent implements OnInit {
     }
     public contribuyenteCrear(): void {
         this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
-        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.classContacto, this.classDomicilio).subscribe({
+        this.service.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.classContacto, this.classDomicilio, this.classDocSustento).subscribe({
             next: (contribuyente) => {
                 console.log(contribuyente);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
@@ -1321,6 +1665,16 @@ export class ContribuyenteComponent implements OnInit {
                         console.log(matriz);
                         this.maestrosTipoMedioContacto = res;
                     }
+                    if (matriz == 'maestrosTipoDocSustento') {
+                        console.log(matriz);
+                        this.maestrosTipoDocSustento = res;
+                    }
+                    if (matriz == 'maestrosFormaPresentacion') {
+                        console.log(matriz);
+                        this.maestrosFormaPresentacion = res;
+                    }
+
+
 
                 },
                 error: (error) => {
