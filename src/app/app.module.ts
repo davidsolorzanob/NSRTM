@@ -14,6 +14,9 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { HandleErrorsInterceptor } from 'app/app.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr'; 
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -45,7 +48,21 @@ const routerConfig: ExtraOptions = {
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
 
-        MatAutocompleteModule
+        MatAutocompleteModule,
+
+        HttpClientModule,
+
+        ToastrModule.forRoot({
+            timeOut: 10000,
+            positionClass: "toast-bottom-left",
+        }),
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HandleErrorsInterceptor,
+            multi: true,
+        },
     ],
     bootstrap   : [
         AppComponent
