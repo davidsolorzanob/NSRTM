@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
+//import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Injectable({
     providedIn: "root",
 })
 export class HandleErrorService{
-    constructor(private toaster: ToastrService){}
+    constructor(){} //private toaster: ToastrService
 
     public handleError(err: HttpErrorResponse){
         let errorMessage: string;
         if(err.error instanceof ErrorEvent){
-            errorMessage = `Un error encontrado: ${err.error.message}`; 
+            errorMessage = `Un error encontrado: ${err.error.message}`;
         }
         else{
             errorMessage = `Something went Wrong`;
@@ -46,7 +46,8 @@ export class HandleErrorService{
         }
         //console.error(errorMessage);
         if(errorMessage){
-            this.toaster.error(errorMessage);
-        }        
+           // this.toaster.error(errorMessage);
+           console.error(errorMessage);
+        }
     }
 }
