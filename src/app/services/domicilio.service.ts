@@ -22,13 +22,13 @@ export class DomicilioService {
 
     }
 
-    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Domicilio> {
+    public obtener(municipalidadId: number ,contribuyenteId: number , numeroDJ: number): Observable<Domicilio> {
 
-        return this.http.get<Domicilio>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+        return this.http.get<Domicilio>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId + '&numeroDJ=' + numeroDJ);
     }
-    public listar(municipalidadId: number ,contribuyenteId: number): Observable<Domicilio[]> {
+    public listar(municipalidadId: number ,contribuyenteId: number  , numeroDJ: number): Observable<Domicilio[]> {
 
-        return this.http.get<Domicilio[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+        return this.http.get<Domicilio[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId + '&numeroDJ=' + numeroDJ);
     }
 
 

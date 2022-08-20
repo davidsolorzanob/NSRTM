@@ -382,7 +382,7 @@
 
 
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field>
+                                <mat-form-field class="w-full">
                                     <mat-label>Fecha de Documento</mat-label>
                                     <input matInput [matDatepicker]="fechaDocumento" formControlName="fechaDocumento">
                                     <mat-hint>DD/MM/YYYY</mat-hint>
@@ -401,7 +401,7 @@
 
                             <div class="col-span-4 sm:col-span-2">
 
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Fecha de Vigencia Inicio</mat-label>
                                     <input matInput [matDatepicker]="fechaVigenciaInicial"
                                         formControlName="fechaVigenciaInicial" >
@@ -412,7 +412,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-form-field class="w-full">
                                     <mat-label>Fecha final </mat-label>
                                     <input matInput [matDatepicker]="fechaVigenciaFinal"
                                         formControlName="fechaVigenciaFinal">
@@ -460,7 +460,7 @@
                             </div>
 
                             <div class="col-span-2 sm:col-span-2">
-                                <mat-form-field appearance="fill">
+                                <mat-form-field class="w-full">
                                     <mat-label>Fecha de Expediente</mat-label>
                                     <input matInput [matDatepicker]="fechaExpediente" formControlName="fechaExpediente">
                                     <mat-hint>DD/MM/YYYY</mat-hint>
@@ -1228,118 +1228,72 @@
                         <!--  Inicio de la grilla  -->
 
 
+
+
+
+                        <!--  Inicio de la grilla  -->
+
+
+
+
+
                         <div>
-
-                            <div class="alert alert-info" *ngIf="listaDomiciliosAdicional?.length==0">
-                                No hay domicilios adicionales del contribuyente en el sistema.
-                            </div>
-
                             <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-                                <ng-container *ngIf="listaDomiciliosAdicional?.length>0">
-                                    <div class="grid">
-                                        <!-- Header -->
-                                        <div
-                                            class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
-                                            <div></div>
-                                            <div class="hidden md:block">
-                                                Id
-                                            </div>
-                                            <div class="hidden md:block">
-                                                Region
-                                            </div>
-                                            <div class="hidden md:block">
-                                                Provincia
-                                            </div>
-                                            <div class="hidden md:block">
-                                                Distrito
-                                            </div>
-                                            <div class="hidden md:block">
-                                                Tipo Predio
-                                            </div>
-
-                                            <div>Manzana</div>
-                                            <div>
-                                                Lote
-                                            </div>
-
-                                            <div class="hidden sm:block">Editar</div>
-
-                                            <div class="hidden sm:block">Eliminar</div>
-                                        </div>
-                                        <!-- Rows -->
-
-                                        <ng-container *ngFor="let domicilio of listaDomiciliosAdicional; let i = index">
-                                            <div
-                                                class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                <table class="mat-table">
+                                    <thead>
+                                        <th>Id</th>
+                                        <th>Región</th>
+                                        <th>Provincia</th>
+                                        <th>Distrito</th>
+                                        <th>Tipo Predio</th>
+                                        <th>Manzana</th>
+                                        <th>Lote</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="classDomicilio.length==0">
+                                            <td colspan="6" class="text-center">No se registraron domicilios</td>
+                                        </tr>
+                                        <tr *ngFor="let domicilio of classDomicilio; let i = index">
+                                            <td class="text-center">{{i+1}}</td>
+                                            <td class="text-center">{{domicilio.descripcionDepartamentoId}}</td>
+                                            <td class="text-center">{{domicilio.descripcionProvinciaId}}</td>
+                                            <td class="text-center">{{domicilio.descripcionDistritoId}}</td>
+                                            <td class="text-center">{{domicilio.desTipoPredioId}}</td>
+                                            <td class="text-center">{{domicilio.manzana}}</td>
+                                            <td class="text-center">{{domicilio.lote}}</td>
 
 
-                                                <!-- Descripcion -->
-                                                <div class="truncate">
+                                            <td class="mat-cell text-center">
+                                                <button mat-icon-button color="primary" matTooltip="Editar"
+                                                    (click)="editDomicilio(i,domicilio)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td class="mat-cell text-center">
+                                                <button mat-icon-button color="primary" matTooltip="Eliminar"
+                                                    (click)="eliminarDomicilio(domicilio)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                                                </div>
-                                                <!-- ID -->
-                                                <div class="hidden md:block truncate">
-                                                    {{i+1}}
-                                                </div>
-
-                                                <!-- Departamento -->
-                                                <div class="hidden md:block truncate">
-                                                    {{domicilio.desDepartamento}}
-                                                </div>
-
-
-                                                <!-- Provincia -->
-                                                <div class="hidden md:block truncate">
-                                                    {{domicilio.desProvincia}}
-                                                </div>
-
-                                                <!-- Distrito -->
-                                                <div class="hidden md:block truncate">
-                                                    {{domicilio.desDistrito}}
-                                                </div>
-
-
-                                                <!-- Tipo Predio -->
-                                                <div class="hidden md:block truncate">
-                                                    {{domicilio.desTipoPredio}}
-                                                </div>
-
-
-                                                <!-- Tipo de Medio -->
-                                                <div class="hidden md:block truncate">
-                                                    {{domicilio.manzana}}
-                                                </div>
-
-                                                <!--   Clase de medio -->
-                                                <div class="truncate">
-                                                    {{domicilio.lote}}
-                                                </div>
-
-
-                                                <!-- Editar button -->
-                                                <div>
-                                                    <button class="btn btn-danger btn-sm"
-                                                        (click)="editDomicilio(i,domicilio)">
-                                                        <mat-icon>edit</mat-icon>
-                                                    </button>
-                                                </div>
-
-                                                <!-- Eliminar button -->
-                                                <div>
-                                                    <button class="btn btn-danger btn-sm"
-                                                        (click)="eliminarDomicilio(domicilio)">
-                                                        <mat-icon>delete</mat-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </ng-container>
-                                    </div>
-                                </ng-container>
                             </div>
 
 
                         </div>
+
+
+
+
+
+
+                        <!-- fin del inicio de la grilla  -->
+
+
 
 
                         <!-- fin del inicio de la grilla  -->
@@ -2114,6 +2068,159 @@
                 </mat-step>
 
 
+
+                <mat-step [formGroupName]="'step7'" #verticalStepperStep6 class="background-color: coral;">
+                    <ng-template matStepLabel>Documentos de Sustento</ng-template>
+                    <p class="font-medium">
+                        Registro de documentos de sustento
+                    </p>
+
+                    <div class="flex flex-col gt-xs:flex-row">
+
+
+                        <div class="grid grid-cols-12 gap-10 w-full mt-2">
+                            <div class="col-span-4 sm:col-span-4">
+                                <table class="mat-table">
+                                    <thead>
+                                        <th>N°</th>
+                                        <th>Documento</th>
+                                        <th>Seleccionar</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="classContacto.length==0">
+                                            <td colspan="3" class="text-center"></td>
+                                        </tr>
+                                        <tr *ngFor="let maestro of maestrosTipoDocSustento; let i = index">
+                                            <td class="text-center">{{i+1}}</td>
+                                            <td class="text-center">{{maestro.descripcion}}</td>
+                                            <td class="text-center">
+                                                <mat-radio-button [color]="'primary'" [value]="maestro.maestroId"
+                                                    name="tipoDocSustentoId" (change)="changeTipoDocSustento($event)"
+                                                    [checked]="maestro.maestroId == valueControlStep('step7','tipoDocSustentoId')">
+                                                </mat-radio-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <mat-error *ngIf="errorValidator('step7','tipoDocSustentoId','required')">Seleccione
+                                        el Documento</mat-error>
+                                </div>
+                            </div>
+
+                            <!-- Tipo de Contacto -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="w-full">
+                                    <mat-label>N° documento</mat-label>
+                                    <input matInput name="nroDocSustento" id="nroDocSustento"
+                                        formControlName="nroDocSustento">
+                                    <mat-error *ngIf="errorValidator('step7','nroDocSustento','required')"> Campo
+                                        obligatorio </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Medio de Contacto -->
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Folios</mat-label>
+                                    <input matInput name="folios" id="folios" formControlName="folios">
+                                    <mat-error *ngIf="errorValidator('step7','folios','required')"> Campo obligatorio
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-2">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Forma presentación</mat-label>
+                                    <mat-select name="tipoFormaPresentacionId" id="tipoFormaPresentacionId"
+                                        formControlName="tipoFormaPresentacionId">
+                                        <mat-option value=""> -- Seleccionar --</mat-option>
+                                        <mat-option *ngFor="let mae of  maestrosFormaPresentacion"
+                                            [value]="mae.maestroId">
+                                            {{mae.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorValidator('step6','desMedioContacto','required')"> Campo
+                                        obligatorio </mat-error>
+                                </mat-form-field>
+                                <input hidden="true" value="" name="desTipoDocSustento" id="desTipoDocSustento"
+                                    formControlName="desTipoDocSustento">
+                                <input hidden="true" value="" name="desTipoFormaPresentacion"
+                                    id="desTipoFormaPresentacion" formControlName="desTipoFormaPresentacion">
+                                <input hidden="true" value="2025" name="usuarioModificacion" id="usuarioModificacion"
+                                    formControlName="usuarioModificacion">
+                                <input hidden="true" value="192.168.1.1" name="terminalModificacion" id="terminalModificacion"
+                                    formControlName="terminalModificacion">
+                                <input hidden="true" value="1" name="municipalidadId" id="municipalidadId"
+                                    formControlName="municipalidadId">
+                            </div>
+
+                            <div class="col-span-1 sm:col-span-1">
+
+                                <br>
+                                <br>
+                                <button class="float-left" mat-flat-button [color]="'primary'"
+                                    (click)="addDocSustento()">
+                                    <mat-icon [svgIcon]="'heroicons_outline:plus'">Agregar</mat-icon>
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div>
+                            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                                <table class="mat-table">
+                                    <thead>
+                                        <th>N°</th>
+                                        <th>Documento</th>
+                                        <th>N° documento</th>
+                                        <th>Folios</th>
+                                        <th>Tipo presentación</th>
+                                        <th>Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="classDocSustento.length==0">
+                                            <td colspan="6" class="text-center"></td>
+                                        </tr>
+                                        <tr *ngFor="let doc of classDocSustento; let i = index">
+                                            <td class="text-center">{{i+1}}</td>
+                                            <td class="text-center">{{doc.desTipoDocSustento}}</td>
+                                            <td class="text-center">{{doc.nroDocSustento}}</td>
+                                            <td class="text-center">{{doc.folios}}</td>
+                                            <td class="text-center">{{doc.desTipoFormaPresentacion}}</td>
+                                            <td>
+                                                <button mat-icon-button color="primary" matTooltip="Editar"
+                                                    (click)="editarDocSustento(i, doc)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button color="primary" matTooltip="Eliminar"
+                                                    (click)="eliminarDocSustento(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext
+                                [disabled]="classDocSustento.length==0">
+                                Siguiente
+                            </button>
+                        </div>
+                        <!-- [disabled]="verticalStepperStep6.stepControl.pristine || verticalStepperStep6.stepControl.invalid" -->
+
+                    </div>
+                </mat-step>
 
 
 

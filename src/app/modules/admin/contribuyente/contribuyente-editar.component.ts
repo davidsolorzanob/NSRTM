@@ -8,6 +8,7 @@ import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { CondicionService } from 'app/services/condicion.service';
 import { DomicilioService } from 'app/services/domicilio.service';
 import { ContactoService } from 'app/services/contacto.service';
+import { DocumentoService } from 'app/services/documento.service';
 import { MaestroService } from 'app/services/maestro.service';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { via } from 'app/models/via.models';
@@ -84,11 +85,15 @@ export class ContribuyenteEditarComponent implements OnInit {
     maestroDocumentoTipo: Maestro[] = [];
     maestrosTipoContacto: Maestro[] = [];
     maestrosTipoMedioContacto: Maestro[] = [];
+    maestrosFormaPresentacion: Maestro[] = [];
+    maestrosTipoDocSustento: Maestro[] = [];
 
     //classContacto: Contacto[] = [];
 
     classDomicilio: Domicilio[] = [];
-    classDocSustento:DocSustento[]=[];
+    classDocSustento: DocSustento[] = [];
+    classContacto: Contacto[] = [];
+
 
     ubigeo: UbigeoDepartamento[] = [];
     ubigeoProvincia: ubigeoProvincia[] = [];
@@ -112,15 +117,18 @@ export class ContribuyenteEditarComponent implements OnInit {
     listaDomicilios: Domicilio[] = [];
     listaDomiciliosAdicional: Domicilio[] = [];
     objectDomicilio: Object;
+    listaDocumentos: DocSustento[] = [];
 
     error: any;
     idGeneral: number;
+    numberDJ: number;
 
     //contadores de listas temporales
 
     countClassContacto: number = 0;
     indexClassContacto: number = -1;
     indexClassDomicilio: number = -1;
+    indexClassDocSustento: number = -1;
 
     ModoEdicionContacto = 0;
     ModoEdicionDomicilio = 0;
@@ -140,7 +148,9 @@ export class ContribuyenteEditarComponent implements OnInit {
         private serviceUbigeo: UbigeoService,
         private serviceVia: ViaService,
         private serviceRelacionado: RelacionadoService,
-        private serviceContacto: ContactoService
+        private serviceContacto: ContactoService,
+        private DocumentoService: DocumentoService,
+
     ) { }
 
 
@@ -148,8 +158,11 @@ export class ContribuyenteEditarComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
+        const dj = this.activatedRoute.snapshot.paramMap.get('dj');
         console.log('id', id);
+        console.log('dj', dj);
         this.idGeneral = (Number)(this.activatedRoute.snapshot.paramMap.get('id'));
+        this.numberDJ = (Number)(this.activatedRoute.snapshot.paramMap.get('dj'));
 
 
         this.maestroGenerico(3, 'maestrosMedio', 0);
@@ -174,6 +187,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.maestroGenerico(18, 'maestroDocumentoTipo', 1);
         this.maestroGenerico(15, 'maestrosTipoContacto', 0);
         this.maestroGenerico(16, 'maestrosTipoMedioContacto', 0);
+        this.maestroGenerico(24, 'maestrosTipoDocSustento', 0);
+        this.maestroGenerico(25, 'maestrosFormaPresentacion', 0);
         this.maestroDepartamento();
         //console.log(this.verticalStepperForm.get('step3').get('departamentoId').value);
 
@@ -444,11 +459,28 @@ export class ContribuyenteEditarComponent implements OnInit {
                 // desTipoMedioContacto: ['', [Validators.required]],
                 //desClaseMedioContacto: ['', [Validators.required]],
                 desMedioContacto: ['', [Validators.required]],
+            }),
+
+            step7: this.formBuilder.group({
+                //contribuyenteNumero: null,
+                docSustentoId: null,
+                tipoDocSustentoId: ['', [Validators.required]],
+                nroDocSustento: ['', [Validators.required]],
+                tipoFormaPresentacionId: ['', [Validators.required]],
+                folios: ['', [Validators.required]],
+                desTipoDocSustento: [''],
+                desTipoFormaPresentacion: [''],
+                activo: 1,
+                usuarioModificacion: this.userEdicion,
+                terminalModificacion: this.terminal,
+                municipalidadId: this.muniId
             })
 
         });
 
     }
+
+
 
 
 
@@ -462,6 +494,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
         this.cargarContribuyenteRelacionado(this.idGeneral);
         this.cargarContactoContribuyente(this.idGeneral);
+        this.cargarDocumentoSustentoContribuyente(this.idGeneral);
 
 
         // this.maestroGenerico(3, 'maestrosMedio', 0);
@@ -492,6 +525,69 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
+    }
+
+    public errorValidator = (step: string, controlName: string, errorName: string) => {
+        return this.verticalStepperForm.get(step).get(controlName).hasError(errorName);
+    }
+
+    // Adicionar Sustento
+    addDocSustento() {
+        //this.verticalStepperForm.get('step6').updateValueAndValidity();
+        //this.touchedFormContacto();
+        if (this.verticalStepperForm.get("step7").valid) {
+            let idTipoDoc = this.valueControlStep("step7", "tipoDocSustentoId");
+            let idForma = this.valueControlStep("step7", "tipoFormaPresentacionId");
+            let dataTipoDoc = this.maestrosTipoDocSustento.find(o => o.maestroId === idTipoDoc);
+            let dataForma = this.maestrosFormaPresentacion.find(o => o.maestroId === idForma);
+
+            this.verticalStepperForm.get('step7').get('desTipoDocSustento').setValue(dataTipoDoc.descripcion);
+            this.verticalStepperForm.get('step7').get('desTipoFormaPresentacion').setValue(dataForma.descripcion);
+
+            if (this.indexClassDocSustento == -1) {
+                this.classDocSustento.push(this.verticalStepperForm.get('step7').value);
+            }
+            else {
+                this.classDocSustento.splice(this.indexClassDocSustento, 1);
+                this.classDocSustento.splice(this.indexClassDocSustento, 0, this.verticalStepperForm.get('step7').value);
+                this.indexClassDocSustento = -1;
+            }
+            this.resetFormDocSustento();
+        }
+    }
+
+    public valueControlStep = (step: string, controlName: string) => {
+        return this.verticalStepperForm.get(step).get(controlName).value;
+    }
+    // Editar Sustento
+    editarDocSustento(lessonIndex: number, sustento: DocSustento) {
+        this.verticalStepperForm.get('step7').patchValue(sustento);
+        this.indexClassDocSustento = lessonIndex;
+        //this.setValidatorDetalleStep6(sustento.tipoMedioContactoId);
+    }
+
+    eliminarDocSustento(lessonIndex: number) {
+        this.classDocSustento.splice(lessonIndex, 1);
+    }
+
+
+    public resetFormDocSustento() {
+        //this.setValidatorDetalleStep6(0);
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').setValue("");
+        this.verticalStepperForm.get('step7').get('nroDocSustento').setValue("");
+        this.verticalStepperForm.get('step7').get('tipoFormaPresentacionId').setValue("");
+        this.verticalStepperForm.get('step7').get('folios').setValue("");
+
+        //this.touchedFormContacto();
+
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('nroDocSustento').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('tipoFormaPresentacionId').updateValueAndValidity({ emitEvent: false });
+        this.verticalStepperForm.get('step7').get('folios').updateValueAndValidity({ emitEvent: false });
+    }
+
+    public changeTipoDocSustento(e) {
+        this.verticalStepperForm.get('step7').get('tipoDocSustentoId').setValue(e.value);
     }
 
 
@@ -742,6 +838,14 @@ export class ContribuyenteEditarComponent implements OnInit {
                         console.log(matriz);
                         this.maestrosTipoMedioContacto = res;
                     }
+                    if (matriz == 'maestrosTipoDocSustento') {
+                        console.log(matriz);
+                        this.maestrosTipoDocSustento = res;
+                    }
+                    if (matriz == 'maestrosFormaPresentacion') {
+                        console.log(matriz);
+                        this.maestrosFormaPresentacion = res;
+                    }
 
 
                 },
@@ -756,7 +860,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     cargarContribuyente(id: any) {
-        this.contribuyenteService.obtener(1, id)
+        this.contribuyenteService.obtener(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Contribuyente) => {
                     console.log('DATOS CONTRIBUYENTE', res);
@@ -774,7 +878,12 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     cargarContribuyenteCondicion(id: any) {
-        this.CondicionService.obtener(1, id)
+
+        console.log(this.numberDJ);
+        console.log(id);
+        console.log('valoresssss');
+
+        this.CondicionService.obtener(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Condicion) => {
                     console.log('DATOS DE CONDICION CONTRIBUYENTE', res);
@@ -792,7 +901,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     cargarContribuyenteDomicilio(id: any) {
-        this.DomicilioService.listar(1, id)
+        this.DomicilioService.listar(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Domicilio[]) => {
                     console.log('DATOS DOMICILIO DE CONTRIBUYENTE', res);
@@ -848,46 +957,23 @@ export class ContribuyenteEditarComponent implements OnInit {
     cargarContribuyenteDomicilioAdicional(id: any) {
 
 
-        this.DomicilioService.listar(1, id)
+        this.DomicilioService.listar(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Domicilio[]) => {
                     console.log('DATOS DOMICILIO ADICIONAL DEL CONTRIBUYENTE', res);
                     // this.verticalStepperForm.patchValue(res);
 
-                    this.listaDomiciliosAdicional = [];
-                    this.listaDomiciliosAdicional = res;
+                    this.classDomicilio = [];
+                    this.classDomicilio = res;
                     console.log(res);
-                    this.listaDomiciliosAdicional = this.listaDomiciliosAdicional.filter((item => item.tipoPredioId !== 1));
+                    this.classDomicilio = this.classDomicilio.filter((item => item.tipoPredioId !== 1));
 
 
                     console.log(this.listaDomiciliosAdicional);
                     console.log('domiciliooooooo adicional <> fiscal');
 
                     console.log(this.listaDomiciliosAdicional);
-                    //   console.log('domiciliooooooooooooooooooooooooooooooo  fiscal');
-                    //this.verticalStepperForm.get('step3').patchValue(this.listaDomiciliosAdicional[0]);
-                    //     this.valorDepartamento = this.verticalStepperForm.get('step3').get('departamentoId').value;
-                    //     console.log(this.valorDepartamento);
-                    //     this.maestroProvincia(this.valorDepartamento);
-                    //     this.valorProvincia = this.verticalStepperForm.get('step3').get('provinciaId').value;
-                    //     this.maestroDistrito(this.valorProvincia);
 
-                    //     this.valorTipoVia = this.verticalStepperForm.get('step3').get('tipoViaId').value;
-                    //     this.listarVias(this.valorTipoVia);
-
-                    //     this.valorTipoZonaUrbana = this.verticalStepperForm.get('step3').get('tipoZonaUrbanaId').value;
-                    //     this.listarNombreZonaUrbana(this.valorTipoZonaUrbana);
-
-                    //     this.valorTipoSubZonaUrbana = this.verticalStepperForm.get('step3').get('subZonaUrbanaId').value;
-                    //     this.listarSubZonaUrbana(this.valorTipoSubZonaUrbana);
-
-                    //     this.valorTipoEdificacion = this.verticalStepperForm.get('step3').get('tipoEdificacionId').value;
-                    //     this.listarEdificaciones(this.valorTipoEdificacion);
-
-                    //this.verticalStepperForm.patchValue(res);
-                    //this.listarNombreZonaUrbana(0);
-
-                    //this.listarNombreZonaUrbana2(0);
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -901,7 +987,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
     cargarContribuyenteRelacionado(id: any) {
-        this.serviceRelacionado.obtener(1, id)
+        this.serviceRelacionado.obtener(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Relacionado) => {
                     console.log('DATOS DEl  RELACIONADO DEL CONTRIBUYENTE', res);
@@ -925,8 +1011,25 @@ export class ContribuyenteEditarComponent implements OnInit {
     }
 
 
+    cargarDocumentoSustentoContribuyente(id: any) {
+        this.DocumentoService.listar(1, id, this.numberDJ)
+            .subscribe({
+                next: (res: DocSustento[]) => {
+                    console.log('DATOS DEL DOCUMENTO SUSTENTO', res);
+                    this.classDocSustento = res;
+                },
+                error: (error) => {
+                    console.error('Error: ' + error);
+                },
+                complete: () => {
+                    console.log('completo la recuperación deL documento sustento del Contribuyente');
+                }
+            });
+    }
+
+    // documento sustento
     cargarContactoContribuyente(id: any) {
-        this.serviceContacto.listar(1, id)
+        this.serviceContacto.listar(1, id, this.numberDJ)
             .subscribe({
                 next: (res: Contacto[]) => {
                     console.log('DATOS DEL CONTACTO DEL CONTRIBUYENTE', res);
@@ -940,6 +1043,7 @@ export class ContribuyenteEditarComponent implements OnInit {
                 }
             });
     }
+
 
     // this.serviceUbigeo.todos().subscribe(p => this.ubigeo = p);
     maestroDepartamento() {
@@ -1263,10 +1367,11 @@ export class ContribuyenteEditarComponent implements OnInit {
         console.log(this.listaContacto);
         console.log('LISTA DE CONTACTO');
 
-
+        this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
         this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.listaDomicilios, this.classDocSustento).subscribe({
             next: (contribuyente) => {
-                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto);
+
+                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.listaDomicilios, this.classDocSustento);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
                 Swal.fire('Edición:', `Contribuyente actualizado con éxito`, 'success');
                 this.router.navigate(['../contribuyente/list']);
@@ -1308,9 +1413,6 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue(this.maestrosTipoContacto[indice].descripcion);
 
     }
-
-
-
 
     // public contribuyenteCrear(): void {
     //     this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
@@ -1401,7 +1503,7 @@ export class ContribuyenteEditarComponent implements OnInit {
 
         //this.verticalStepperForm.get('step6').get('desTipoMedioContacto').setValue("");
 
-       // this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue("");
+        // this.verticalStepperForm.get('step6').get('desClaseMedioContacto').setValue("");
 
         //this.verticalStepperForm.get('step6').get('desMedioContacto').setValue("");
         console.log(this.listaContacto);

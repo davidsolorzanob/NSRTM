@@ -10,7 +10,7 @@ export const contribuyenteRoutes: Route[] = [
     { path: 'contribuyente', component: ContribuyenteComponent},
     { path: 'list', component:ListComponent },
     { path: 'contribuyente/:id', component: ContribuyenteComponent},
-    { path: 'contribuyente-editar/:id', component: ContribuyenteEditarComponent},
+    { path: 'contribuyente-editar/:id/:dj', component: ContribuyenteEditarComponent},
     { path: 'contribuyente-ver', component: ContribuyenteVerComponent},
 
 

@@ -43,9 +43,9 @@ export class CondicionService {
     public filtrarPorNombre(contribuyente: Condicion): Observable<Condicion[]> {
         return this.http.post<Condicion[]>(this.baseEndpoint + '/filtrar/', contribuyente, { headers: this.cabeceras });
     }
-    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Condicion> {
+    public obtener(municipalidadId: number ,contribuyenteId: number, numeroDJ:number): Observable<Condicion> {
 
-        return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+        return this.http.get<Condicion>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId  + '&numeroDJ=' + numeroDJ);
     }
 
 

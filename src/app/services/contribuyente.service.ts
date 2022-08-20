@@ -84,20 +84,28 @@ console.log('llego todoooooooo');
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
 
+
+
+
+    public obtenerHistorico(municipalidadId: number ,contribuyenteId: number): Observable<DocSustento> {
+        return this.http.get<DocSustento>(this.baseEndpoint + '/listaContribuyenteHistorico/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    }
+
     public editar(contribuyente: Contribuyente): Observable<Contribuyente> {
         return this.http.put<Contribuyente>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
 
-    public eliminar(municipalidadId: number , contribuyenteNumero: number): Observable<void> {  //cuando se elimina no devuelve nada
+    public eliminar(municipalidadId: number , contribuyenteNumero: number, numeroDJ: number): Observable<void> {  //cuando se elimina no devuelve nada
         var params = {
             "municipalidadId": municipalidadId,
-            "contribuyenteNumero": contribuyenteNumero
+            "contribuyenteNumero": contribuyenteNumero,
+            "numeroDJ": numeroDJ
         };
-        return this.http.post<void>(this.baseEndpoint + '/eliminar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteNumero,  {headers: this.cabeceras});
+        return this.http.post<void>(this.baseEndpoint + '/eliminar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteNumero + '&numeroDJ=' + numeroDJ,  {headers: this.cabeceras});
     }
 
-    public obtener(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
-        return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    public obtener(municipalidadId: number ,contribuyenteId: number, numeroDJ: number): Observable<Contribuyente> {
+        return this.http.get<Contribuyente>(this.baseEndpoint + '/obtener/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId + '&numeroDJ=' + numeroDJ);
     }
 
     public filtrarPorNombre(contribuyente: Contribuyente): Observable<Contribuyente[]> {

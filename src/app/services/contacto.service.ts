@@ -24,7 +24,7 @@ export class ContactoService {
         return this.http.post<any>(this.baseEndpoint + '/listaContribuyentePaginado', params, { headers: this.cabeceras });
     }
 
-    public listar(municipalidadId: number, contribuyenteId: number): Observable<Contacto[]> {
-        return this.http.get<Contacto[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    public listar(municipalidadId: number, contribuyenteId: number, numeroDJ: number): Observable<Contacto[]> {
+        return this.http.get<Contacto[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId + '&numeroDJ=' + numeroDJ);
     }
 }
