@@ -314,70 +314,40 @@ export class ContribuyenteEditarComponent implements OnInit {
             step4: this.formBuilder.group({
                 municipalidadId: this.muniId,
                 domContribuyenteDomicilioNumero: null,
-                departamentoId: ['', [Validators.required]],
-                provinciaId: ['', [Validators.required]],
-                distritoId: ['', [Validators.required]],
-                tipoPredioId: ['', [Validators.required]],
+                departamentoId: [''],
+                provinciaId: [''],
+                distritoId: [''],
+                tipoPredioId: [''],
                 descripcionDepartamentoId: [''],
                 descripcionProvinciaId: [''],
                 descripcionDistritoId: [''],
                 viaDepartamentoId: ['15'],
                 viaProvinciaId: ['135'],
                 viaDistritoId: ['121'],
-                fechaRegistro: [''],
-                tipoViaId: ['', [Validators.required]],
+                //fechaRegistro: ['', [Validators.required]],
+                tipoViaId: [''],
                 desTipoPredioId: '',
-                // viaId: [''],
-                // numero1: [''],
-                // letra1: [''],
-                // numero2: [''],
-                // letra2: [''],
-                // manzana: [''],
-                // lote: [''],
-                // subLote: [''],
-                // zonaUrbanaId: ['', [Validators.required]],
-                // //nombreZonaUrbana: ['', [Validators.required]],
-                // subZonaUrbanaId: ['', [Validators.required]],
-                // //nombreSubZonaUrbana: ['', [Validators.required]],
-                // edificacionId: ['', [Validators.required]],
-                // //nombreEdificacion: ['', [Validators.required]],
-                // tipoInteriorId: ['', [Validators.required]],
-                // ingreso: [''],
-                // piso: [''],
-                // kilometro: [''],
-                // referencia: [''],
-                // latitud: [''],
-                // longitud: [''],
-
-
-
-
-                viaId: ['', [Validators.required]],  // buscador SELECT 2
-                numero1: ['', [Validators.maxLength(5)]],
-                letra1: ['', [Validators.maxLength(5)]],
-                numero2: ['', [Validators.maxLength(6)]],
-                letra2: ['', [Validators.maxLength(6)]],
-                manzana: ['', [Validators.maxLength(6)]],
-                lote: ['', [Validators.maxLength(6)]],
-                subLote: ['', [Validators.maxLength(6)]],
-                zonaUrbanaId: [''], // buscador SELECT 2
-                //nombreZonaUrbana: [''],
-                subZonaUrbanaId: [''],  // buscador SELECT 2
-                //nombreSubZonaUrbana: [''],
-                edificacionId: [''],  // buscador SELECT 2
-                //nombreEdificacion: [''],
-                tipoInteriorId: [''], // buscador SELECT 2
-                ingreso: ['', [Validators.maxLength(6)]],
-                piso: ['', [Validators.maxLength(6)]],
-                kilometro: ['', [Validators.maxLength(6)]],
-                referencia: ['', [Validators.maxLength(100)]],
+                viaId: [''],
+                numero1: ['', [Validators.maxLength(5), Validators.pattern("^[0-9]*$")]],
+                letra1: [''],
+                numero2: ['', [Validators.maxLength(5), Validators.pattern("^[0-9]*$")]],
+                letra2: [''],
+                manzana: [''],
+                lote: [''],
+                subLote: [''],
+                zonaUrbanaId: [''],
+                nombreZonaUrbana: [''],
+                subZonaUrbanaId: [''],
+                nombreSubZonaUrbana: [''],
+                edificacionId: [''],
+                nombreEdificacion: [''],
+                tipoInteriorId: [''],
+                ingreso: [''],
+                piso: [''],
+                kilometro: [''],
+                referencia: [''],
                 latitud: [''],
                 longitud: [''],
-
-
-
-
-
                 usuarioModificacion: this.userEdicion,
                 terminalModificacion: this.terminal,
                 tipoZonaUrbanaId: ['', [Validators.required]],
@@ -973,6 +943,30 @@ export class ContribuyenteEditarComponent implements OnInit {
                     console.log('domiciliooooooo adicional <> fiscal');
 
                     console.log(this.listaDomiciliosAdicional);
+
+
+
+                    // let depa = this.verticalStepperForm.get('step4').get('departamentoId').value;
+                    // let pro = this.verticalStepperForm.get('step4').get('provinciaId').value;
+                    // let dis = this.verticalStepperForm.get('step4').get('distritoId').value;
+
+                    // let depaNombre = this.ubigeo.filter((filter => filter.departamentoId == depa));
+                    // let proNombre = this.ubigeoProvincia.filter((filter => filter.provinciaId == pro));
+                    // let disNombre = this.ubigeoDistrito.filter((item => item.distritoId == dis));
+                    // console.log(depa);
+                    // console.log(pro);
+                    // console.log(dis);
+
+                    // console.log(depaNombre);
+                    // console.log(proNombre);
+                    // console.log(disNombre);
+
+
+
+                    // this.verticalStepperForm.get('step4').get('descripcionDepartamentoId').setValue(depaNombre[0].descripcion);
+                    // this.verticalStepperForm.get('step4').get('descripcionProvinciaId').setValue(proNombre[0].descripcion);
+                    // this.verticalStepperForm.get('step4').get('descripcionDistritoId').setValue(disNombre[0].descripcion);
+                    // this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
 
                 },
                 error: (error) => {
