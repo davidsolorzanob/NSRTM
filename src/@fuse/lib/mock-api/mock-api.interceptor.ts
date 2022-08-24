@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { delay, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, delay, Observable, of, switchMap, throwError } from 'rxjs';
 import { FUSE_MOCK_API_DEFAULT_DELAY } from '@fuse/lib/mock-api/mock-api.constants';
 import { FuseMockApiService } from '@fuse/lib/mock-api/mock-api.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
     providedIn: 'root'
@@ -36,9 +37,28 @@ export class FuseMockApiInterceptor implements HttpInterceptor
         // Pass through if the request handler does not exist
         if ( !handler )
         {
-            return next.handle(request);
+            console.log("sin handler");
+            console.log(handler);
+            console.log(request);
+            return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
+                    let data = {};
+                    data = {
+                    reason: error && error.error && error.error.reason ? error.error.reason : '',
+                    status: error.status
+                    };
+                    //this.errorDialogService.openDialog(data);
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Intente en otro momento',
+                        text: 'Por favor, comunicarse con el administrador del sistema',
+                        footer: 'Error al invocar el servicio'
+                    });
+                    return throwError(error);
+                }));
         }
 
+        console.log(handler);
         // Set the intercepted request on the handler
         handler.request = request;
 
@@ -46,6 +66,8 @@ export class FuseMockApiInterceptor implements HttpInterceptor
         handler.urlParams = urlParams;
 
         // Subscribe to the response function observable
+        //return next.handle()
+        
         return handler.response.pipe(
             delay(handler.delay ?? this._defaultDelay ?? 0),
             switchMap((response) => {
@@ -92,5 +114,6 @@ export class FuseMockApiInterceptor implements HttpInterceptor
 
                 return throwError(response);
             }));
+        
     }
 }
