@@ -28,52 +28,30 @@ export class FuseMockApiInterceptor implements HttpInterceptor
      */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
-        // Try to get the request handler
         const {
                   handler,
                   urlParams
               } = this._fuseMockApiService.findHandler(request.method.toUpperCase(), request.url);
 
-        // Pass through if the request handler does not exist
         if ( !handler )
         {
-            console.log("sin handler");
-            console.log(handler);
-            console.log(request);
             return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
                     let data = {};
                     data = {
-                    reason: error && error.error && error.error.reason ? error.error.reason : '',
-                    status: error.status
+                        reason: error && error.error && error.error.reason ? error.error.reason : '',
+                        status: error.status
                     };
-                    //this.errorDialogService.openDialog(data);
-                    console.log(error);
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Intente en otro momento',
-                        text: 'Por favor, comunicarse con el administrador del sistema',
-                        footer: 'Error al invocar el servicio'
-                    });
+                    this.showErrorMessage(error);
                     return throwError(error);
                 }));
         }
 
-        console.log(handler);
-        // Set the intercepted request on the handler
         handler.request = request;
-
-        // Set the url params on the handler
         handler.urlParams = urlParams;
 
-        // Subscribe to the response function observable
-        //return next.handle()
-        
         return handler.response.pipe(
             delay(handler.delay ?? this._defaultDelay ?? 0),
             switchMap((response) => {
-
-                // If there is no response data,
-                // throw an error response
                 if ( !response )
                 {
                     response = new HttpErrorResponse({
@@ -85,14 +63,11 @@ export class FuseMockApiInterceptor implements HttpInterceptor
                     return throwError(response);
                 }
 
-                // Parse the response data
                 const data = {
                     status: response[0],
                     body  : response[1]
                 };
 
-                // If the status code is in between 200 and 300,
-                // return a success response
                 if ( data.status >= 200 && data.status < 300 )
                 {
                     response = new HttpResponse({
@@ -104,8 +79,6 @@ export class FuseMockApiInterceptor implements HttpInterceptor
                     return of(response);
                 }
 
-                // For other status codes,
-                // throw an error response
                 response = new HttpErrorResponse({
                     error     : data.body.error,
                     status    : data.status,
@@ -114,6 +87,46 @@ export class FuseMockApiInterceptor implements HttpInterceptor
 
                 return throwError(response);
             }));
-        
+    }
+
+    showErrorMessage(err: HttpErrorResponse) {
+        let errorMessage: string;
+        console.log(err);
+
+        switch(err.status){
+            case 400:
+            errorMessage = "Bad Request.";
+            break;
+            case 401:
+            errorMessage = "You need to log in to do this action.";
+            break;
+            case 403:
+            errorMessage = "You don't have permission to access the requested resource.";
+            break;
+            case 404:
+            errorMessage = "The requested resource does not exist.";
+            break;
+            case 412:
+            errorMessage = "Precondition Failed.";
+            break;
+            case 500:
+            errorMessage = "Internal Server Error.";
+            break;
+            case 503:
+            errorMessage = "The requested service is not available.";
+            break;
+            case 422:
+            errorMessage = "Validation Error!";
+            break;
+            default:
+            errorMessage = "Something went wrong!";
+        }
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Intente en otro momento',
+            text: 'Por favor, comunicarse con el administrador del sistema',
+            footer: 'Error al invocar el servicio: <span class="text-red-600"> ' + err.status.toString() + '</span>'
+        });
     }
 }
