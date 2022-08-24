@@ -37,6 +37,24 @@ import moment from 'moment';
                 grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
             }
         }
+        .demo-table {
+            width: 100%;
+          }
+
+          .mat-row .mat-cell {
+            border-bottom: 1px solid transparent;
+            border-top: 1px solid transparent;
+            cursor: pointer;
+          }
+
+          .mat-row:hover .mat-cell {
+            border-color: currentColor;
+            background-color: #ef4444;
+          }
+
+          .demo-row-is-clicked {
+            font-weight: bold;
+          }
     `
     ],
     encapsulation: ViewEncapsulation.None,
@@ -65,20 +83,21 @@ export class ListComponent implements OnInit {
         'acciones'];
     dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
-    classHisotico: DocSustento[]  = [];
+    classHistorico: Contribuyente[]  = [];
 
-    activities$: Observable<Activity[]>;
+    classHistorico$: Observable<Contribuyente[]>;
 
     @ViewChild('supportNgForm') supportNgForm: NgForm;
     public formBusquedaContribuyente!: FormGroup;
     public formControl: FormControl;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+    selectedContact: Contribuyente;
 
     constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe, public _activityService: ActivitiesService) { }
 
     ngOnInit() {
 
-        this.activities$ = this._activityService.activities;
+       // this.activities$ = this._activityService.activities;
 
         this.formBusquedaContribuyente = this.formBuilder.group({
             municipalidadId: ['1'],
@@ -95,6 +114,7 @@ export class ListComponent implements OnInit {
         this.removeValidators();
         this.buscarContribuyentes();
         this.dataSource.paginator = this.paginator;
+
     }
 
     public submit() {
@@ -327,15 +347,15 @@ export class ListComponent implements OnInit {
 
 
 
-    getHistorico() {
-        this.service.obtenerHistorico(1,2)
+    getHistorico(contribuyente: Contribuyente) {
+        this.service.obtenerHistorico(1,contribuyente.contribuyenteNumero)
         .subscribe({
             next: (res: any) => {
                 console.log('Obtener historico', res);
                 // matriz = res;
 
-                this.classHisotico = res;
-                console.log(this.classHisotico);
+                this.classHistorico = res;
+                console.log(this.classHistorico);
 
             },
             error: (error) => {
@@ -347,7 +367,7 @@ export class ListComponent implements OnInit {
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
@@ -357,40 +377,50 @@ export class ListComponent implements OnInit {
      * @param current
      * @param compare
      */
-    isSameDay(current: string, compare: string): boolean {
-        return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
-    }
+     isSameDay(current: string, compare: string): boolean
+     {
+         return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
+     }
 
-    /**
-     * Get the relative format of the given date
-     *
-     * @param date
-     */
-    getRelativeFormat(date: string): string {
-        const today = moment().startOf('day');
-        const yesterday = moment().subtract(1, 'day').startOf('day');
+     /**
+      * Get the relative format of the given date
+      *
+      * @param date
+      */
+     getRelativeFormat(date: string): string
+     {
+         const today = moment().startOf('day');
+         const yesterday = moment().subtract(1, 'day').startOf('day');
 
-        // Is today?
-        if (moment(date, moment.ISO_8601).isSame(today, 'day')) {
-            return 'Today';
-        }
+         // Is today?
+         if ( moment(date, moment.ISO_8601).isSame(today, 'day') )
+         {
+             return 'Today';
+         }
 
-        // Is yesterday?
-        if (moment(date, moment.ISO_8601).isSame(yesterday, 'day')) {
-            return 'Yesterday';
-        }
+         // Is yesterday?
+         if ( moment(date, moment.ISO_8601).isSame(yesterday, 'day') )
+         {
+             return 'Yesterday';
+         }
 
-        return moment(date, moment.ISO_8601).fromNow();
-    }
+         return moment(date, moment.ISO_8601).fromNow();
+     }
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
+     /**
+      * Track by function for ngFor loops
+      *
+      * @param index
+      * @param item
+      */
+     trackByFn(index: number, item: any): any
+     {
+         return item.id || index;
+     }
 
 }
+
+
+
+
+

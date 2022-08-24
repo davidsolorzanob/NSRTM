@@ -4,6 +4,12 @@ export class Domicilio {
     departamento: string;
     provincia: string;
     distrito: string;
+    descripcionDepartamentoId: string;
+    descripcionProvinciaId: string;
+    descripcionDistritoId:string;
+    desDepartamento: string;
+    desProvincia: string;
+    desDistrito:string;
     departamentoId: number;
     provinciaId: number;
     distritoId: number;
@@ -34,6 +40,7 @@ export class Domicilio {
     tipoZonaUrbanaId: number;
     edificacionId: number;
     tipoEdificacionId: number;
+    desTipoPredio: string;
 
     // Auditoria
     usuarioCreacion: number;

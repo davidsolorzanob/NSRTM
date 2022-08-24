@@ -31,7 +31,7 @@ export class ViaService {
         };
         return this.http.post<any>(this.baseEndpoint + '/via/listar/', params, { headers: this.cabeceras });
         //console.log(departamentoId  , ' - ' , provinciaId  , ' - ' ,distritoId  , ' - ' ,tipoVia  , ' - ' ,  );
-        return this.http.get<via>(this.baseEndpoint + '/via/listar/?idDepartamento=' + departamentoId + '&idProvincia=' + provinciaId + '&idDistrito=' + distritoId + '&tipo=' + tipoVia);
+     // return this.http.get<via>(this.baseEndpoint + '/via/listar/?idDepartamento=' + departamentoId + '&idProvincia=' + provinciaId + '&idDistrito=' + distritoId + '&tipo=' + tipoVia);
     }
 
 

@@ -1,5 +1,6 @@
 <div class="flex flex-col flex-auto min-w-0">
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
             <div class="flex flex-wrap items-center font-medium">
@@ -24,94 +25,104 @@
 
         <div class="max-w-12xl">
 
-            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden" [formGroup]="formBusquedaContribuyente" #supportNgForm="ngForm" (ngSubmit)="submit()">
+            <form class="flex flex-col mt-4 px-8 pt-4 bg-card shadow rounded overflow-hidden"
+                [formGroup]="formBusquedaContribuyente" #supportNgForm="ngForm" (ngSubmit)="submit()">
                 <p class="text-lg font-medium pb-3">Búsqueda de Contribuyentes</p>
                 <mat-divider class="mb-2"></mat-divider>
 
                 <div class="flex flex-col gt-xs:flex-row mt-4">
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-3">
                         <!-- Search -->
-                        <mat-radio-button [color]="'primary'" [value]="'2'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <mat-radio-button [color]="'primary'" [value]="'2'" name="tipoFiltro"
+                            (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
 
-                                <mat-form-field class="fuse-mat-dense min-w-64">
-                                    <mat-label>Código Contribuyente :</mat-label>
-                                    <input matInput [autocomplete]="'off'" name="contribuyenteNumero" id="contribuyenteNumero" formControlName="contribuyenteNumero">
-                                    <mat-error>Campo obligatorio</mat-error>
-                                </mat-form-field>
+                            <mat-form-field class="fuse-mat-dense min-w-64">
+                                <mat-label>Código Contribuyente :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="contribuyenteNumero"
+                                    id="contribuyenteNumero" formControlName="contribuyenteNumero">
+                                <mat-error>Campo obligatorio</mat-error>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-4">
-                        <mat-radio-button [color]="'primary'" [value]="'3'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <mat-radio-button [color]="'primary'" [value]="'3'" name="tipoFiltro"
+                            (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
-                                <mat-form-field class="fuse-mat-dense min-w-64">
-                                    <mat-label>Tipo de documento :</mat-label>
-                                    <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
-                                        <mat-option value="">Seleccionar</mat-option>
-                                        <mat-option [value]="'1'">DNI</mat-option>
-                                        <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
-                                        <mat-option [value]="'3'">Pasaporte</mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="f.docIdentidadId.hasError('required')" >Campo obligatorio</mat-error>
-                                </mat-form-field>
+                            <mat-form-field class="fuse-mat-dense min-w-64">
+                                <mat-label>Tipo de documento :</mat-label>
+                                <mat-select name="docIdentidadId" id="docIdentidadId" formControlName="docIdentidadId">
+                                    <mat-option value="">Seleccionar</mat-option>
+                                    <mat-option [value]="'1'">DNI</mat-option>
+                                    <mat-option [value]="'2'">Carnet de Extranjería</mat-option>
+                                    <mat-option [value]="'3'">Pasaporte</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="f.docIdentidadId.hasError('required')">Campo obligatorio</mat-error>
+                            </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label>Número documento :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad" formControlName="numDocIdentidad">
+                                <input matInput [autocomplete]="'off'" name="numDocIdentidad" id="numDocIdentidad"
+                                    formControlName="numDocIdentidad">
                                 <mat-error *ngIf="f.numDocIdentidad.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-6">
-                        <mat-radio-button [color]="'primary'" [value]="'4'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <mat-radio-button [color]="'primary'" [value]="'4'" name="tipoFiltro"
+                            (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
-                                <mat-form-field class="fuse-mat-dense min-w-64">
-                                    <mat-label>Apellido Paterno :</mat-label>
-                                    <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno" formControlName="apellidoPaterno">
-                                    <mat-error *ngIf="f.apellidoPaterno.hasError('required')">Campo obligatorio</mat-error>
-                                </mat-form-field>
+                            <mat-form-field class="fuse-mat-dense min-w-64">
+                                <mat-label>Apellido Paterno :</mat-label>
+                                <input matInput [autocomplete]="'off'" name="apellidoPaterno" id="apellidoPaterno"
+                                    formControlName="apellidoPaterno">
+                                <mat-error *ngIf="f.apellidoPaterno.hasError('required')">Campo obligatorio</mat-error>
+                            </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label style="padding-right: 20;">Apellido Materno :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno" formControlName="apellidoMaterno">
+                                <input matInput [autocomplete]="'off'" name="apellidoMaterno" id="apellidoMaterno"
+                                    formControlName="apellidoMaterno">
                                 <mat-error *ngIf="f.apellidoMaterno.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="mr-4">
                             <mat-form-field class="fuse-mat-dense min-w-64">
                                 <mat-label>Nombres :</mat-label>
-                                <input matInput [autocomplete]="'off'" name="nombres" id="nombres" formControlName="nombres">
+                                <input matInput [autocomplete]="'off'" name="nombres" id="nombres"
+                                    formControlName="nombres">
                                 <mat-error *ngIf="f.nombres.hasError('required')">Campo obligatorio</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
 
                     <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 col-span-2">
-                        <mat-radio-button class="mb-2" [color]="'primary'" [value]="'5'" name="tipoFiltro" (change)="changeFiltro($event)"></mat-radio-button>
+                        <mat-radio-button class="mb-2" [color]="'primary'" [value]="'5'" name="tipoFiltro"
+                            (change)="changeFiltro($event)"></mat-radio-button>
                         <div class="mr-4">
-                                <mat-form-field class="fuse-mat-dense min-w-64">
-                                    <mat-label>Razón social</mat-label>
-                                    <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'" formControlName="razonSocial">
-                                    <mat-error *ngIf="f.razonSocial.hasError('required')">Campo obligatorio</mat-error>
+                            <mat-form-field class="fuse-mat-dense min-w-64">
+                                <mat-label>Razón social</mat-label>
+                                <input matInput name="razonSocial" id="razonSocial" [autocomplete]="'off'"
+                                    formControlName="razonSocial">
+                                <mat-error *ngIf="f.razonSocial.hasError('required')">Campo obligatorio</mat-error>
 
-                                </mat-form-field>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div>
-                        <mat-error *ngIf="isSubmited && f.tipoFiltro.errors" class="text-sm">Seleccione el tipo de filtro</mat-error>
+                        <mat-error *ngIf="isSubmited && f.tipoFiltro.errors" class="text-sm">Seleccione el tipo de
+                            filtro</mat-error>
                     </div>
                 </div>
                 <div class="flex items-center justify-end border-t -mx-8 mt-2 px-4 py-2 bg-gray-50 dark:bg-gray-700">
                     <button mat-button [color]="'accent'" (click)="onReset()">
-                        <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active"></mat-icon>
+                        <mat-icon [svgIcon]="'heroicons_outline:x-circle'" routerLinkActive="router-link-active">
+                        </mat-icon>
                         Cancelar
                     </button>
-                    <button
-                        class="px-6 ml-3"
-                        mat-flat-button
-                        [color]="'primary'" type="submit">
+                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" type="submit">
                         <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
                         Buscar
                     </button>
@@ -122,11 +133,14 @@
                 <mat-tab-group mat-align-tabs="end" class="p-2">
                     <mat-tab label="Detalle">
                         <div class="flex justify-end">
-                            <div class="inline-flex pb-3" role="group" aria-label="Button group" class="absolute left-0 px-8">
-                                <button mat-raised-button color="default" (click)="descargarReporteExcel()" class="px-4" matTooltip="Descargar">
+                            <div class="inline-flex pb-3" role="group" aria-label="Button group"
+                                class="absolute left-0 px-8">
+                                <button mat-raised-button color="default" (click)="descargarReporteExcel()" class="px-4"
+                                    matTooltip="Descargar">
                                     <mat-icon [svgIcon]="'heroicons_outline:download'"></mat-icon>
                                 </button>
-                                <button mat-raised-button color="default" (click)="printResult()" class="px-4" matTooltip="Imprimir" >
+                                <button mat-raised-button color="default" (click)="printResult()" class="px-4"
+                                    matTooltip="Imprimir">
                                     <mat-icon [svgIcon]="'heroicons_outline:printer'"></mat-icon>
                                 </button>
                             </div>
@@ -147,75 +161,89 @@
                             <div class="flex flex-col flex-auto overflow-hidden">
                                 <div class="mat-elevation-z8">
                                     <mat-progress-bar mode="indeterminate" *ngIf="isLoadingBusqueda"></mat-progress-bar>
-                                    <table mat-table [dataSource]="dataSource" class="w-full overflow-y-visible" id="tblContribuyentes">
+                                    <table mat-table [dataSource]="dataSource"
+                                        class="w-full overflow-y-visible mat-elevation-z8 demo-table"
+                                        id="tblContribuyentes">
+
+
                                         <ng-container matColumnDef="contribuyenteNumero">
                                             <th mat-header-cell *matHeaderCellDef> Código </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.contribuyenteNumero}} </td>
+                                            <td mat-cell *matCellDef="let element"> {{element.contribuyenteNumero}}
+                                            </td>
                                         </ng-container>
+
+
                                         <ng-container matColumnDef="fechaDJ">
                                             <th mat-header-cell *matHeaderCellDef> Fecha de Declaración </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.fechaDJ | date  : 'dd/MM/yyyy'}}</td>
+                                            <td mat-cell *matCellDef="let element"> {{element.fechaDJ | date :
+                                                'dd/MM/yyyy'}}</td>
                                         </ng-container>
                                         <ng-container matColumnDef="desEstadoDj">
                                             <th mat-header-cell *matHeaderCellDef> Estado </th>
                                             <td mat-cell *matCellDef="let element"> {{element.desEstadoDj}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="apellidoPaterno">
-                                            <th mat-header-cell *matHeaderCellDef>  Nombres/Razón Social</th>
-                                            <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno + ' ' + element.apellidoMaterno + ' ' +
+                                            <th mat-header-cell *matHeaderCellDef> Nombres/Razón Social</th>
+                                            <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno + ' ' +
+                                                element.apellidoMaterno + ' ' +
                                                 element.nombres}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="descDocIdentidad">
-                                            <th mat-header-cell *matHeaderCellDef>  Tipo Documento </th>
+                                            <th mat-header-cell *matHeaderCellDef> Tipo Documento </th>
                                             <td mat-cell *matCellDef="let element"> {{element.desDocIdentidad}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="numDocIdentidad">
-                                            <th mat-header-cell *matHeaderCellDef>  N° Documento </th>
+                                            <th mat-header-cell *matHeaderCellDef> N° Documento </th>
                                             <td mat-cell *matCellDef="let element"> {{element.numDocIdentidad}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="area">
-                                            <th mat-header-cell *matHeaderCellDef>  Área usuaria </th>
+                                            <th mat-header-cell *matHeaderCellDef> Área usuaria </th>
                                             <td mat-cell *matCellDef="let element"> {{element.area}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="usuarioCreacion">
-                                            <th mat-header-cell *matHeaderCellDef>  Usuario creación </th>
+                                            <th mat-header-cell *matHeaderCellDef> Usuario creación </th>
                                             <td mat-cell *matCellDef="let element"> {{element.usuarioCreacion}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="fechaInscripcion">
-                                            <th mat-header-cell *matHeaderCellDef>  Fecha inscripción </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.fechaInscripcion | date:'dd/MM/yyyy'}} </td>
+                                            <th mat-header-cell *matHeaderCellDef> Fecha inscripción </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.fechaInscripcion |
+                                                date:'dd/MM/yyyy'}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="terminalCreacion">
-                                            <th mat-header-cell *matHeaderCellDef>  Terminal registro </th>
+                                            <th mat-header-cell *matHeaderCellDef> Terminal registro </th>
                                             <td mat-cell *matCellDef="let element"> {{element.terminalCreacion}} </td>
                                         </ng-container>
                                         <ng-container matColumnDef="acciones">
-                                            <th mat-header-cell *matHeaderCellDef>  Acciones </th>
+                                            <th mat-header-cell *matHeaderCellDef> Acciones </th>
 
                                             <td mat-cell *matCellDef="let element">
-                                                <button mat-icon-button color="primary" matTooltip="Imprimir DJ" (click)="reporteDJ(element)">
+                                                <button mat-icon-button color="primary" matTooltip="Imprimir DJ"
+                                                    (click)="reporteDJ(element)">
                                                     <mat-icon>feed</mat-icon>
                                                 </button>
                                                 <button mat-icon-button color="primary" matTooltip="Ver detalle"
-                                                [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
+                                                    [routerLink]="['../contribuyente-ver/' ,element.contribuyenteNumero]">
                                                     <mat-icon>search</mat-icon>
                                                 </button>
                                                 <button mat-icon-button color="primary" matTooltip="Editar"
-                                                [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero, element.numeroDJ]">
+                                                    [routerLink]="['../contribuyente-editar/' ,element.contribuyenteNumero, element.numeroDJ]">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
-                                                <button mat-icon-button color="primary" matTooltip="Dar de baja" (click)="eliminar(element)">
+                                                <button mat-icon-button color="primary" matTooltip="Dar de baja"
+                                                    (click)="eliminar(element)">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             </td>
                                         </ng-container>
 
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        <tr mat-row (click)="getHistorico(row)"
+                                            *matRowDef="let row; columns: displayedColumns;"></tr>
                                     </table>
 
-                                    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-                                    [pageSizeOptions]="pageSizeOptions" (page)="pageBusquedaChanged($event)" aria-label="Página">
+                                    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage"
+                                        [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                                        (page)="pageBusquedaChanged($event)" aria-label="Página">
                                     </mat-paginator>
                                 </div>
                             </div>
@@ -224,127 +252,204 @@
                     </mat-tab>
                     <mat-tab label="Histórico">
 
+                        <ng-container>
+                            <ng-container *ngIf="classHistorico.length; else noActivity">
+                                <div class="mt-8">
+                                    <ol>
+                                        <!-- Activities -->
+                                        <ng-container *ngFor="let activity of classHistorico; let i = index; let first = first; let last = last; trackBy: trackByFn">
 
+                                            <!-- Date separator -->
+                                            <ng-container>
+                                                <li class="relative flex py-7">
+                                                    <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
+                                                        {{activity.fechaInscripcion}}
+                                                    </div>
+                                                </li>
+                                            </ng-container>
 
+                                            <!-- Activity -->
+                                            <li class="relative flex py-7">
+                                                <!-- Line -->
+                                                <ng-container *ngIf="!last && isSameDay(activity.fechaInscripcion)">
+                                                    <div class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600"></div>
+                                                </ng-container>
 
-                        <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
-
-                            <!-- Main -->
-                            <div class="flex flex-col flex-auto px-6 py-10 sm:px-16 sm:pt-18 sm:pb-20">
-
-                                <!-- Activity feed -->
-                                <div class="w-full max-w-3xl">
-
-                                    <!-- Title -->
-                                    <div class="text-4xl font-extrabold tracking-tight leading-none">Relación de Historico </div>
-                                    <div class="mt-1.5 text-lg text-secondary">Historico de Contribuyente.</div>
-
-                                    <ng-container *ngIf="(activities$ | async) as activities; else loading">
-                                        <ng-container *ngIf="activities.length; else noActivity">
-                                            <div class="mt-8">
-                                                <ol>
-                                                    <!-- Activities -->
-                                                    <ng-container *ngFor="let activity of activities; let i = index; let first = first; let last = last; trackBy: trackByFn">
-
-                                                        <!-- Date separator -->
-                                                        <ng-container *ngIf="first || !isSameDay(activity.date, activities[i - 1].date)">
-                                                            <li class="relative flex py-7">
-                                                                <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
-                                                                    {{getRelativeFormat(activity.date)}}
-                                                                </div>
-                                                            </li>
-                                                        </ng-container>
-
-                                                        <!-- Activity -->
-                                                        <li class="relative flex py-7">
-                                                            <!-- Line -->
-                                                            <ng-container *ngIf="!last && isSameDay(activity.date, activities[i + 1].date)">
-                                                                <div class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600"></div>
-                                                            </ng-container>
-
-                                                            <div class="relative flex flex-auto">
-                                                                <!-- Icon -->
-                                                                <ng-container *ngIf="activity.icon && !activity.image">
-                                                                    <div class="flex shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
-                                                                        <mat-icon
-                                                                            class="icon-size-5 text-white"
-                                                                            [svgIcon]="activity.icon">
-                                                                        </mat-icon>
-                                                                    </div>
-                                                                </ng-container>
-
-                                                                <!-- Image -->
-                                                                <ng-container *ngIf="activity.image">
-                                                                    <img
-                                                                        class="shrink-0 w-10 h-10 mr-4 rounded-full overflow-hidden object-cover object-center"
-                                                                        [src]="activity.image"
-                                                                        [alt]="'Activity image'">
-                                                                </ng-container>
-
-                                                                <!-- Content -->
-                                                                <div class="flex flex-col flex-auto items-start">
-                                                                    <!-- Description -->
-                                                                    <ng-container *ngIf="activity.description">
-                                                                        <div
-                                                                            [innerHTML]="activity.description"></div>
-                                                                    </ng-container>
-                                                                    <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
-                                                                        <!-- Date -->
-                                                                        <div class="text-secondary">
-                                                                            {{activity.date | date:'MMM dd, h:mm a'}}
-                                                                        </div>
-                                                                        <!-- Linked content -->
-                                                                        <ng-container *ngIf="activity.linkedContent">
-                                                                            <div class="hidden sm:block">&bull;</div>
-                                                                            <!-- Internal link -->
-                                                                            <ng-container *ngIf="activity.useRouter">
-                                                                                <a
-                                                                                    class="cursor-pointer text-primary"
-                                                                                    [routerLink]="activity.link">
-                                                                                    {{activity.linkedContent}}
-                                                                                </a>
-                                                                            </ng-container>
-                                                                            <!-- External link -->
-                                                                            <ng-container *ngIf="!activity.useRouter">
-                                                                                <a
-                                                                                    class="cursor-pointer text-primary"
-                                                                                    [href]="activity.link"
-                                                                                    target="_blank">
-                                                                                    {{activity.linkedContent}}
-                                                                                </a>
-                                                                            </ng-container>
-                                                                        </ng-container>
-                                                                    </div>
-                                                                    <!-- Extra content -->
-                                                                    <ng-container *ngIf="activity.extraContent">
-                                                                        <div
-                                                                            class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
-                                                                            [innerHTML]="activity.extraContent"></div>
-                                                                    </ng-container>
-                                                                </div>
-                                                            </div>
-                                                        </li>
+                                                <div class="relative flex flex-auto">
+                                                    <!-- Icon -->
+                                                    <ng-container>
+                                                        <div class="flex shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
+                                                            <mat-icon>
+                                                                edit
+                                                            </mat-icon>
+                                                        </div>
                                                     </ng-container>
-                                                </ol>
-                                            </div>
+
+                                                    <!-- Image
+                                                    <ng-container *ngIf="activity.image">
+                                                        <img
+                                                            class="shrink-0 w-10 h-10 mr-4 rounded-full overflow-hidden object-cover object-center"
+                                                            [src]="activity.image"
+                                                            [alt]="'Activity image'">
+                                                    </ng-container> -->
+
+                                                    <!-- Content -->
+                                                    <div class="flex flex-col flex-auto items-start">
+                                                        <!-- Description -->
+                                                        <ng-container *ngIf="activity.description">
+                                                            <div
+                                                                [innerHTML]="activity.description"></div>
+                                                        </ng-container>
+                                                        <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
+                                                            <!-- Date -->
+                                                            <div class="text-secondary">
+                                                                {{activity.fechaInscripcion | date:'MMM dd, h:mm a'}}
+                                                            </div>
+                                                            <!-- Linked content
+                                                            <ng-container *ngIf="activity.linkedContent">
+                                                                <div class="hidden sm:block">&bull;</div>
+
+                                                                <ng-container *ngIf="activity.useRouter">
+                                                                    <a
+                                                                        class="cursor-pointer text-primary"
+                                                                        [routerLink]="activity.link">
+                                                                        {{activity.linkedContent}}
+                                                                    </a>
+                                                                </ng-container>
+
+                                                                <ng-container *ngIf="!activity.useRouter">
+                                                                    <a
+                                                                        class="cursor-pointer text-primary"
+                                                                        [href]="activity.link"
+                                                                        target="_blank">
+                                                                        {{activity.linkedContent}}
+                                                                    </a>
+                                                                </ng-container>
+                                                            </ng-container> -->
+                                                        </div>
+                                                        <!-- Extra content -->
+                                                        <ng-container>
+                                                            <div
+                                                                class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
+                                                                [innerHTML]="activity.contribuyenteNumero"></div>
+                                                                <div
+                                                                class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
+                                                                [innerHTML]="activity.contribuyenteNumero"></div>
+                                                                <div
+                                                                class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
+                                                                [innerHTML]="activity.contribuyenteNumero"></div>
+                                                                <div
+                                                                class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800"
+                                                                [innerHTML]="activity.contribuyenteNumero"></div>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </li>
                                         </ng-container>
+                                    </ol>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+
+                        <!-- Loading template -->
+                        <ng-template #loading>
+                            Loading...
+                        </ng-template>
+
+                        <!-- No Activity template -->
+                        <ng-template #noActivity>
+                            There are is activity at the moment...
+                        </ng-template>
+
+
+
+
+                          <!-- Courses -->
+            <ng-container *ngIf="this.classHistorico.length; else noCourses">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
+                    <ng-container *ngFor="let historico of classHistorico; trackBy: trackByFn">
+                        <!-- Course -->
+                        <div class="flex flex-col h-96 shadow rounded-2xl overflow-hidden bg-card">
+                            <div class="flex flex-col p-6">
+                                <div class="flex items-center justify-between">
+                                    <!-- Course category -->
+                                    <ng-container *ngIf="(historico.desEstadoDj) as categoryHistorico">
+                                        <div
+                                            class="py-0.5 px-3 rounded-full text-sm font-semibold"
+                                            [ngClass]="{'text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500': categoryHistorico.desEstadoDj === 'Reemplazado',
+                                                        'text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500': categoryHistorico.desEstadoDj === 'Activo',
+                                                        'text-pink-800 bg-pink-100 dark:text-pink-50 dark:bg-pink-500': categoryHistorico.desEstadoDj === 'Inactivo',
+                                                        'text-amber-800 bg-amber-100 dark:text-amber-50 dark:bg-amber-500': categoryHistorico.desEstadoDj === 'Inactivo'}">
+                                            {{categoryHistorico.desEstadoDj}}
+                                        </div>
+                                    </ng-container>
+                                    <!-- Completed at least once -->
+                                    <!-- <div class="flex items-center">
+                                        <ng-container *ngIf="course.progress.completed > 0">
+                                            <mat-icon
+                                                class="icon-size-5 text-green-600"
+                                                [svgIcon]="'heroicons_solid:badge-check'"
+                                                [matTooltip]="'You completed this course at least once'"></mat-icon>
+                                        </ng-container>
+                                    </div> -->
+                                </div>
+                                <!-- Course title & description -->
+
+                                <!-- `<div class="font-bold">Congratulations for your acceptance!</div><br>
+                                <div>Hi Brian,<br>Your submission has been accepted and you are ready to move into the next phase. Once you are ready, reach out to me and we will ...</div>` -->
+
+
+                                <div class="mt-4 text-lg font-medium">{{historico.nombreCompleto}}</div>
+                                <div class="mt-0.5 line-clamp-2 text-secondary">{{historico.desMedioDeterminacion}}</div>
+                                <div class="w-12 h-1 my-6 border-t-2"></div>
+                                <!-- Course time -->
+                                <div class="flex items-center leading-5 text-md text-secondary">
+                                    <mat-icon
+                                        class="icon-size-5 text-hint"
+                                        [svgIcon]="'heroicons_solid:clock'"></mat-icon>
+                                    <div class="ml-1.5">{{historico.numDocIdentidad}} </div>
+                                </div>
+                                <!-- Course completion -->
+                                <!-- <div class="flex items-center mt-2 leading-5 text-md text-secondary">
+                                    <mat-icon
+                                        class="icon-size-5 text-hint"
+                                        [svgIcon]="'heroicons_solid:academic-cap'"></mat-icon>
+                                    <ng-container *ngIf="course.progress.completed === 0">
+                                        <div class="ml-1.5">Never completed</div>
                                     </ng-container>
 
-                                    <!-- Loading template -->
-                                    <ng-template #loading>
-                                        Cargando...
-                                    </ng-template>
+                                </div> -->
+                            </div>
+                            <!-- Footer -->
+                            <div class="flex flex-col w-full mt-auto">
 
-                                    <!-- No Activity template -->
-                                    <ng-template #noActivity>
-                                        No hay actividades hasta el momento...
-                                    </ng-template>
+
+                                <!-- Course launch button -->
+                                <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
+                                    <!-- <button
+                                        mat-stroked-button
+                                        [routerLink]="[historico.numDocIdentidad]">
+                                        <span class="inline-flex items-center"> -->
+
 
                                 </div>
                             </div>
-
                         </div>
+                    </ng-container>
 
+
+                </div>
+            </ng-container>
+
+             <!-- No courses -->
+             <ng-template #noCourses>
+                <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
+                    <mat-icon
+                        class="icon-size-20"
+                        [svgIcon]="'iconsmind:file_search'"></mat-icon>
+                    <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">No courses found!</div>
+                </div>
+            </ng-template>
 
 
                     </mat-tab>
@@ -355,5 +460,3 @@
 
     </div>
 </div>
-
-

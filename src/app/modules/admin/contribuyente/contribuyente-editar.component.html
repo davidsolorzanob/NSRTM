@@ -922,14 +922,14 @@
 
                             <!--  ingresar region, provincia y distritro  -->
 
-                            <input hidden="true" name="descripcionDepartamentoId" id="descripcionDepartamentoId"
-                                formControlName="descripcionDepartamentoId">
-                            <input hidden="true" name="descripcionProvinciaId" id="descripcionProvinciaId"
-                                formControlName="descripcionProvinciaId">
-                            <input hidden="true" name="descripcionDistritoId" id="descripcionDistritoId"
-                                formControlName="descripcionDistritoId">
-                            <input hidden="true" name="desTipoPredioId" id="desTipoPredioId"
-                                formControlName="desTipoPredioId">
+                            <input hidden="true" name="desDepartamento" id="desDepartamento"
+                                formControlName="desDepartamento">
+                            <input hidden="true" name="desProvincia" id="desProvincia"
+                                formControlName="desProvincia">
+                            <input hidden="true" name="desDistrito" id="desDistrito"
+                                formControlName="desDistrito">
+                            <input hidden="true" name="desTipoPredio" id="desTipoPredio"
+                                formControlName="desTipoPredio">
 
                             <input hidden="true" value="2025" name="usuarioModificacion" id="usuarioModificacion"
                                 formControlName="usuarioModificacion">
@@ -1257,10 +1257,10 @@
                                         </tr>
                                         <tr *ngFor="let domicilio of classDomicilio; let i = index">
                                             <td class="text-center">{{i+1}}</td>
-                                            <td class="text-center">{{domicilio.descripcionDepartamentoId}}</td>
-                                            <td class="text-center">{{domicilio.descripcionProvinciaId}}</td>
-                                            <td class="text-center">{{domicilio.descripcionDistritoId}}</td>
-                                            <td class="text-center">{{domicilio.desTipoPredioId}}</td>
+                                            <td class="text-center">{{domicilio.desDepartamento}}</td>
+                                            <td class="text-center">{{domicilio.desProvincia}}</td>
+                                            <td class="text-center">{{domicilio.desDistrito}}</td>
+                                            <td class="text-center">{{domicilio.desTipoPredio}}</td>
                                             <td class="text-center">{{domicilio.manzana}}</td>
                                             <td class="text-center">{{domicilio.lote}}</td>
 
@@ -1318,9 +1318,9 @@
 
 
                 </mat-step>
-                <!--  Fin de informacion adicional-->
+                <!--  Fin de informacion adicional   [stepControl]="verticalStepperForm.get('step5')-->
 
-                <mat-step [formGroupName]="'step5'" [stepControl]="verticalStepperForm.get('step5')"
+                <mat-step [formGroupName]="'step5'"
                     #verticalStepperStep4>
                     <ng-template matStepLabel>Información del Relacionado</ng-template>
                     <p class="my-6 font-medium">
