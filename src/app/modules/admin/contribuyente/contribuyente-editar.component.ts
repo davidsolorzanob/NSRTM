@@ -216,8 +216,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 fechaFallecimiento: [{ value: '', disabled: true }],
                 razonSocial: [''],
                 segContribuyenteId: [{ value: '', disabled: true }],
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
                 // "contribuyenteNumero": "5",
             }),
@@ -237,8 +237,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 numeroLicencia: ['', [Validators.required]],
                 numeroExpediente: ['', [Validators.required]],
                 fechaExpediente: ['', [Validators.required]],
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
                 // "contribuyenteNumero": "5",
                 "conContribuyenteId": null,
@@ -304,8 +304,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 referencia: ['', [Validators.maxLength(100)]],
                 latitud: [''],
                 longitud: [''],
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 tipoZonaUrbanaId: ['', [Validators.required]],
                 //edificacionId: ['', [Validators.required]],
                 tipoEdificacionId: ['', [Validators.required]],
@@ -378,8 +378,8 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 tipoZonaUrbanaId: ['', [Validators.required]],
                 //edificacionId: ['', [Validators.required]],
                 tipoEdificacionId: ['', [Validators.required]],
@@ -428,8 +428,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 piso: ['', [Validators.maxLength(6)]],
                 kilometro: ['', [Validators.maxLength(6)]],
                 referencia: ['', [Validators.maxLength(100)]],
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
                 "conContribuyenteId": null,
                 tipoZonaUrbanaId: ['', [Validators.required]],
@@ -452,8 +452,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 principal: "1",
                 //  nombres: null,
                 estadoId: "1",
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 municipalidadId: this.muniId,
 
                 // desTipoMedioContacto: ['', [Validators.required]],
@@ -471,8 +471,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 desTipoDocSustento: [''],
                 desTipoFormaPresentacion: [''],
                 activo: 1,
-                usuarioModificacion: this.userEdicion,
-                terminalModificacion: this.terminal,
+                usuarioCreacion: this.userEdicion,
+                terminalCreacion: this.terminal,
                 municipalidadId: this.muniId
             })
 
@@ -1346,22 +1346,22 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
-        this.verticalStepperForm.get('step1').get('usuarioModificacion').setValue(this.userEdicion);
-        this.verticalStepperForm.get('step1').get('terminalModificacion').setValue(this.terminal);
-        this.verticalStepperForm.get('step2').get('usuarioModificacion').setValue(this.userEdicion);
-        this.verticalStepperForm.get('step2').get('terminalModificacion').setValue(this.terminal);
-        this.verticalStepperForm.get('step3').get('usuarioModificacion').setValue(this.userEdicion);
-        this.verticalStepperForm.get('step3').get('terminalModificacion').setValue(this.terminal);
-        this.verticalStepperForm.get('step5').get('usuarioModificacion').setValue(this.userEdicion);
-        this.verticalStepperForm.get('step5').get('terminalModificacion').setValue(this.terminal);
+        this.verticalStepperForm.get('step1').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step1').get('terminalCreacion').setValue(this.terminal);
+        this.verticalStepperForm.get('step2').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step2').get('terminalCreacion').setValue(this.terminal);
+        this.verticalStepperForm.get('step3').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step3').get('terminalCreacion').setValue(this.terminal);
+        this.verticalStepperForm.get('step5').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step5').get('terminalCreacion').setValue(this.terminal);
         //this.listaContacto.push(this.listaContacto);
-        this.listaDomicilios[0].usuarioModificacion = this.userEdicion;
-        this.listaDomicilios[0].terminalModificacion = this.terminal;
+        this.listaDomicilios[0].usuarioCreacion = this.userEdicion;
+        this.listaDomicilios[0].terminalCreacion = this.terminal;
         //this.listaDomicilios[1].usuarioEdicion = this.userEdicion;
         //this.listaDomicilios[1].usuarioEdicion = this.terminal;
 
-        this.listaContacto[0].terminalModificacion = this.terminal;
-        this.listaContacto[0].usuarioModificacion = this.userEdicion;
+        this.listaContacto[0].terminalCreacion = this.terminal;
+        this.listaContacto[0].usuarioCreacion = this.userEdicion;
         console.log(this.listaDomicilios);
         console.log('LISTA DE DOMICILIO');
         console.log(this.listaContacto);
@@ -1469,9 +1469,9 @@ export class ContribuyenteEditarComponent implements OnInit {
         //     'usuarioCreacion': '2025',
         //     'fechaCreacion': '',
         //     'terminalCreacion': '192.168.1.1',
-        //     'usuarioModificacion': '',
+        //     'usuarioCreacion': '',
         //     'fechaModificacion': '',
-        //     'terminalModificacion': ''
+        //     'terminalCreacion': ''
 
         //    }];
         //this.verticalStepperForm.get('step5').value
