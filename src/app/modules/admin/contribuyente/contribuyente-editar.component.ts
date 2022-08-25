@@ -1368,24 +1368,16 @@ export class ContribuyenteEditarComponent implements OnInit {
         console.log('LISTA DE CONTACTO');
 
         this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
-        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.listaDomicilios, this.classDocSustento).subscribe({
+        this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.classDomicilio, this.classDocSustento).subscribe({
             next: (contribuyente) => {
 
-                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.listaDomicilios, this.classDocSustento);
+                console.log(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.classDomicilio, this.classDocSustento);
                 // alert('Contribuyente creado con exito ${contribuyente.nombres}');
                 Swal.fire('Edición:', `Contribuyente actualizado con éxito`, 'success');
                 this.router.navigate(['../contribuyente/list']);
             }
-            , error: (err) => {
-                if (err.status === 400) {
-                    this.error = err.error;
-                    console.log(this.error);
-                }
-            }
         });
     }
-
-
 
     getClaseMedioContactoId(tipoClaseMedioContactoId: number) {
         console.log(tipoClaseMedioContactoId);
