@@ -65,7 +65,7 @@ export class ListComponent implements OnInit {
         'acciones'];
     dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
 
-    classHisotico: DocSustento[]  = [];
+    classHistorico: Contribuyente[]  = [];
 
     activities$: Observable<Activity[]>;
 
@@ -334,8 +334,8 @@ export class ListComponent implements OnInit {
                 console.log('Obtener historico', res);
                 // matriz = res;
 
-                this.classHisotico = res;
-                console.log(this.classHisotico);
+                this.classHistorico = res;
+                console.log(this.classHistorico);
 
             },
             error: (error) => {

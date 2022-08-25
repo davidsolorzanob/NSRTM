@@ -232,7 +232,8 @@
                                         </ng-container>
 
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        <tr mat-row (click)="getHistorico(row)"
+                                            *matRowDef="let row; columns: displayedColumns;"></tr>
                                     </table>
 
                                     <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage"
@@ -276,18 +277,11 @@
                                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                                         Declaracion Jurada</div>
                                                     <div class="text-green-600 font-medium text-sm">
-                                                        Fecha de la DJ: {{item.}}
+                                                        Fecha de la DJ: {{item.fechaDJ}}
                                                     </div>
                                                 </div>
 
-                                                <!-- <button mat-menu-item>
-                                                            <span class="flex items-center">
-                                                                <mat-icon
-                                                                    class="icon-size-5 mr-3"
-                                                                    [svgIcon]="'heroicons_solid:printer'"></mat-icon>
-                                                                <span>Print statement</span>
-                                                            </span>
-                                                        </button> -->
+
                                             </div>
                                         </div>
                                         <div class="flex flex-row flex-wrap mt-4 -mx-6">
@@ -334,8 +328,7 @@
                                             </div>
                                             <button mat-menu-item>
                                                 <span class="flex items-center">
-                                                    <mat-icon
-                                                        class="icon-size-5 mr-3"
+                                                    <mat-icon class="icon-size-5 mr-3"
                                                         [svgIcon]="'heroicons_solid:printer'"></mat-icon>
                                                     <span>Ver Declaración Jurada (DJ)</span>
                                                 </span>
@@ -343,6 +336,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+
                     </mat-tab>
                 </mat-tab-group>
                 <!-- Main -->
