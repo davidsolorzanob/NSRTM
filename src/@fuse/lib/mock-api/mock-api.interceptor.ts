@@ -95,38 +95,41 @@ export class FuseMockApiInterceptor implements HttpInterceptor
 
         switch(err.status){
             case 400:
-            errorMessage = "Bad Request.";
+            errorMessage = "Petición errónea";
             break;
             case 401:
-            errorMessage = "You need to log in to do this action.";
+            errorMessage = "Usted necesita autenticarse para realizar esta acción";
             break;
             case 403:
-            errorMessage = "You don't have permission to access the requested resource.";
+            errorMessage = "Usted no posee permisos para acceder al recurso solicitado";
             break;
             case 404:
-            errorMessage = "The requested resource does not exist.";
+            errorMessage = "El recurso solicitado no existe";
             break;
             case 412:
-            errorMessage = "Precondition Failed.";
+            errorMessage = "Precondición fallida";
             break;
             case 500:
-            errorMessage = "Internal Server Error.";
+            errorMessage = "Error interno en el servidor";
             break;
             case 503:
-            errorMessage = "The requested service is not available.";
+            errorMessage = "El servicio solicitado no se encuentra disponible";
             break;
             case 422:
-            errorMessage = "Validation Error!";
+            errorMessage = "Error de validación";
+            break;
+            case 0:
+            errorMessage = "El servidor y/o servicio no responde";
             break;
             default:
-            errorMessage = "Something went wrong!";
+            errorMessage = "Algo salió mal";
         }
 
         Swal.fire({
             icon: 'warning',
-            title: 'Intente en otro momento',
+            title: errorMessage,
             text: 'Por favor, comunicarse con el administrador del sistema',
-            footer: 'Error al invocar el servicio: <span class="text-red-600"> ' + err.status.toString() + '</span>'
+            footer: '<div class="swal2-html-container"><div class="text-sm text-slate-900 text-red-600"> Error ' + err.status.toString() + ':</div><div class="text-sm text-slate-700">'+ err.url+'</div></div>'
         });
     }
 }
