@@ -37,6 +37,25 @@ import moment from 'moment';
                 grid-template-columns: 94px 94px 84px 384px 184px 184px 184px 84px 84px;
             }
         }
+        .demo-table {
+            width: 100%;
+          }
+
+          .mat-row .mat-cell {
+            border-bottom: 1px solid transparent;
+            border-top: 1px solid transparent;
+            cursor: pointer;
+          }
+
+          .mat-row:hover .mat-cell {
+            border-color: currentColor;
+            background-color: #ef4444;
+
+          }
+
+          .demo-row-is-clicked {
+            font-weight: bold;
+          }
     `
     ],
     encapsulation: ViewEncapsulation.None,

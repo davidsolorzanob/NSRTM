@@ -643,6 +643,10 @@ export class ContribuyenteEditarComponent implements OnInit {
     //Adicionar Domicilio
     addDomicilio() {
         if (this.ModoEdicionDomicilio == 0) {
+
+            this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue(this.userEdicion);
+            this.verticalStepperForm.get('step4').get('terminalCreacion').setValue(this.terminal);
+
             this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
             //this.verticalStepperForm.get('step4').reset();
 
@@ -681,8 +685,8 @@ export class ContribuyenteEditarComponent implements OnInit {
             this.verticalStepperForm.get('step4').get('latitud').setValue("");
             this.verticalStepperForm.get('step4').get('longitud').setValue("");
             this.verticalStepperForm.get('step4').get('kilometro').setValue("");
-            // this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue("");
-            //this.verticalStepperForm.get('step4').get('terminalCreacion').setValue("");
+            this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue("");
+            this.verticalStepperForm.get('step4').get('terminalCreacion').setValue("");
             console.log(this.classDomicilio);
         }
         else {
@@ -1355,13 +1359,13 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.verticalStepperForm.get('step5').get('usuarioCreacion').setValue(this.userEdicion);
         this.verticalStepperForm.get('step5').get('terminalCreacion').setValue(this.terminal);
         //this.listaContacto.push(this.listaContacto);
-        this.listaDomicilios[0].usuarioCreacion = this.userEdicion;
-        this.listaDomicilios[0].terminalCreacion = this.terminal;
+       // this.classDomicilio[0].usuarioCreacion = this.userEdicion;
+        //this.classDomicilio[0].terminalCreacion = this.terminal;
         //this.listaDomicilios[1].usuarioEdicion = this.userEdicion;
         //this.listaDomicilios[1].usuarioEdicion = this.terminal;
 
-        this.listaContacto[0].terminalCreacion = this.terminal;
-        this.listaContacto[0].usuarioCreacion = this.userEdicion;
+       // this.listaContacto[0].terminalCreacion = this.terminal;
+        //this.listaContacto[0].usuarioCreacion = this.userEdicion;
         console.log(this.listaDomicilios);
         console.log('LISTA DE DOMICILIO');
         console.log(this.listaContacto);
@@ -1475,6 +1479,8 @@ export class ContribuyenteEditarComponent implements OnInit {
         //const Con = this.contacto;
         //this.Con =
 
+        this.verticalStepperForm.get('step6').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step6').get('terminalCreacion').setValue(this.terminal);
         console.log(this.verticalStepperForm.get('step6').value);
         //({
         //     contribuyenteNumero: null,
