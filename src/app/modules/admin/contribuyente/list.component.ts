@@ -346,8 +346,8 @@ export class ListComponent implements OnInit {
 
 
 
-    getHistorico() {
-        this.service.obtenerHistorico(1,2)
+    getHistorico(item: Contribuyente) {
+        this.service.obtenerHistorico(1, item.contribuyenteNumero)
         .subscribe({
             next: (res: any) => {
                 console.log('Obtener historico', res);

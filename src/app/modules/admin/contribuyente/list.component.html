@@ -270,7 +270,8 @@
 
 
                                     <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row dark:bg-gray-600">
-                                        <div class="flex shrink-0 items-center justify-center w-10 h-10 mr-6 rounded-full bg-gray-400">
+                                        <div
+                                            class="flex shrink-0 items-center justify-center w-10 h-10 mr-6 rounded-full bg-gray-400">
                                             <!-- Line -->
 
                                             <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:refresh'">
@@ -285,11 +286,23 @@
                                         <!-- Previo -->
                                         <div
                                             class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
-                                            <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                                            <div *ngIf="item.desEstadoDj == 'Presentada' "
+                                                class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                                                 <mat-icon
                                                     class="icon-size-24 opacity-25 text-green-500 dark:text-green-400"
                                                     [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                                             </div>
+
+                                            <div *ngIf="item.desEstadoDj != 'Presentada' "
+                                                class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                                                <mat-icon
+                                                    class="icon-size-24 opacity-25 text-red-500 dark:text-green-400"
+                                                    [svgIcon]="'heroicons_outline:exclamation-circle'"></mat-icon>
+                                            </div>
+
+
+
+
                                             <div class="flex items-center">
                                                 <div class="flex flex-col">
                                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
@@ -363,7 +376,7 @@
                                                         {{item.nombres}}
                                                     </div>
                                                 </div>
-                                                <button mat-menu-item>
+                                                <button mat-menu-item (click)="reporteDJ(item)">
                                                     <span class="flex items-center">
                                                         <mat-icon class="icon-size-5 mr-3"
                                                             [svgIcon]="'heroicons_solid:printer'"></mat-icon>

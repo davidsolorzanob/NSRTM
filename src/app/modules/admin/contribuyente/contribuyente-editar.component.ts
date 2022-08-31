@@ -304,8 +304,8 @@ export class ContribuyenteEditarComponent implements OnInit {
                 referencia: ['', [Validators.maxLength(100)]],
                 latitud: [''],
                 longitud: [''],
-                usuarioCreacion: this.userEdicion,
-                terminalCreacion: this.terminal,
+                usuarioCreacion: [''],
+                terminalCreacion: [''],
                 tipoZonaUrbanaId: ['', [Validators.required]],
                 //edificacionId: ['', [Validators.required]],
                 tipoEdificacionId: ['', [Validators.required]],
@@ -378,8 +378,8 @@ export class ContribuyenteEditarComponent implements OnInit {
 
 
 
-                usuarioCreacion: this.userEdicion,
-                terminalCreacion: this.terminal,
+                usuarioCreacion: [''],
+                terminalCreacion: [''],
                 tipoZonaUrbanaId: ['', [Validators.required]],
                 //edificacionId: ['', [Validators.required]],
                 tipoEdificacionId: ['', [Validators.required]],
@@ -648,6 +648,8 @@ export class ContribuyenteEditarComponent implements OnInit {
             this.verticalStepperForm.get('step4').get('terminalCreacion').setValue(this.terminal);
 
             this.classDomicilio.push(this.verticalStepperForm.get('step4').value);
+            console.log(this.classDomicilio);
+
             //this.verticalStepperForm.get('step4').reset();
 
 
@@ -1356,15 +1358,17 @@ export class ContribuyenteEditarComponent implements OnInit {
         this.verticalStepperForm.get('step2').get('terminalCreacion').setValue(this.terminal);
         this.verticalStepperForm.get('step3').get('usuarioCreacion').setValue(this.userEdicion);
         this.verticalStepperForm.get('step3').get('terminalCreacion').setValue(this.terminal);
+        this.verticalStepperForm.get('step4').get('usuarioCreacion').setValue(this.userEdicion);
+        this.verticalStepperForm.get('step4').get('terminalCreacion').setValue(this.terminal);
         this.verticalStepperForm.get('step5').get('usuarioCreacion').setValue(this.userEdicion);
         this.verticalStepperForm.get('step5').get('terminalCreacion').setValue(this.terminal);
         //this.listaContacto.push(this.listaContacto);
-       // this.classDomicilio[0].usuarioCreacion = this.userEdicion;
+        // this.classDomicilio[0].usuarioCreacion = this.userEdicion;
         //this.classDomicilio[0].terminalCreacion = this.terminal;
         //this.listaDomicilios[1].usuarioEdicion = this.userEdicion;
         //this.listaDomicilios[1].usuarioEdicion = this.terminal;
 
-       // this.listaContacto[0].terminalCreacion = this.terminal;
+        // this.listaContacto[0].terminalCreacion = this.terminal;
         //this.listaContacto[0].usuarioCreacion = this.userEdicion;
         console.log(this.listaDomicilios);
         console.log('LISTA DE DOMICILIO');
@@ -1372,6 +1376,21 @@ export class ContribuyenteEditarComponent implements OnInit {
         console.log('LISTA DE CONTACTO');
 
         this.classDomicilio.push(this.verticalStepperForm.get('step3').value);
+
+    this.classDomicilio.forEach(item=> {
+
+        item.usuarioCreacion = 2025;
+        item.terminalCreacion = '192.168.1.1';
+    }
+    );
+
+
+
+        console.log(this.verticalStepperForm.get('step3').value);
+        console.log('domicilio contribuyente');
+        console.log(this.classDomicilio);
+        console.log('clase domicilio final');
+
         this.contribuyenteService.crear(this.verticalStepperForm.get('step1').value, this.verticalStepperForm.get('step2').value, this.verticalStepperForm.get('step3').value, this.verticalStepperForm.get('step5').value, this.listaContacto, this.classDomicilio, this.classDocSustento).subscribe({
             next: (contribuyente) => {
 
