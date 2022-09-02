@@ -49,8 +49,9 @@ import moment from 'moment';
 
           .mat-row:hover .mat-cell {
             border-color: currentColor;
-            background-color: #ef4444;
-
+            background-color: #FAC5BC;
+            color: red;
+            font-weight: bold;
           }
 
           .demo-row-is-clicked {
@@ -355,6 +356,7 @@ export class ListComponent implements OnInit {
 
                 this.classHistorico = res;
                 console.log(this.classHistorico);
+                console.log('CLASS HISTORICO');
 
             },
             error: (error) => {
