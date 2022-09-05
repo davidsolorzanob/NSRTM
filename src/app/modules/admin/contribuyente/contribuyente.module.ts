@@ -34,6 +34,7 @@ import { DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DateAdapter } from '@angular/material/core';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 //import  localeES  from '@angular/common/locales/es';
 //import { MAT_DATE_LOCALE } from '@angular/material';
@@ -74,7 +75,9 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
     HttpClientModule,
     MatTabsModule,
     MatTooltipModule,
-   // BrowserAnimationsModule
+   // BrowserAnimationsModule,
+   MatSelectFilterModule
+
 
   ],
   providers: [

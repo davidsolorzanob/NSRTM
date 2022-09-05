@@ -84,8 +84,8 @@ console.log('llego todoooooooo');
         return this.http.post<Contribuyente>(this.baseEndpoint + '/guardar', contribuyente, { headers: this.cabeceras });
     }
 
-    public obtenerHistorico(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente> {
-        return this.http.get<Contribuyente>(this.baseEndpoint + '/listaContribuyenteHistorico/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
+    public obtenerHistorico(municipalidadId: number ,contribuyenteId: number): Observable<Contribuyente[]> {
+        return this.http.get<Contribuyente[]>(this.baseEndpoint + '/listaContribuyenteHistorico/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId);
     }
 
     public editar(contribuyente: Contribuyente): Observable<Contribuyente> {

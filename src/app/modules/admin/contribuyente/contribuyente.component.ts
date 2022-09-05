@@ -79,6 +79,7 @@ export class ContribuyenteComponent implements OnInit {
     contribuyentes: Contribuyente[];
     maestrosTipoMedio: Maestro[] = [];
     maestrosMedio: Maestro[] = [];
+    maestrosMedio2: Maestro[] = [];
     maestrosMotivo: Maestro[] = [];
     maestrosModalidadOficio: Maestro[] = [];
     maestrosTipoContribuyente: Maestro[] = [];
@@ -137,6 +138,10 @@ export class ContribuyenteComponent implements OnInit {
     listaNombreEdificacion: Ubicacion[] = [];
     listarZonaUrbana: Ubicacion[] = [];
 
+//busqueda matselect
+    selectedMedios: Maestro[] = [];
+    variables2: Maestro[] = [];
+
     //Condición
     valorDepartamento: number;
     valorProvincia: number;
@@ -167,6 +172,20 @@ export class ContribuyenteComponent implements OnInit {
     public registerFormContribuyenteCondicion!: FormGroup;
     public registerFormContribuyenteContacto!: FormGroup;
     public registerFormTemp!: FormGroup;
+
+
+
+
+    public variables = ['One','Two','County', 'Three', 'Zebra', 'XiOn'];
+    //public variables2 = [{ id: 0, name: 'One' }, { id: 1, name: 'Two' }];
+    public filteredList1;
+   // public filteredList1 = this.variables.slice();
+    public filteredList2 = this.variables.slice();
+    public filteredList3 = this.variables.slice();
+    public filteredList4 = this.variables.slice();
+    //public filteredList5 = this.variables2.slice();
+
+    public filterMaestrosMedio = this.maestrosTipoMedio.slice();
 
     isAddMode!: boolean;
     loading = false;
@@ -450,7 +469,25 @@ export class ContribuyenteComponent implements OnInit {
 
     }
 
+    log(value: number){
+      console.log(value);
 
+    }
+
+    onKey(value) {
+        this.selectedMedios = this.search(value);
+      }
+
+      search(value: string) {
+        let filter = this.maestrosMedio.filter(item =>
+          item.descripcion.toLowerCase().includes(value.toLowerCase())
+        );
+        return [...filter];
+      }
+
+      getSubtier(value) {
+        console.log(value);
+      }
 
     // Adicionar Sustento
     addDocSustento() {
@@ -570,18 +607,6 @@ export class ContribuyenteComponent implements OnInit {
     public setFieldRequiredContacto(set: boolean) {
         this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'));
         this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.pattern('^[0-9]+$'));
-        /*
-        if(set){
-            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').setValidators(Validators.required);
-            this.verticalStepperForm.get('step6').get('claseMedioContactoId').setValidators(Validators.required);
-            this.verticalStepperForm.get('step6').get('desMedioContacto').setValidators(Validators.required);
-        }
-        else{
-            this.verticalStepperForm.get('step6').get('tipoMedioContactoId').removeValidators(Validators.required);
-            this.verticalStepperForm.get('step6').get('claseMedioContactoId').removeValidators(Validators.required);
-            this.verticalStepperForm.get('step6').get('desMedioContacto').removeValidators(Validators.required);
-        }
-        */
     }
 
     public touchedFormContacto() {
@@ -851,7 +876,7 @@ export class ContribuyenteComponent implements OnInit {
     }
 
     touchedFormDomicilioAdicional() {
- 
+
         this.verticalStepperForm.get('step4').get('tipoViaId').markAsUntouched();
         this.verticalStepperForm.get('step4').get('desTipoPredioId').markAsUntouched();
         this.verticalStepperForm.get('step4').get('viaId').markAsUntouched();
@@ -1468,6 +1493,8 @@ export class ContribuyenteComponent implements OnInit {
                     if (matriz == 'maestrosMedio') {
                         console.log(matriz);
                         this.maestrosMedio = res;
+                        this.variables2 = res;
+                        this.filteredList1 = this.variables2.slice();
                     }
                     if (matriz == 'maestrosMotivo') {
                         console.log(matriz);

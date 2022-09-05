@@ -350,7 +350,7 @@ export class ListComponent implements OnInit {
     getHistorico(item: Contribuyente) {
         this.service.obtenerHistorico(1, item.contribuyenteNumero)
         .subscribe({
-            next: (res: any) => {
+            next: (res: Contribuyente[]) => {
                 console.log('Obtener historico', res);
                 // matriz = res;
 
@@ -363,7 +363,7 @@ export class ListComponent implements OnInit {
                 console.error('Error: ' + error);
             },
             complete: () => {
-                console.log('completo la recuperación de Provincia');
+                console.log('completo la recuperación de getHistorico');
             }
         });
     }
