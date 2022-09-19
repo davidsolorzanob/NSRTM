@@ -20,8 +20,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core'
-//import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../contribuyente/date-format';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -35,13 +34,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DateAdapter } from '@angular/material/core';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatSelectFilterModule } from 'mat-select-filter';
-
-//import  localeES  from '@angular/common/locales/es';
-//import { MAT_DATE_LOCALE } from '@angular/material';
-
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-//registerLocaleData(localeES,'es');
 
 @NgModule({
   declarations: [
@@ -69,24 +61,18 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-   // MatMomentDateModule,
     MatStepperModule,
     MatTableModule,
     HttpClientModule,
     MatTabsModule,
     MatTooltipModule,
-   // BrowserAnimationsModule,
    MatSelectFilterModule
-
-
   ],
   providers: [
     DatePipe,
-    //{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]},
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-
   ]
 })
 export class ContribuyenteModule { }

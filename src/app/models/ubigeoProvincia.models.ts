@@ -1,5 +1,3 @@
-
-
 export class ubigeoProvincia
 {
     usuarioCreacion: number;
@@ -8,7 +6,6 @@ export class ubigeoProvincia
     usuarioEdicion: number;
     fechaModificacion: Date;
     terminalModificacion: string;
-
     ubigeo: string;
     descripcion: string;
     abreviatura: string;

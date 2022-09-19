@@ -72,8 +72,7 @@ export const appRoutes: Route[] = [
         children   : [
 
             {path: 'contribuyente', loadChildren: () => import('app/modules/admin/contribuyente/contribuyente.module').then(m => m.ContribuyenteModule)},
-            {path: 'settings', loadChildren:()=> import('app/modules/pages/settings/settings.module').then(m=>m.SettingsModule)},
-            {path: 'activities', loadChildren:()=> import('app/modules/admin/activities/activities.module').then(m=>m.ActivitiesModule)},
+            {path: 'settings', loadChildren:()=> import('app/modules/pages/settings/settings.module').then(m=>m.SettingsModule)}
            // {path: 'list', component: ListComponent}
 
         ]

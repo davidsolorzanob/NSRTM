@@ -4,15 +4,11 @@ import { ContribuyenteService } from 'app/services/contribuyente.service';
 import { ContribuyenteReporte } from 'app/models/contribuyenteReporte.models';
 import { Contribuyente } from 'app/models/contribuyente.models';
 import { DocSustento } from 'app/models/docSustento.models';
-
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import Swal from 'sweetalert2';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-
-import { Activity } from 'app/modules/admin/activities/activities.types';
-import { ActivitiesService } from 'app/modules/admin/activities/activities.service';
 import { Observable } from 'rxjs';
 import moment from 'moment';
 
@@ -78,28 +74,20 @@ export class ListComponent implements OnInit {
         'apellidoPaterno',
         'descDocIdentidad',
         'numDocIdentidad',
-        'area',
         'usuarioCreacion',
         'fechaInscripcion',
         'terminalCreacion',
         'acciones'];
     dataSource: MatTableDataSource<ContribuyenteReporte> = new MatTableDataSource();
-
     classHistorico: Contribuyente[]  = [];
-
-    activities$: Observable<Activity[]>;
-
     @ViewChild('supportNgForm') supportNgForm: NgForm;
     public formBusquedaContribuyente!: FormGroup;
     public formControl: FormControl;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe, public _activityService: ActivitiesService) { }
+    constructor(private service: ContribuyenteService, private formBuilder: FormBuilder, public datepipe: DatePipe) { }
 
     ngOnInit() {
-
-        this.activities$ = this._activityService.activities;
-
         this.formBusquedaContribuyente = this.formBuilder.group({
             municipalidadId: ['1'],
             docIdentidadId: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -142,15 +130,7 @@ export class ListComponent implements OnInit {
     }
 
     public removeValidators = () => {
-        /*
-        this.formBusquedaContribuyente.get('docIdentidadId').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('numDocIdentidad').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('contribuyenteNumero').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('apellidoPaterno').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('apellidoMaterno').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('nombres').removeValidators(Validators.required);
-        this.formBusquedaContribuyente.get('razonSocial').removeValidators(Validators.required);
-    */
+
         this.formBusquedaContribuyente.get('docIdentidadId').disable();
         this.formBusquedaContribuyente.get('numDocIdentidad').disable();
         this.formBusquedaContribuyente.get('contribuyenteNumero').disable();
@@ -169,25 +149,18 @@ export class ListComponent implements OnInit {
             case "2":
                 console.log(this.formBusquedaContribuyente.get('contribuyenteNumero'));
                 this.formBusquedaContribuyente.get('contribuyenteNumero').enable();
-                //this.formBusquedaContribuyente.get('contribuyenteNumero').addValidators(Validators.required);
                 break;
             case "3":
                 this.formBusquedaContribuyente.get('docIdentidadId').enable();
                 this.formBusquedaContribuyente.get('numDocIdentidad').enable();
-                //this.formBusquedaContribuyente.get('docIdentidadId').addValidators(Validators.required);
-                //this.formBusquedaContribuyente.get('numDocIdentidad').addValidators(Validators.required);
                 break;
             case "4":
                 this.formBusquedaContribuyente.get('apellidoPaterno').enable();
                 this.formBusquedaContribuyente.get('apellidoMaterno').enable();
                 this.formBusquedaContribuyente.get('nombres').enable();
-                //this.formBusquedaContribuyente.get('apellidoPaterno').addValidators(Validators.required);
-                //this.formBusquedaContribuyente.get('apellidoMaterno').addValidators(Validators.required);
-                //this.formBusquedaContribuyente.get('nombres').addValidators(Validators.required);
                 break;
             case "5":
                 this.formBusquedaContribuyente.get('razonSocial').enable();
-                //this.formBusquedaContribuyente.get('razonSocial').addValidators(Validators.required);
                 break;
             default:
                 break;
@@ -235,7 +208,7 @@ export class ListComponent implements OnInit {
     }
 
     public reporteDJ(contribuyente: ContribuyenteReporte) {
-        var data = { municipalidadId: contribuyente.municipalidadId, contribuyenteNumero: contribuyente.contribuyenteNumero };
+        var data = { municipalidadId: contribuyente.municipalidadId, contribuyenteNumero: contribuyente.contribuyenteNumero, numeroDJ: contribuyente.numeroDJ };
         var url = this.service.getReporteDjContribuyente(JSON.stringify(data));
 
         window.open(url, '_blank').focus();
@@ -344,9 +317,6 @@ export class ListComponent implements OnInit {
       </html>`)
         newWin.document.close();
     }
-
-
-
     getHistorico(item: Contribuyente) {
         this.service.obtenerHistorico(1, item.contribuyenteNumero)
         .subscribe({

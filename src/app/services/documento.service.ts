@@ -9,14 +9,11 @@ import { DocSustento } from '../models/docSustento.models';
 export class DocumentoService {
 
     private baseEndpoint = 'http://localhost:8082/api/docsustento';
-    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
+    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     constructor(private http: HttpClient) { }
-
-
     public listar(municipalidadId: number ,contribuyenteId: number  , numeroDJ: number): Observable<DocSustento[]> {
 
-        return this.http.get<DocSustento[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero=' + contribuyenteId + '&numeroDJ=' + numeroDJ);
+        return this.http.get<DocSustento[]>(this.baseEndpoint + '/listar/?municipalidadId=' + municipalidadId + '&contribuyenteNumero='
+        + contribuyenteId + '&numeroDJ=' + numeroDJ);
     }
-
-
 }

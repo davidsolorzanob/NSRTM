@@ -9,7 +9,6 @@ export class Contacto {
     desMedioContacto: string;
     principal: number;
     estadoId: number;
-
     // Auditoria
     usuarioCreacion: number;
     fechaCreacion: Date;
@@ -17,7 +16,6 @@ export class Contacto {
     usuarioModificacion: number;
     fechaModificacion: Date;
     terminalModificacion: string;
-
 }
 
 

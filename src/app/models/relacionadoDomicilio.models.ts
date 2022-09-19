@@ -1,5 +1,4 @@
 export class RelacionadoDomicilio{
-
     domicilioRelacionadoNumero: number;
     departamentoId: number;
     provinciaId: number;

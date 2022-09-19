@@ -9,7 +9,7 @@ import { Condicion } from '../models/condicion.models';
 export class CondicionService {
 
     private baseEndpoint = 'http://localhost:8082/api/condicioncontribuyente';
-    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
+    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     constructor(private http: HttpClient) { }
 
     public todos(): Observable<Condicion[]> {
@@ -37,7 +37,7 @@ export class CondicionService {
     public editar(contribuyente: Condicion): Observable<Condicion> {
         return this.http.put<Condicion>(this.baseEndpoint + '/editar', contribuyente, { headers: this.cabeceras });
     }
-    public eliminar(contribuyenteId: number): Observable<void> {  //cuando se elimina no devuelve nada
+    public eliminar(contribuyenteId: number): Observable<void> {
         return this.http.delete<void>(this.baseEndpoint + '/eliminar/?id=' + contribuyenteId)
     }
     public filtrarPorNombre(contribuyente: Condicion): Observable<Condicion[]> {

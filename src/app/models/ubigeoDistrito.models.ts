@@ -6,7 +6,6 @@ export class ubigeoDistrito
     usuarioEdicion: number;
     fechaModificacion: Date;
     terminalModificacion: string;
-
     ubigeo: string;
     descripcion: string;
     abreviatura: string;

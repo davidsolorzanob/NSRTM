@@ -1,9 +1,7 @@
 export class Condicion{
-
-    municipalidadId: number;
+   municipalidadId: number;
    conContribuyenteId:number;
    contribuyenteNumero:number;
-
    tipoCondicionInafectacionId:number;
    tipoCondicionConcursalId:number;
    desTipoConcursal: string;
@@ -18,9 +16,6 @@ export class Condicion{
    numeroLicencia:string;
    numeroExpediente:string;
    fechaExpediente:Date;
-//   desTipoDocumento:string;
-  // terminalCreacion: string;
-
 }
 
 

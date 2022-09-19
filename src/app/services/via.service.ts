@@ -13,16 +13,10 @@ export class ViaService {
 
     private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
     constructor(private http: HttpClient) { }
-
-
     public todos(): Observable<via> {
-
         return this.http.get<via>(this.baseEndpoint + '/via/listar');
-
     }
-
     public listarVias(departamentoId: number, provinciaId: number, distritoId: Number, tipoVia: number): Observable<via> {
-
         var params = {
             "departamentoId": departamentoId,
             "provinciaId": provinciaId,
@@ -30,14 +24,8 @@ export class ViaService {
             "tipo": '1'
         };
         return this.http.post<any>(this.baseEndpoint + '/via/listar/', params, { headers: this.cabeceras });
-        //console.log(departamentoId  , ' - ' , provinciaId  , ' - ' ,distritoId  , ' - ' ,tipoVia  , ' - ' ,  );
-        return this.http.get<via>(this.baseEndpoint + '/via/listar/?idDepartamento=' + departamentoId + '&idProvincia=' + provinciaId + '&idDistrito=' + distritoId + '&tipo=' + tipoVia);
     }
-
-
-
     public listarZona(departamentoId: number, provinciaId: number, distritoId: Number, valorTipoZonaUrbana: number): Observable<Ubicacion> {
-
         var params = {
             "departamentoId": departamentoId,
             "provinciaId": provinciaId,
@@ -45,33 +33,23 @@ export class ViaService {
             "tipo": valorTipoZonaUrbana
         };
         return this.http.post<Ubicacion>(this.baseEndpoint + '/zona/listarZona/', params, { headers: this.cabeceras });
-   }
-
-
-   public listarSubZona(departamentoId: number, provinciaId: number, distritoId: Number, valorSubZonaUrbana: number): Observable<Ubicacion> {
-
-    var params = {
-        "departamentoId": departamentoId,
-        "provinciaId": provinciaId,
-        "distritoId": distritoId,
-        "tipo": valorSubZonaUrbana
-    };
-    return this.http.post<Ubicacion>(this.baseEndpoint + '/zona/listarSubZona/', params, { headers: this.cabeceras });
-}
-
-public listarEdificacion(departamentoId: number, provinciaId: number, distritoId: Number, tipoEdificacion: number): Observable<Ubicacion> {
-
-    var params = {
-        "departamentoId": departamentoId,
-        "provinciaId": provinciaId,
-        "distritoId": distritoId,
-        "tipo": tipoEdificacion
-    };
-    return this.http.post<Ubicacion>(this.baseEndpoint + '/edificacion/listarEdificacion/', params, { headers: this.cabeceras });
-}
-
-
-
-
-
+    }
+    public listarSubZona(departamentoId: number, provinciaId: number, distritoId: Number, valorSubZonaUrbana: number): Observable<Ubicacion> {
+        var params = {
+            "departamentoId": departamentoId,
+            "provinciaId": provinciaId,
+            "distritoId": distritoId,
+            "tipo": valorSubZonaUrbana
+        };
+        return this.http.post<Ubicacion>(this.baseEndpoint + '/zona/listarSubZona/', params, { headers: this.cabeceras });
+    }
+    public listarEdificacion(departamentoId: number, provinciaId: number, distritoId: Number, tipoEdificacion: number): Observable<Ubicacion> {
+        var params = {
+            "departamentoId": departamentoId,
+            "provinciaId": provinciaId,
+            "distritoId": distritoId,
+            "tipo": tipoEdificacion
+        };
+        return this.http.post<Ubicacion>(this.baseEndpoint + '/edificacion/listarEdificacion/', params, { headers: this.cabeceras });
+    }
 }

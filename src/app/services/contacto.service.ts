@@ -9,7 +9,7 @@ import { Contacto } from '../models/contacto.models';
 export class ContactoService {
 
     private baseEndpoint = 'http://localhost:8082/api/contacto';
-    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' }); //la cabecera es lo que va a pasar un JSON
+    private cabeceras: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     constructor(private http: HttpClient) { }
 
     public todos(): Observable<Contacto[]> {

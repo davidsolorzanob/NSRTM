@@ -1,5 +1,5 @@
 export class Contribuyente {
-    // Contribuyente
+ // Contribuyente
     municipalidadId!:number;
     contribuyenteNumero!: number;
     fechaInscripcion!: Date;

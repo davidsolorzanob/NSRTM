@@ -12,8 +12,6 @@ export const contribuyenteRoutes: Route[] = [
     { path: 'contribuyente/:id', component: ContribuyenteComponent},
     { path: 'contribuyente-editar/:id/:dj', component: ContribuyenteEditarComponent},
     { path: 'contribuyente-ver/:id/:dj', component: ContribuyenteVerComponent},
-
-
 ];
 @NgModule(
     {
@@ -21,5 +19,4 @@ export const contribuyenteRoutes: Route[] = [
    exports: [RouterModule]
     }
 )
-
 export class ContribuyenteRoutingModule {}

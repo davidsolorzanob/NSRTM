@@ -139,8 +139,31 @@ export class ContribuyenteComponent implements OnInit {
     listarZonaUrbana: Ubicacion[] = [];
 
 //busqueda matselect
-    selectedMedios: Maestro[] = [];
-    variables2: Maestro[] = [];
+    //selectedMedios: Maestro[] = [];
+    variablesMedio: Maestro[] = [];
+    public filteredListMedio;
+
+
+    variablesViaId: via[] = [];
+    public filteredListViaId;
+
+
+    variablesZonaUrbanaId: Ubicacion[] = [];
+    public filteredListZonaUrbanaId;
+
+
+    variablesEdificacionId: Maestro[] = [];
+    public filteredListEdificacionId;
+
+
+    variablesTipoInteriorId: Maestro[] = [];
+    public filteredListTipoInteriorId;
+
+    variablesNombreSubZonaUrbana: Ubicacion[] = [];
+    public filteredListNombreSubZonaUrbana;
+
+
+
 
     //Condición
     valorDepartamento: number;
@@ -178,14 +201,7 @@ export class ContribuyenteComponent implements OnInit {
 
     public variables = ['One','Two','County', 'Three', 'Zebra', 'XiOn'];
     //public variables2 = [{ id: 0, name: 'One' }, { id: 1, name: 'Two' }];
-    public filteredList1;
-   // public filteredList1 = this.variables.slice();
-    public filteredList2 = this.variables.slice();
-    public filteredList3 = this.variables.slice();
-    public filteredList4 = this.variables.slice();
-    //public filteredList5 = this.variables2.slice();
 
-    public filterMaestrosMedio = this.maestrosTipoMedio.slice();
 
     isAddMode!: boolean;
     loading = false;
@@ -474,16 +490,9 @@ export class ContribuyenteComponent implements OnInit {
 
     }
 
-    onKey(value) {
-        this.selectedMedios = this.search(value);
-      }
 
-      search(value: string) {
-        let filter = this.maestrosMedio.filter(item =>
-          item.descripcion.toLowerCase().includes(value.toLowerCase())
-        );
-        return [...filter];
-      }
+
+
 
       getSubtier(value) {
         console.log(value);
@@ -1112,6 +1121,10 @@ export class ContribuyenteComponent implements OnInit {
                     console.log('Motivo', res);
                     this.listaVias = res;
                     console.log(this.listaVias);
+                    this.variablesViaId = res;
+                    this.filteredListViaId = this.variablesViaId.slice();
+
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -1162,6 +1175,9 @@ export class ContribuyenteComponent implements OnInit {
                     console.log('Motivo', res);
                     this.listarZonaUrbana = res;
                     console.log(this.listarZonaUrbana);
+                    this.variablesZonaUrbanaId = res;
+                    this.filteredListZonaUrbanaId = this.variablesZonaUrbanaId.slice();
+
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -1214,6 +1230,9 @@ export class ContribuyenteComponent implements OnInit {
                     console.log('Motivo', res);
                     this.listaSubZona = res;
                     console.log(this.listaSubZona);
+
+                    this.variablesNombreSubZonaUrbana= res;
+                   this.filteredListNombreSubZonaUrbana = this.variablesNombreSubZonaUrbana.slice();
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -1265,6 +1284,9 @@ export class ContribuyenteComponent implements OnInit {
                     console.log('Motivo', res);
                     this.listaNombreEdificacion = res;
                     console.log(this.listaNombreEdificacion);
+
+                    this.variablesEdificacionId = res;
+                    this.filteredListEdificacionId = this.variablesEdificacionId.slice();
                 },
                 error: (error) => {
                     console.error('Error: ' + error);
@@ -1493,8 +1515,9 @@ export class ContribuyenteComponent implements OnInit {
                     if (matriz == 'maestrosMedio') {
                         console.log(matriz);
                         this.maestrosMedio = res;
-                        this.variables2 = res;
-                        this.filteredList1 = this.variables2.slice();
+                        this.variablesMedio = res;
+                        this.filteredListMedio = this.variablesMedio.slice();
+
                     }
                     if (matriz == 'maestrosMotivo') {
                         console.log(matriz);
