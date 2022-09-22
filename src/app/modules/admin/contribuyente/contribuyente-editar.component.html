@@ -1063,7 +1063,7 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                               </table>
+                                </table>
                             </div>
                         </div>
                         <!-- fin del inicio de la grilla  -->
@@ -1449,33 +1449,19 @@
                             <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
-
                         </div>
                     </div>
                 </mat-step>
-
-
                 <mat-step [formGroupName]="'step6'" #verticalStepperStep6 class="background-color: coral;">
                     <ng-template matStepLabel>Información del Contacto</ng-template>
                     <p class="my-6 font-medium">
                         Registro de la información del Contacto
                     </p>
-
-
-
-
                     <div class="flex flex-col gt-xs:flex-row">
                         <!-- Section -->
                         <div class="w-full">
                         </div>
                         <div class="grid grid-cols-12 gap-10 w-full mt-10">
-
-
-
-
-
-
-
                             <!-- Tipo de Contacto -->
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -1490,7 +1476,6 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-
                             <!-- Medio de Contacto -->
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
@@ -1506,7 +1491,6 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-
                             <div class="col-span-2 sm:col-span-2">
                                 <mat-form-field class="fuse-mat-no-subscript w-full">
                                     <mat-label>Detalle</mat-label>
@@ -1514,8 +1498,6 @@
                                         formControlName="desMedioContacto">
                                 </mat-form-field>
                             </div>
-
-
                             <input hidden="true" value="2025" name="usuarioCreacion" id="usuarioCreacion"
                                 formControlName="usuarioCreacion">
                             <input hidden="true" value="192.168.1.1" name="terminalCreacion" id="terminalCreacion"
@@ -1524,47 +1506,29 @@
                                 formControlName="municipalidadId">
                             <input hidden="true" name="contribuyenteNumero" id="contribuyenteNumero"
                                 formControlName="contribuyenteNumero">
-
                             <input hidden="true" name="desTipoMedioContacto" id="desTipoMedioContacto"
                                 formControlName="desTipoMedioContacto">
                             <input hidden="true" name="desClaseMedioContacto" id="desClaseMedioContacto"
                                 formControlName="desClaseMedioContacto">
-
                             <div class="col-span-2 sm:col-span-2">
-
                                 <br>
                                 <br>
                                 <mat-checkbox name="principal" id="principal" value="checked"
                                     formControlName="principal">
                                     Principal</mat-checkbox>
-
-
-
-
-
                             </div>
-
                             <div class="col-span-2 sm:col-span-2">
-
                                 <br>
                                 <br>
                                 <button class="float-left" mat-flat-button [color]="'primary'" (click)="addContacto()">
                                     <mat-icon [svgIcon]="'heroicons_outline:plus'">Agregar</mat-icon>
                                 </button>
-
-
                             </div>
-
                         </div>
-
-
-
                         <div>
-
                             <div class="alert alert-info" *ngIf="listaContacto?.length==0">
                                 No hay contactos en el sistema.
                             </div>
-
                             <div>
                                 <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
                                     <table class="mat-table">
@@ -1574,9 +1538,6 @@
                                             <th>Clase Medio</th>
                                             <th>Descripcion</th>
                                             <th>Acciones</th>
-
-
-
                                         </thead>
                                         <tbody>
                                             <tr *ngIf="listaContacto.length==0">
@@ -1589,10 +1550,6 @@
                                                 <td class="text-center">{{contacto.desMedioContacto}}</td>
                                                 <td class="text-center">{{contacto.desTipoFormaPresentacion}}</td>
                                                 <td class="text-center">
-                                                    <!-- <button mat-icon-button color="primary" matTooltip="Editar"
-                                                        (click)="editarDocSustento(i, doc)">
-                                                        <mat-icon>edit</mat-icon>
-                                                    </button> -->
                                                     <button mat-icon-button color="primary" matTooltip="Eliminar"
                                                         (click)="eliminarContacto(contacto)">
                                                         <mat-icon>delete</mat-icon>
@@ -1601,32 +1558,23 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
-
                         <div class="flex justify-end">
                             <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Siguiente
                             </button>
                         </div>
                         <!-- [disabled]="verticalStepperStep5.stepControl.pristine || verticalStepperStep5.stepControl.invalid" -->
-
                     </div>
                 </mat-step>
-
-
-
                 <mat-step [formGroupName]="'step7'" #verticalStepperStep6 class="background-color: coral;">
                     <ng-template matStepLabel>Documentos de Sustento</ng-template>
                     <p class="font-medium">
                         Registro de documentos de sustento
                     </p>
-
                     <div class="flex flex-col gt-xs:flex-row">
-
-
                         <div class="grid grid-cols-12 gap-10 w-full mt-2">
                             <div class="col-span-4 sm:col-span-4">
                                 <table class="mat-table">
